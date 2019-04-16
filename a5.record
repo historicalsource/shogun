@@ -1,0 +1,934 @@
+ZILCH of 6/30/89 14:41
+
+Combined ZIL Compiler Ver 2.0 (MIM)
+-----------------------------------
+Input file: /HOME/DEVELOPMENT/SHOGUN/A5.ZIL
+[YZIP instructions]
+
+[Object numbers assigned rooms first]
+
+[Zaps always go to current directory]
+
+First segment STARTUP
+Loading /HOME/DEVELOPMENT/SHOGUN/DEFS.ZIL and compiling it.
+XFLOAD /HOME/DEVELOPMENT/INTERLOGIC/ZILLIB/PARSER/PARSER.SHOGUN.
+Loading /HOME/DEVELOPMENT/INTERLOGIC/ZILLIB/CONSTANTS.ZIL and compiling it.
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/PSTACK.ZABSTR.
+Start segment 0
+End segment 0
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/PMEM.ZABSTR.
+Start segment 0
+End segment 0
+Loading /HOME/DEVELOPMENT/INTERLOGIC/ZILLIB/PARSER/PDEFS.ZIL and compiling it.
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/PARSER.ZABSTR.
+Start segment 0
+End segment 0
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/FIND.ZABSTR.
+Start segment 0
+End segment 0
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/REDS.ZABSTR.
+Start segment 0
+End segment 0
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/BREDS.ZABSTR.
+Start segment 0
+End segment 0
+Loading /HOME/DEVELOPMENT/INTERLOGIC/ZILLIB/PARSER/GRAM.ZIL and compiling it.
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/TOP.ZABSTR.
+Start segment 0
+End segment 0
+Loading /HOME/DEVELOPMENT/SHOGUN/PICDEF.ZIL and compiling it.
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/MISC.ZABSTR.
+Start segment 0
+End segment 0
+Start segment STARTUP
+End segment STARTUP
+Start segment 0
+End segment 0
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/SOFT.ZABSTR.
+Start segment 0
+End segment 0
+Start segment SOFT-KEYS
+End segment SOFT-KEYS
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/MENU.ZABSTR.
+Start segment 0
+End segment 0
+Loading /HOME/DEVELOPMENT/SHOGUN/STATUS.ZIL and compiling it.
+Start segment 0
+Start segment HINTS
+Compiling routine: SETUP-TEXT-AND-STATUS
+End segments 0 HINTS
+Start segment 0
+Compiling routine: INIT-STATUS-LINE
+Compiling routine: UPDATE-STATUS-LINE
+Compiling routine: ERASE-ALL-BUT
+Compiling routine: INTERLUDE-STATUS-LINE
+Compiling routine: RJNUM
+End segment 0
+Abstracting STATUS to /HOME/DEVELOPMENT/SHOGUN/STATUS.
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/PIC.ZABSTR.
+Start segment 0
+End segment 0
+Start segment STARTUP
+End segment STARTUP
+Start segment 0
+Start segment HINTS
+End segments 0 HINTS
+Start segment 0
+End segment 0
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/DESC.ZABSTR.
+Start segment 0
+End segment 0
+Loading /HOME/DEVELOPMENT/SHOGUN/SYNTAX.ZIL and compiling it.
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/RECORD.ZABSTR.
+Start segment RECORD
+End segment RECORD
+Loading /HOME/DEVELOPMENT/SHOGUN/VERBS.ZIL and compiling it.
+Start segment 0
+Compiling routine: YOULL-HAVE-TO
+Compiling routine: TO-A-PRSO?
+Compiling routine: CANT-GO
+Compiling routine: NOT-HOLDING
+Compiling routine: ITS-EMPTY
+Compiling routine: ITS-ALREADY-X
+Compiling routine: ALREADY-OPEN
+Compiling routine: ALREADY-CLOSED
+Compiling routine: WITH-PRSI?
+Compiling routine: TELL-OPEN-CLOSED
+Compiling routine: OPEN-CLOSED
+Compiling routine: THE-PRSO
+Compiling routine: A-PRSO
+Compiling routine: A-PRSO?
+Compiling routine: THE-PRSI
+Compiling routine: A-PRSI?
+Compiling routine: YOU-CANT-X-THAT
+Compiling routine: YOU-CANT-X-PRSO
+Compiling routine: UNINTERESTED
+Compiling routine: PLURAL?
+Compiling routine: CANT-REACH-THAT
+Compiling routine: V-VERBOSE
+Compiling routine: V-BRIEF
+Compiling routine: V-SUPER-BRIEF
+Compiling routine: V-DIAGNOSE
+Compiling routine: V-INVENTORY
+Compiling routine: V-QUIT
+Compiling routine: V-CHOOSE
+Compiling routine: V-RESTART
+Compiling routine: FINISH
+Compiling routine: FINISH-MENU-F
+Compiling routine: V-RESTORE
+Compiling routine: V-SAVE
+Compiling routine: V-UNDO
+Compiling routine: V-SCORE
+Compiling routine: V-SCRIPT
+Compiling routine: V-UNSCRIPT
+Compiling routine: V-VERSION
+Compiling routine: PCENTER
+Compiling routine: V-CREDITS
+Compiling routine: V-$VERIFY
+Compiling routine: V-WAKE
+Compiling routine: V-ANSWER
+Compiling routine: PRE-ASK-ABOUT
+Compiling routine: V-ASK-ABOUT
+Compiling routine: FIND-IN
+Compiling routine: PRE-ASK-FOR
+Compiling routine: V-ASK-FOR
+Compiling routine: PRE-ATTACK
+Compiling routine: V-ATTACK
+Compiling routine: V-HIT
+Compiling routine: V-BITE
+Compiling routine: PRE-BOARD
+Compiling routine: YOU-ARE-IN
+Compiling routine: V-BOARD
+Compiling routine: V-BURN
+Compiling routine: V-CHASTISE
+Compiling routine: V-CLIMB-DOWN
+Compiling routine: V-CLIMB-FOO
+Compiling routine: V-CLIMB-ON
+Compiling routine: V-CLIMB-OVER
+Compiling routine: V-CLIMB-UP
+Compiling routine: V-CLOSE
+Compiling routine: CLOSE-A-DOOR
+Compiling routine: IN-DARK?
+Compiling routine: OKAY-THE-PRSO-IS-NOW
+Compiling routine: V-COMPARE-MANY
+Compiling routine: V-WASTE-OF-TIME
+Compiling routine: V-COMPARE
+Compiling routine: V-CROSS
+Compiling routine: V-CURSE
+Compiling routine: V-CUT
+Compiling routine: V-DIG
+Compiling routine: V-DISEMBARK
+Compiling routine: V-DRINK
+Compiling routine: V-DRINK-FROM
+Compiling routine: PRE-DROP
+Compiling routine: V-DROP
+Compiling routine: V-EAT
+Compiling routine: V-ENTER
+Compiling routine: PRE-EXAMINE
+Compiling routine: V-EXAMINE
+Compiling routine: PRSO-NOTHING-SPECIAL
+Compiling routine: V-EXIT
+Compiling routine: V-FILL
+Compiling routine: V-FIND
+Compiling routine: V-FOLLOW
+Compiling routine: PRE-GIVE
+Compiling routine: V-GIVE
+Compiling routine: V-GOODBYE
+Compiling routine: V-HELLO
+Compiling routine: V-HELP
+Compiling routine: V-HIDE
+Compiling routine: V-HIDE-BEHIND
+Compiling routine: V-HIDE-UNDER
+Compiling routine: V-HIDE-FROM
+Compiling routine: V-KICK
+Compiling routine: V-KILL
+Compiling routine: IKILL
+Compiling routine: NOT-TRAINED
+Compiling routine: V-KNOCK
+Compiling routine: V-KISS
+Compiling routine: V-LAMP-OFF
+Compiling routine: V-LAMP-ON
+Compiling routine: V-LEAN-ON
+Compiling routine: V-LEAP
+Compiling routine: V-LEAVE
+Compiling routine: V-LISTEN
+Compiling routine: CANT-X-WITH-PRSI
+Compiling routine: V-LOCK
+Compiling routine: NO-LOCK
+Compiling routine: V-INTRODUCE
+Compiling routine: V-AFTER
+Compiling routine: TIME-PASSES
+Compiling routine: NEXT-SCENE
+Compiling routine: FAILED-SCENE
+Compiling routine: NEW-SCENE
+Compiling routine: I-NEW-SCENE
+Compiling routine: SCORE-HAVE
+Compiling routine: SCORE-MAX
+Compiling routine: CONTINUE-MENU-F
+Compiling routine: V-FIRST-LOOK
+Compiling routine: V-LOOK
+Compiling routine: V-LOOK-BEHIND
+Compiling routine: V-LOOK-DOWN
+Compiling routine: WHAT-CONTENTS
+Compiling routine: V-LOOK-INSIDE
+Compiling routine: V-LOOK-ON
+Compiling routine: V-LOOK-UNDER
+Compiling routine: V-LOWER
+Compiling routine: V-MELT
+Compiling routine: V-MOVE
+Compiling routine: MOTION-VERB?
+Compiling routine: HOSTILE-VERB?
+Compiling routine: JAPANESE-VERB?
+Compiling routine: ACT-CRAZY?
+Compiling routine: ABSTRACT-VERB?
+Compiling routine: PASSIVE-VERB?
+Compiling routine: V-MUNG
+Compiling routine: PRE-OPEN
+Compiling routine: V-OPEN
+Compiling routine: V-PICK
+Compiling routine: V-PLUG
+Compiling routine: V-POINT
+Compiling routine: V-POUR-FROM
+Compiling routine: PRE-POUR
+Compiling routine: V-POUR
+Compiling routine: EMPTY-ALL
+Compiling routine: V-PUSH
+Compiling routine: V-PUSH-TO
+Compiling routine: PRE-PUT
+Compiling routine: TAKE-OUT-FIRST
+Compiling routine: V-PUT
+Compiling routine: PRSO-TOO-BIG?
+Compiling routine: INSPECTION-REVEALS
+Compiling routine: V-PUT-BEHIND
+Compiling routine: V-PUT-ON
+Compiling routine: NO-GOOD-SURFACE
+Compiling routine: V-PUT-UNDER
+Compiling routine: V-RAISE
+Compiling routine: V-REACH-IN
+Compiling routine: PRE-READ
+Compiling routine: HOW-DO-YOU
+Compiling routine: V-READ
+Compiling routine: V-REPLY
+Compiling routine: PRE-SRUB
+Compiling routine: V-SRUB
+Compiling routine: V-RUB
+Compiling routine: V-SAY
+Compiling routine: HOW-TO-USE-TELL
+Compiling routine: V-SEARCH
+Compiling routine: V-SEND
+Compiling routine: V-SEND-UNDER
+Compiling routine: PRE-SGIVE
+Compiling routine: V-SGIVE
+Compiling routine: V-SHAKE
+Compiling routine: THAT/THEM
+Compiling routine: V-SHARPEN
+Compiling routine: V-SHOOT-WITH
+Compiling routine: PRE-SHOOT
+Compiling routine: V-SHOOT
+Compiling routine: V-SHOW
+Compiling routine: V-SKIP
+Compiling routine: V-SLEEP
+Compiling routine: LIKE-A-PRSO
+Compiling routine: V-SMELL
+Compiling routine: PRE-SSHOW
+Compiling routine: V-SSHOW
+Compiling routine: V-SWING
+Compiling routine: V-SWIM
+Compiling routine: V-SWIM-TO
+Compiling routine: PRE-TAKE
+Compiling routine: V-TAKE
+Compiling routine: PUT-ON
+Compiling routine: TAKE-OFF
+Compiling routine: V-TAKE-OFF
+Compiling routine: V-HOLD
+Compiling routine: V-TELL
+Compiling routine: V-THANK
+Compiling routine: V-DOMO
+Compiling routine: V-DOZO
+Compiling routine: PRE-THROUGH
+Compiling routine: V-THROUGH
+Compiling routine: FIND-DOOR
+Compiling routine: PRE-THROW
+Compiling routine: V-THROW
+Compiling routine: V-THROW-OFF
+Compiling routine: V-TIE
+Compiling routine: V-TIE-UP
+Compiling routine: V-TIME
+Compiling routine: V-TORTURE
+Compiling routine: NO-EFFECT
+Compiling routine: V-TURN
+Compiling routine: V-TURN-OVER
+Compiling routine: V-TURN-AROUND
+Compiling routine: V-UNLOCK
+Compiling routine: V-UNTIE
+Compiling routine: V-WALK
+Compiling routine: V-WALK-AROUND
+Compiling routine: V-WALK-TO
+Compiling routine: NEXT-ROOM?
+Compiling routine: V-WAIT
+Compiling routine: V-WAIT-FOR
+Compiling routine: V-WAVE
+Compiling routine: YOU-ARENT-HOLDING
+Compiling routine: V-WAVE-AT
+Compiling routine: V-DRESS
+Compiling routine: V-WEAR
+Compiling routine: V-YAWN
+Compiling routine: V-YELL-AT
+Compiling routine: V-YELL
+Compiling routine: V-LAUGH
+Compiling routine: ITAKE
+Compiling routine: V-NOTIFY
+Compiling routine: SCORE-OBJECT
+Compiling routine: SCORE-OBJECT?
+Compiling routine: IDROP
+Compiling routine: HAVE-TO-TAKE-OFF
+Compiling routine: CCOUNT
+Compiling routine: WEIGHT
+Compiling routine: GOTO
+Compiling routine: I-STUPID-MOVE
+Compiling routine: JIGS-UP?
+Compiling routine: JIGS-UP
+Compiling routine: MOVE-ALL
+Compiling routine: THIS-IS-IT
+Compiling routine: INTRINSIC?
+Compiling routine: ACCESSIBLE?
+Compiling routine: VISIBLE?
+Compiling routine: HELD?
+Compiling routine: SEE-INSIDE?
+Compiling routine: GLOBAL-IN?
+Compiling routine: DO-WALK
+Compiling routine: HACK-HACK
+Compiling routine: TELL-YUKS
+Compiling routine: PRE-PRY
+Compiling routine: V-PRY
+Compiling routine: V-BURY
+Compiling routine: V-YES
+Compiling routine: V-NO
+Compiling routine: V-BUY
+Compiling routine: PRE-SSELL
+Compiling routine: V-SSELL
+Compiling routine: V-SELL
+Compiling routine: PRE-TELL-ABOUT
+Compiling routine: V-TELL-ABOUT
+Compiling routine: DIFFICULTY
+Compiling routine: V-TELL-ME-ABOUT
+Compiling routine: V-TRADE
+Compiling routine: V-ERASE
+Compiling routine: V-ADMIRE
+Compiling routine: V-BARGAIN
+Compiling routine: V-REPAIR
+Compiling routine: V-LOOK-UP
+Compiling routine: V-PLUG-IN
+Compiling routine: V-UNPLUG
+Compiling routine: V-WALK-UNDER
+Compiling routine: V-SCARE
+Compiling routine: V-WEDGE
+Compiling routine: PRE-SWEDGE
+Compiling routine: V-SWEDGE
+Compiling routine: V-PUT-BETWEEN
+Compiling routine: V-TASTE
+Compiling routine: V-DIE
+Compiling routine: V-COOK
+Compiling routine: V-DRIVE-ON
+Compiling routine: V-DRIVE-TO
+Compiling routine: V-STEP-ON
+Compiling routine: V-STOP
+Compiling routine: V-RELEASE
+Compiling routine: V-PUSH-DOWN
+Compiling routine: V-PUSH-UP
+Compiling routine: V-PUSH-OUT
+Compiling routine: PUSH-FOO
+Compiling routine: V-PRAY
+Compiling routine: PRE-SPUT-ON
+Compiling routine: V-SPUT-ON
+Compiling routine: V-LOVE
+Compiling routine: V-THOU
+Compiling routine: V-WRITE
+Compiling routine: V-RING
+Compiling routine: V-BOW
+Compiling routine: V-SORRY
+Compiling routine: V-PISS
+Compiling routine: V-LOAD
+Compiling routine: V-STRAIGHTEN
+Compiling routine: V-LAUNCH
+Compiling routine: V-BLESS
+Compiling routine: V-MAKE
+Compiling routine: V-ACT
+Compiling routine: V-DANCE
+Compiling routine: V-TEAR
+Compiling routine: V-SHIP
+Compiling routine: V-SORT
+Compiling routine: V-ROW
+Compiling routine: V-TAKE-OVER
+Compiling routine: V-SHUT-UP
+Compiling routine: V-USE
+Compiling routine: V-STEER-BY
+Compiling routine: FORMAL-SCENE?
+Compiling routine: V-STRIP
+Compiling routine: V-TRANSLATE
+Compiling routine: SETUP-ANSWER
+Compiling routine: I-SETUP-ANSWER
+Compiling routine: V-SMILE
+Compiling routine: V-WINK
+Compiling routine: V-CLEAR
+Compiling routine: V-TURN-TOWARD
+Compiling routine: V-TURN-AWAY
+Compiling routine: V-REACH-FOR
+Compiling routine: V-HUG
+Compiling routine: V-SOOTHE
+Compiling routine: V-HAI
+Compiling routine: V-IYE
+Compiling routine: V-HOLD-ON
+Compiling routine: V-RINSE
+Compiling routine: V-BATHE
+Compiling routine: V-REPLACE
+Compiling routine: V-ESCAPE
+Compiling routine: V-PLEAD
+Compiling routine: V-COMMIT
+Compiling routine: V-ACCUSE
+Compiling routine: V-SPIT
+Compiling routine: V-TEKI
+Compiling routine: GET-INTQUOTE
+Compiling routine: PRE-SSPEAK
+Compiling routine: V-SSPEAK
+Compiling routine: V-SPEAK
+Compiling routine: V-AIM
+Compiling routine: V-EXPLODE
+End segment 0
+Start segment HINTS
+End segment HINTS
+Start segment 0
+Compiling routine: V-HINT
+Compiling routine: V-HINTS-OFF
+Compiling routine: V-PICK-UP
+Compiling routine: V-COME-FROM
+Compiling routine: PAST-TENSE?
+Compiling routine: PRE-COME-TO-FROM
+Compiling routine: V-COME-TO-FROM
+Compiling routine: V-PARRY
+Compiling routine: V-TEACH
+Compiling routine: V-LEARN
+Compiling routine: V-LOOK-OUT
+Compiling routine: B-STAND
+Compiling routine: B-SITTING?
+Compiling routine: B-SIT
+Compiling routine: B-KNEELING?
+Compiling routine: B-KNEEL
+Compiling routine: B-LYING?
+Compiling routine: B-LIE-DOWN
+Compiling routine: V-STAND
+Compiling routine: V-SIT
+Compiling routine: V-KNEEL
+Compiling routine: V-KNEEL-ON
+Compiling routine: V-LIE-DOWN
+Compiling routine: V-LIE
+Compiling routine: V-AVOID
+Compiling routine: V-FUCK
+Compiling routine: V-KNOW
+Compiling routine: V-TRAIN
+Compiling routine: V-BETRAY
+Compiling routine: V-LET-IN
+Compiling routine: V-PUT-AWAY
+Compiling routine: V-DODGE
+Compiling routine: V-WAKARIMASU
+Compiling routine: V-MIZU
+Compiling routine: V-QUIET
+Compiling routine: V-COLOR
+Compiling routine: MAC-II?
+Compiling routine: DO-COLOR
+Compiling routine: PICK-COLOR
+Compiling routine: COLOR-OFFSET
+Compiling routine: COLOR-MENU-F
+Compiling routine: V-SHRUG
+Compiling routine: V-SING
+Compiling routine: V-DISTRACT
+Compiling routine: V-JOIN
+Compiling routine: OUTSIDE-TUB?
+Compiling routine: V-DRAW
+Compiling routine: V-DIVE
+Compiling routine: V-BABBLE
+Compiling routine: V-TRIP
+Compiling routine: V-NIHON-GO-GA
+Compiling routine: V-GENKI-DESU
+Compiling routine: V-GOMEN-NASAI
+Compiling routine: V-ISOGI
+Compiling routine: V-KONBANWA
+Compiling routine: V-KONNICHI-WA
+Compiling routine: V-KINJIRU
+Compiling routine: V-DRY
+Compiling routine: V-WARN
+Compiling routine: V-PULL-BEHIND
+Compiling routine: V-TOMO
+Compiling routine: V-NEH
+End segment 0
+Abstracting VERBS to /HOME/DEVELOPMENT/SHOGUN/VERBS.
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/PRARE.ZABSTR.
+Start segment 0
+End segment 0
+Start segment 0
+End segment 0
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/QVERBS.ZABSTR.
+Start segment 0
+End segment 0
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/GLOBALS.ZABSTR.
+Start segment 0
+End segment 0
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/CAST.ZABSTR.
+Start segment 0
+End segment 0
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/ERASMUS.ZABSTR.
+Start segment ERASMUS
+Start segment ANJIRO
+Start segment RODRIGUES
+End segments ANJIRO ERASMUS RODRIGUES
+Start segment ERASMUS
+Start segment RODRIGUES
+End segments ERASMUS RODRIGUES
+Start segment ERASMUS
+Start segment RODRIGUES
+End segments ERASMUS RODRIGUES
+Start segment ERASMUS
+Start segment RODRIGUES
+End segments ERASMUS RODRIGUES
+Start segment ERASMUS
+Start segment ANJIRO
+Start segment RODRIGUES
+End segments ANJIRO ERASMUS RODRIGUES
+Start segment ERASMUS
+Start segment YABU
+Start segment PIT
+End segments ERASMUS PIT YABU
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/ANJIRO.ZABSTR.
+Start segment ANJIRO
+Start segment RODRIGUES
+End segments ANJIRO RODRIGUES
+Start segment ANJIRO
+Start segment RODRIGUES
+End segments ANJIRO RODRIGUES
+Start segment ANJIRO
+Start segment RODRIGUES
+End segments ANJIRO RODRIGUES
+Start segment ANJIRO
+Start segment YABU
+Start segment RODRIGUES
+End segments ANJIRO RODRIGUES YABU
+Start segment ANJIRO
+Start segment PIT
+End segments ANJIRO PIT
+Start segment ANJIRO
+Start segment RODRIGUES
+End segments ANJIRO RODRIGUES
+Start segment YABU
+End segment YABU
+Start segment PIT
+End segment PIT
+Start segment RODRIGUES
+End segment RODRIGUES
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/VOYAGE.ZABSTR.
+Start segment VOYAGE
+End segment VOYAGE
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/AUDIENCE.ZABSTR.
+Start segment AUDIENCE
+Start segment NINJA
+End segments AUDIENCE NINJA
+Start segment AUDIENCE
+End segment AUDIENCE
+Start segment PRISON
+End segment PRISON
+Start segment MARIKO
+End segment MARIKO
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/OSAKA.ZABSTR.
+Start segment ESCAPE
+Start segment MAZE
+End segments ESCAPE MAZE
+Start segment ESCAPE
+Start segment SEPPUKU
+End segments ESCAPE SEPPUKU
+Start segment ESCAPE
+Start segment MAZE
+End segments ESCAPE MAZE
+Start segment ESCAPE
+Start segment DEPARTURE
+Start segment SEPPUKU
+End segments DEPARTURE ESCAPE SEPPUKU
+Start segment ESCAPE
+End segment ESCAPE
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/MAZE.ZABSTR.
+Start segment MAZE
+End segment MAZE
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/QUAKE.ZABSTR.
+Start segment QUAKE
+End segment QUAKE
+Start segment YOKOSE
+End segment YOKOSE
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/MARIKO.ZABSTR.
+Start segment OCHIBA
+End segment OCHIBA
+Start segment DEPARTURE
+End segment DEPARTURE
+Start segment SEPPUKU
+Start segment ESCAPE
+End segments ESCAPE SEPPUKU
+Start segment SEPPUKU
+Start segment ESCAPE
+End segments ESCAPE SEPPUKU
+Start segment SEPPUKU
+End segment SEPPUKU
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/ATTACK.ZABSTR.
+Start segment NINJA
+Start segment YOKOHAMA
+End segments NINJA YOKOHAMA
+Start segment NINJA
+Start segment PRISON
+End segments NINJA PRISON
+Start segment NINJA
+End segment NINJA
+Start segment YOKOHAMA
+End segment YOKOHAMA
+Start segment AFTERMATH
+End segment AFTERMATH
+Start segment SEKIGAHARA
+End segment SEKIGAHARA
+XFLOAD /HOME/DEVELOPMENT/INTERLOGIC/ZILLIB/CLUES.XFLOAD.
+Loading abstract /HOME/DEVELOPMENT/SHOGUN/CLUES.ZABSTR.
+Start segment HINTS
+End segment HINTS
+Distinguished segment HINTS
+Start segment HINTS
+End segment HINTS
+Loading /HOME/DEVELOPMENT/SHOGUN/HINTS.ZIL and compiling it.
+Start segment HINTS
+End segment HINTS
+ ** Warning: Never defined - RLANDBIT
+ ** Warning: Never defined - PERSON
+ ** Warning: Never defined - NOTHEBIT
+
+Warnings: 3
+ ** Note: OBJECT has no properties: INTQUOTE
+ ** Note: OBJECT has no properties: GLOBAL-OBJECTS
+Vocabulary: 1389
+
+Verbs: 252
+
+Real globals: 237
+
+AFTERMATH-QUESTION	     P-MULT
+ALVITO-TRANSLATES?	     P-NOT-HERE
+AMBUSH-CNT		     P-NUMBER
+AMBUSH-PROB		     P-OFLAG
+ANSWER-HAI?		     P-OLEN
+ATTACK-CNT		     P-PRSA-WORD
+AUDIENCE-CNT		     P-PRSI
+AVOID-CALTROPS?		     P-PRSO
+BATH-CNT		     P-RESPONDED
+BATH-FLAG		     P-RUNNING
+BEEN-IN-GARDEN?		     P-THEM-OBJECT
+BELOW-DECKS-BACKGROUND	     P-WALK-DIR
+BG-COLOR		     P-WON
+BORDER-HEIGHT		     P-WORD-NUMBER
+BOTTOM-HINT-NUM		     P-WORDS-AGAIN
+C-INTS			     PARSE-SENTENCE-ACTIVATION
+C-TABLE			     PARSER-RESULT
+CAPTURE-CNT		     PERIOD
+CLOCK-HAND		     PIC-SIDE
+CLOCK-WAIT		     PISS-FLAG
+CLOCKER-RUNNING		     PIT-CNT
+COLLAPSE-CNT		     PLAYER
+COLOR-NOTE		     PMAX
+CREW-ON-DECK?		     PMEM-STORE-POINTER
+CROOCQ-CNT		     PMEM-STORE-WORDS
+CURRENT-BORDER		     PMEM-WORDS-USED
+CURRENT-REDUCTION	     POINTEE
+D-BIT			     PRISON-CNT
+DELAY-CNT		     PRSA
+DELAYING-FIGHT?		     PRSI
+DEMO-VERSION?		     PRSI-NP
+DEPARTURE-CNT		     PRSO
+DESCRIBED-ROOM?		     PRSO-NP
+DESCRIPTIONS		     PRSQ
+DIGIT-WIDTH		     PRSS
+DODGED?			     QCONTEXT
+DONE-DEFINE?		     QUAKE-CNT
+DOOR-CNT		     QUAKE?
+ERROR-PRIORITY		     RANKINGS
+ERROR-STRING		     REEF-FLAG
+FAILED			     REEF-X
+FG-COLOR		     REEF-Y
+FLEN			     RESTORED?
+FOLLOW-FLAG		     RIBBON-CNT
+FONT-X			     RODRIGUES-CNT
+FONT-Y			     RODRIGUES-QUESTION
+FUMBLE-NUMBER		     ROPE-LOWERED?
+GALLEY-IN-BAY?		     RUSE-CNT
+GAME-OVER?		     SCENE
+GET-HINT-ROUTINE	     SCORE
+GOOD-TRICK		     SCORE-START
+GOT-GUNWALE?		     SEARCH-FLAGS
+H-CHAPT-NUM		     SEARCHED?
+H-OR-USE-MOUSE-WID	     SEBASTIO-CNT
+H-QUEST-NUM		     SEEN-FALCON?
+HEALTH-TELL		     SEEN-MAD-SCENE?
+HENDRIK-CNT		     SEEN-TORANAGA?
+HERE			     SEPPUKU-CNT
+HINTS-OFF		     SHERE
+I-DONT-THINK-THAT	     SHIP-COURSE
+ISHIDO-CNT		     SHIP-DIRECTION
+ISHIDO-DISTRACTED?	     SHIP-X
+IT-IS-ALREADY		     SHIP-Y
+IT-LOOKS-LIKE		     SIZE
+JERK-CNT		     SKIFF-CNT
+KIRI-CNT		     SPACE-WIDTH
+KNOCKOUT-CNT		     STABLE-CNT
+LAST-PSEUDO-LOC		     STATIONARY-CNT
+LEAVE-CNT		     STATIONARY?
+LEN			     STORM-DELAY?
+LIT			     STUPID-MOVE
+LITTER-CNT		     TEXT-MARGIN
+LMAX			     THERE-IS-NOTHING
+LOAD-ALLOWED		     THERES-NOTHING-TO
+LOAD-PISTOL-CNT		     TIRED-TIME
+MACHINE			     TLEXV
+MADNESS-CNT		     TOO-DARK
+MARIKO-IMPATIENT	     TORANAGA-HELD-FLAG
+MARIKO-PLAN?		     VERBOSITY
+MARIKO-WON-FLAG		     VINCK-CNT
+MAZE-HEIGHT		     VINCK-PICKED?
+MAZE-MAP		     WASTE-OF-TIME
+MAZE-WIDTH		     WHEEL-SPINNING?
+MEET-CNT		     WIDTH
+MONO-X			     WINNER
+MOUSE-LOC-X		     WRONG-ANSWER?
+MOUSE-LOC-Y		     X
+MOVES			     XAMBUSH
+MUST-CHOOSE?		     XFISH
+NEW-SCENE-NUMBER	     XGOAL
+NEXT-PIC-CRCNT		     XOFFSET
+NEXT-PIC-WIDTH		     XSTART
+NINJA-ATTACKING-CUL-DE-SAC?  Y
+NINJA-COWED-CNT		     YABU-BETRAYED?
+NO-ROOM			     YABU-CNT
+NOTHING-HAPPENS		     YABU-HEARD?
+NOTIFY-FLAG		     YABU-QUESTION
+NOW-PRSI		     YABU-RESIGNED?
+OBJ-SWAP		     YABU-WARNED?
+OCHIBA-CNT		     YAEMON-BORED?
+OCHIBA-QUESTION		     YAEMON-CNT
+OHERE			     YAMAZAKI-ATTACK
+OKAY			     YAMAZAKI-ATTACKS
+OMI-CNT			     YAMBUSH
+OMI-QUESTION		     YFISH
+OMOVES			     YGOAL
+OPPONENT		     YOFFSET
+OPRSO			     YOSHI-CHATS
+ORPHAN-ANSWER		     YOSHI-GOAL
+OSCORE			     YOSHI-TABLE
+OTLEXV			     YOSHI-WAITS?
+P-CAN-UNDO		     YOU-ARE
+P-CONT			     YOU-ARE-NOW
+P-DIRECTION		     YOU-CANT
+P-HER-OBJECT		     YOU-FIND-NOTHING
+P-HIM-OBJECT		     YOU-HAVE
+P-IT-OBJECT		     YOU-HAVE-TO
+P-LAST-OPEN		     YSTART
+P-LEN
+
+Objects: 405
+
+ACHIKO		      HIRO-MATSU	    PRIVATE-QUARTERS-2
+AIR		      HOLLAND		    PROPHECY
+ALVITO		      HOUSE		    PSEUDO-OBJECT
+AMBUSH-SITE	      IN-THE-SEA	    QUEEN
+AMBUSHERS	      INNER-CORRIDOR	    QUILL
+ANCHOR		      INNER-DOOR	    QUILT
+ANJIRO		      INTADJ		    RANDOM-GRAYS
+ANJIRO-HARBOR	      INTDIR		    REEF
+ANJIRO-WATERFRONT     INTNUM		    RIBBON
+APPLE		      INTPP		    ROBE
+ARCHERS		      INTQUOTE		    ROCK
+AROUND-HEADLAND	      IRON-BAR		    ROCKY-SHORE
+AT-ERASMUS	      IRON-DOOR		    RODRIGUES
+AT-PORTCULLIS	      ISHIDO		    RONIN
+AUDIENCE-CHAMBER      ISHIDO-SWORD	    ROOMS
+BALCONY		      IT		    ROPE
+BALCONY-DOOR	      JAPAN		    ROPER
+BANDIT-LEADER	      JAPANESE		    ROSARY
+BANDITS		      JESUITS		    RUTTER
+BARRELS		      KEY		    SAFETY-LINE
+BATH-HOUSE	      KIKU		    SALAMON
+BATHTUB		      KIMONO		    SAMURAI-GUARDS
+BELL		      KIRIS-LITTER	    SANDALS
+BELOW-DECKS	      KIRITSUBO		    SANE
+BLACK-SHIP	      KIYAMA		    SATAN
+BLACKTHORNE	      KOJIMA		    SAZUKO
+BLACKTHORNE-QUARTERS  LADDER		    SEA-CHAIR
+BOAT-OAR	      LARGE-KNIFE	    SEA-CHEST
+BOLTS		      LASHING		    SEALED-SCROLL
+BOOTS		      LATIN		    SEARCH-PARTY
+BOTTOM-CATCH	      LATITUDE		    SEAWATER
+BRIDGE-OF-ERASMUS     LEADER		    SEBASTIO
+BROWNS		      LEDGE		    SEBASTIO-CRUCIFIX
+BULLDOG		      LEDGE-1		    SEBASTIO-HENCHMEN
+BUNK		      LEDGE-2		    SECOND-GRAY
+BUNTARO		      LEDGE-3		    SECRET-DRAWER
+CALTROPS	      LEDGE-4		    SECRET-REDOUBT
+CAMELLIA	      LG-BAY		    SECRET-REDOUBT-DOOR
+CAPTAINS-CABIN	      LG-BUNK		    SECRET-ROOM
+CAPTAINS-CABIN-DOOR   LG-CASTLE		    SECRET-ROOM-DOOR
+CAPTAINS-DESK	      LG-CLIFF		    SECRET-RUTTER
+CAULDRON	      LG-CREWMEN	    SEKIGAHARA
+CEILING		      LG-ERASMUS	    SERVANTS
+CELLAR-DOOR	      LG-GALLEY		    SERVANTS-QUARTERS
+CELLARS		      LG-HOLE		    SHOGUN
+CHIMMOKO	      LG-LAND		    SHOJI-1
+CHOPSTICKS	      LG-LINE		    SHOJI-2
+CHURCH		      LG-MEN		    SHOJI-3
+CITY		      LG-NINJA		    SHOJI-4
+CLIFF-PATH	      LG-PATH		    SHOJI-5
+CLOTHES		      LG-RODRIGUES	    SHOJI-6
+COJONES		      LG-SEA		    SHORT-STRAW
+COMPASS		      LG-SHIP		    SIDE-FISSURE
+CORRIDOR	      LG-SMALL-BOAT	    SIGN-OF-CROSS
+CORTEGE		      LG-VILLAGE	    SKIFF
+COURSE		      LG-WOMEN		    SLAVER
+COURTYARD	      LG-YABU		    SLIPPERS
+CRAZY		      LG-YOSHINAKA	    SMALL-BOAT
+CREWMEN		      LIFE-RING		    SMALL-BRIDGE
+CROOCQ		      LIGHT		    SMALL-KNIFE
+CROWD		      LILY-POND		    SMOKE-BOMB
+CUP		      LIZARD		    SOCKS
+CURTAINS	      LOCAL-GLOBALS	    SONK
+DAGGER		      LOINCLOTH		    SOUTH-SHOJI
+DAIS		      LONG-STRAW	    SOUTH-WALL
+DECK		      LOSING-SAMURAI	    SPAIN
+DEEP-WOODS	      MADMAN		    SPANISH
+DESK		      MAETSUKKER	    SPILLBERGEN
+DICTIONARY	      MAIN-DECK		    STABLE
+DIRT		      MAIN-DECK-2	    STAIRS
+DOMINGO		      MAIN-FISSURE	    STOMACH
+DOOR-CRACK	      MAPLE-GLADE	    STRAIT-OF-MAGELLAN
+DUTCH		      MARIKO		    STRAW
+EARTHQUAKE	      MARIKOS-LITTER	    STREAM
+EAST-WALL	      MATES		    SUICIDE
+ENGLAND		      MATES-CABIN	    SUMIYORI
+ENGLISH		      MATES-CABIN-DOOR	    SWORDS
+ERASMUS-ANCHOR	      MAZE		    TAIKO
+ETA		      ME		    TEA-HOUSE
+ETSU		      MESSENGER		    TEKI
+EYES		      MOUTH		    THEM
+FALCON		      MURA		    THIS
+FEET		      MURA-CRUCIFIX	    THUG
+FINGERS		      MURA-DOOR		    TOP-CATCH
+FIRE-BOMB	      MURA-HOUSE	    TORANAGA
+FISH-GATE	      MURA-ROPE		    TORANAGA-IN-DRAG
+FLAGON		      NINJA		    TORANAGAS-GUARDS
+FLOWER		      NINJA-LEADER	    TOWEL
+FOCSLE-DOOR	      NOISE		    TRAITOR
+FOOD		      NORTH-SHOJI	    TRAPDOOR
+FORECOURT	      NORTH-WALL	    TRAY
+FORESAILS	      NOT-HERE-OBJECT	    TRINITY-HOUSE
+FORMAL-GARDEN	      OAR		    VAN-NEKK
+FORTIFIED-GATE	      OARS		    VASE
+GALLEY		      OARSMEN		    VEIL
+GALLEY-WHEEL	      OCHIBA		    VILLAGE-SQUARE
+GANGWAY		      OCHIBA-ROOM	    VILLAGERS
+GARDEN		      OFFAL		    VINCK
+GARDEN-GATE	      OFFICIAL		    VINCKS-STRAW
+GATEWAY		      OMI		    VOYAGE
+GENERIC-OBJECTS	      OMI-SAMURAI	    WALL
+GINSEL		      ON-BRIDGE		    WAREHOUSE
+GLOBAL-BARBARIAN      ON-DECK		    WATERFALL
+GLOBAL-DAIMYO	      ONNA		    WEST-WALL
+GLOBAL-FOOD	      ORDERS		    WHARF
+GLOBAL-HATAMOTO	      OUTER-CORRIDOR	    WHAT
+GLOBAL-HERE	      OUTER-DOOR	    WHEEL
+GLOBAL-OBJECTS	      OUTER-ROOM	    WIND
+GLOBAL-RUTTERS	      OUTSIDE-PRISON	    WOODS
+GLOBAL-SAMURAI	      PACIFIC		    WORLD
+GLOBAL-SLEEP	      PARCHMENT		    YABU
+GLOBAL-WATER	      PARTY-KIMONO	    YABU-HEAD
+GOD		      PASSAGE-DOOR	    YABU-KIMONO
+GORODA		      PASSAGEWAY	    YABU-PALANQUIN
+GRAY-CAPTAIN	      PATHS		    YABU-SWORDS
+GRAY-LEADER	      PEBBLED-BEACH	    YAEMON
+GRAYS		      PEDESTAL		    YAMAZAKI
+GREEN-RIBBON	      PIETERZOON	    YOKOHAMA
+GROUND		      PILOTS-CABIN	    YOKOSE-BATH-HOUSE
+GRUEL		      PILOTS-CABIN-DOOR	    YOKOSE-BATHTUB
+GUARDS		      PIRATE		    YOKOSE-CORRIDOR-1
+GUNWALE		      PISTOL		    YOKOSE-CORRIDOR-2
+GYOKO		      PIT		    YOKOSE-CORRIDOR-3
+HANASE-MASEN	      PLAN		    YOKOSE-FIRST-FLOOR
+HANDS		      PLANTS		    YOKOSE-GUEST-1
+HEAD		      PLATEAU		    YOKOSE-GUEST-2
+HEADS		      POPE		    YOKOSE-SPA-1
+HELP		      PORTCULLIS	    YOKOSE-SPA-2
+HENCHMAN-BODY	      PORTUGAL		    YOKOSE-SPA-3
+HENCHMAN-HEAD	      PORTUGUESE	    YOKOSE-SPA-4
+HENDRIK		      POWDER-HORN	    YOKOSE-SPA-5
+HER		      PRISON		    YOKOSE-SPA-6
+HERETIC		      PRISON-COURTYARD	    YOSHINAKA
+HIGH-WALL	      PRISON-GATE	    YOU
+HIM		      PRIVATE-QUARTERS	    ZATAKI
+
+Properties: 40
+
+P?ACTION     P?COUNT	  P?GLOBAL     P?NW	    P?SDESC	 P?TEXT
+P?ADJACENT   P?DESCFCN	  P?HEALTH     P?OUT	    P?SE	 P?THINGS
+P?ADJECTIVE  P?DOWN	  P?IN	       P?OWNER	    P?SIZE	 P?UP
+P?AFT	     P?EAST	  P?LDESC      P?PICTURE    P?SOUTH	 P?VALUE
+P?AFTER	     P?FDESC	  P?MOUSE      P?PORT	    P?STARBOARD	 P?WEST
+P?CAPACITY   P?FORE	  P?NE	       P?SCENE	    P?SW
+P?CONTFCN    P?GENERIC	  P?NORTH      P?SCORE	    P?SYNONYM
+
+Flags: 47
+
+ABSTRACTBIT    ENGLISHBIT     NOABIT	     RLANDBIT	    TOUCHBIT
+AN	       FEMALE	      NOTHEBIT	     RMUNGBIT	    TRANSBIT
+BODY-PART      FOODBIT	      ONBIT	     SCOREBIT	    TRYTAKEBIT
+CANT-HOLD      FURNITURE      OPENABLE	     SEARCHBIT	    VEHBIT
+CONTBIT	       INVISIBLE      OPENBIT	     SITTING	    WEAPONBIT
+DEAD	       JAPANESEBIT    OUTSIDE	     SPANISHBIT	    WEARABLE
+DONT-ALL       LIGHTBIT	      PERSON	     SURFACEBIT	    WEARBIT
+DONT-IT	       LOCKABLE	      PLURAL	     TAKEBIT
+DOORBIT	       LOCKED	      PORTUGUESEBIT  THE
+DUTCHBIT       NDESCBIT	      READBIT	     TOOLBIT

@@ -1,0 +1,2 @@
+#
+zsplit -a 2 -d 5 -h hints -v ~curpix/a5apple.d ~curpix/a5.apple.1 -n shogun -p 107 -e 23 -0 a5 270

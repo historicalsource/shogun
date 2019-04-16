@@ -16,7 +16,7 @@
 	 <SET X <+ .X ,FONT-X -1>>
 	 <- .X <MOD .X ,FONT-X>>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"0">
 
 <BEGIN-SEGMENT STARTUP>
 
@@ -27,35 +27,60 @@
 		<SCREEN ,S-FULL>
 		<DISPLAY ,P-TITLE 1 1>
 		<CURSET <WINGET ,S-TEXT ,WHIGH> 1>
-		<INPUT 1>
+		<READ-CHAR> ;<INPUT 1>
 		<CLEAR ,S-FULL>
 		<CURSOR-ON>)>
-	 <DISPLAY-BORDER ,P-BORDER>
+	 <COND (<NOT <APPLE?>>
+		<DISPLAY-BORDER ,P-BORDER>)
+	       (ELSE
+		<DISPLAY ,P-BORDER 1 1>
+		<DISPLAY ,P-BORDER
+			 <+ 1 <- <WINGET ,S-FULL ,WHIGH> ,BORDER-HEIGHT>>
+			 1>)>
 	 <V-VERSION T>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"STARTUP">
 
 <BEGIN-SEGMENT 0>
 
 <GLOBAL CURRENT-BORDER 0>
 
-<ROUTINE DISPLAY-BORDER ("OPT" (B ,CURRENT-BORDER))
-	 <COND (<APPLE?> <RFALSE>)
+<ROUTINE DISPLAY-BORDER ("OPT" (B ,CURRENT-BORDER) (CH? T) "AUX" Y)
+	 <COND (<APPLE?>
+		<SCREEN ,S-BORDER>)
 	       (<PICINF .B ,YX-TBL>
-		<SCREEN ,S-FULL>
-		<DISPLAY .B 1 1>
-		<SETG CURRENT-BORDER .B>
-		<SCREEN ,S-TEXT>)>>
+		<SCREEN ,S-FULL>)>
+	 <DISPLAY .B 1 1>
+	 <COND (.CH? <SETG CURRENT-BORDER .B>)>
+	 <COND (<EQUAL? ,MACHINE ,IBM>
+		<SET Y 1>
+		<COND (<EQUAL? .B ,P-HINT-BORDER>
+		       <SET Y <GET ,YX-TBL 0>>
+		       <COND (<PICINF ,P-HINT-BORDER-L ,YX-TBL>
+			      <DISPLAY ,P-HINT-BORDER-L <+ 1 .Y> 1>)>)>
+		<COND (<EQUAL? .B ,P-BORDER>
+		       <SET B ,P-BORDER-R>)
+		      (<EQUAL? .B ,P-BORDER2>
+		       <SET B ,P-BORDER2-R>)
+		      (<EQUAL? .B ,P-HINT-BORDER>
+		       <SET B ,P-HINT-BORDER-R>)>
+		<COND (<PICINF .B ,YX-TBL>
+		       <DISPLAY .B
+				.Y
+				<+ 1
+				   <- <WINGET ,S-FULL ,WWIDE>
+				      <GET ,YX-TBL 1>>>>)>)>
+	 <SCREEN ,S-TEXT>>
 
 <ROUTINE CENTER-PIC-X (P "AUX" X Y)
 	 <COND (<PICINF .P ,YX-TBL>
 		<FLUSH-OLD-PICTURE>
-		<MAKE-ROOM-FOR <SET Y <GET ,YX-TBL 0>>>
+		<MAKE-ROOM-FOR <SET Y <YCEILING <GET ,YX-TBL 0>>>>
 		<SET X <- <WINGET -3 ,WWIDE> <GET ,YX-TBL 1>>>
 		<COND (<G? .X 1> <SET X </ .X 2>>)
 		      (ELSE <SET X 1>)>
 		<DISPLAY .P 0 .X>
-		<N-CRLF </ <+ .Y ,FONT-Y -1> ,FONT-Y>>
+		<N-CRLF </ .Y ,FONT-Y>>
 		<RTRUE>)>>
 
 "display a picture centered in the current window"
@@ -70,7 +95,7 @@
 		      (ELSE <SET X 1>)>
 		<DISPLAY .P .Y .X>)>>
 
-<CONSTANT TEXT-MARGIN 2>	;"left and right text margins in pixels"
+<GLOBAL TEXT-MARGIN 2>	;"left and right text margins in pixels"
 
 <ROUTINE FLUSH-OLD-PICTURE ("AUX" Y)
 	 <COND (<SET Y <WINGET ,S-TEXT ,WCRCNT>>
@@ -78,17 +103,24 @@
 		<RESET-MARGIN>)>>
 
 <ROUTINE N-CRLF (Y)
+	 <WINATTR -3 ,A-SCRIPT ,O-CLEAR>
 	 <REPEAT ((CNT 0))
-		 <COND (<IGRTR? CNT .Y> <RETURN>)>
+		 <COND (<IGRTR? CNT .Y>
+			<WINATTR -3 ,A-SCRIPT ,O-SET>
+			<RETURN>)>
 		 <CRLF>>>
 
 <ROUTINE MARGINAL-PIC (P "OPT" (RIGHT? T) (C <>) (CTOP? <>)
-		       "AUX" TMP X Y YLEFT HIGH WIDE (CENTER? <>))
+		       "AUX" TMP X Y YLEFT HIGH WIDE (CENTER? <>) (BORD? <>))
 	 <COND (<PICINF .P ,YX-TBL>
 		<SET HIGH <WINGET ,S-TEXT ,WHIGH>>
 		<SET WIDE <WINGET ,S-TEXT ,WWIDE>>
 		<FLUSH-OLD-PICTURE>
 		<SET Y <YCEILING <GET ,YX-TBL 0>>> ;"pic height rounded up"
+		<COND (<AND <APPLE?>
+			    <G? .Y .HIGH>>
+		       <SET BORD? T>
+		       <SET Y <- .Y ,BORDER-HEIGHT>>)>
 		<SET X <GET ,YX-TBL 1>> ;"pic width"
 		<COND (<AND .C <PICINF .C ,YX-TBL>>
 		       <SETG NEXT-PIC-CRCNT <GET ,YX-TBL 0>>
@@ -100,6 +132,9 @@
 		<SET YLEFT <MAKE-ROOM-FOR .Y>>
 		<COND (<G=? <+ .X <* ,FONT-X 10>> .WIDE>
 		       <SET CENTER? T>)>
+		<COND (.BORD?
+		       <SCREEN ,S-BORDER>
+		       <CURSET 1 1>)>
 		<DISPLAY .P
 			 0
 			 <COND (.CENTER?
@@ -108,10 +143,13 @@
 				     <L? .X .WIDE>>
 				<+ 1 <- .WIDE .X>>)
 			       (ELSE 1)>>
+		<COND (.BORD? <SCREEN ,S-TEXT>)>
 		<COND (.CENTER?
 		       <CURSET .YLEFT 1>
 		       <CURSOR-OFF>
-		       <INPUT 1>
+		       <READ-CHAR> ;<INPUT 1>
+		       <COND (<EQUAL? ,MACHINE ,AMIGA> ;"makes pallette happy"
+			      <DISPLAY-BORDER>)>
 		       <CURSOR-ON>
 		       <SET Y <- <YCEILING .HIGH> ,FONT-Y>>
 		       <COND (<L? <- .HIGH .Y> ,FONT-Y>
@@ -141,10 +179,15 @@
 				     <WINPUT 0 ,WCRCNT <- .Y .TMP 1>>)>
 			      <WINPUT 0 ,WCRFUNC ,NEXT-MARGIN>)
 			     (ELSE
-			      <WINPUT 0 ,WCRFUNC ,RESET-MARGIN>
+			      <WINPUT 0 ,WCRFUNC
+				      <COND (.BORD? ,RESET-MARGIN-1)
+					    (ELSE ,RESET-MARGIN)>>
 			      <COND (<EQUAL? .P ,P-OAR>
 				     <SET Y <+ .Y 1>>)>
-			      <WINPUT 0 ,WCRCNT .Y>)>)>)>>
+			      <WINPUT 0 ,WCRCNT .Y>)>)>
+		<COND (<L=? <- .HIGH .YLEFT> ,FONT-Y>
+		       <RTRUE>)
+		      (ELSE <RFALSE>)>)>>
 
 <ROUTINE SET-MARGIN (X RIGHT? "AUX" WIDE)
 	 <SET WIDE <WINGET ,S-TEXT ,WWIDE>>
@@ -168,15 +211,25 @@
 	 <COND (,NEXT-PIC-CRCNT
 		<SET-MARGIN ,NEXT-PIC-WIDTH ,PIC-SIDE>
 		<WINPUT ,S-TEXT ,WCRCNT ,NEXT-PIC-CRCNT>
-		<WINPUT ,S-TEXT ,WCRFUNC ,RESET-MARGIN>
+		<WINPUT ,S-TEXT ,WCRFUNC ,RESET-MARGIN-1>
 		<SETG NEXT-PIC-CRCNT 0>)>
 	 <RTRUE>>
+
+<ROUTINE RESET-MARGIN-1 ()
+	 <DISPLAY-BORDER>
+	 <RESET-MARGIN>>
+
+<BEGIN-SEGMENT HINTS>
 
 <ROUTINE RESET-MARGIN ()
 	 <WINPUT ,S-TEXT ,WCRCNT 0>
 	 <WINPUT ,S-TEXT ,WCRFUNC 0>
 	 <MARGIN ,TEXT-MARGIN ,TEXT-MARGIN>
 	 <PUTB ,P-INBUF 0 ,INBUF-LENGTH>>
+
+<END-SEGMENT>
+
+<BEGIN-SEGMENT 0>
 
 "make sure room for Y pixels, by scrolling and moreing if necessary"
 
@@ -202,4 +255,4 @@
 	 <SET YLEFT <+ .Y <WINGET ,S-TEXT ,WYPOS>>>
 	 <RETURN .YLEFT>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"0">

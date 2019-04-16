@@ -145,8 +145,15 @@ litter." CR>
 <GLOBAL YAMBUSH 0>
 
 <ROUTINE I-AMBUSH-START ()
-	 <COND (<OR <G? ,AMBUSH-PROB 100>
-		    <PROB ,AMBUSH-PROB>>
+	 <COND (<AND <L=? ,AMBUSH-PROB 100>
+		     <NOT <PROB ,AMBUSH-PROB>>>
+		<QUEUE I-AMBUSH-START 5>
+		<SETG AMBUSH-PROB
+		      <+ ,AMBUSH-PROB
+			 <COND (<APPLE?> 12)
+			       (ELSE 6)>>>
+		<RFALSE>)
+	       (ELSE
 		<SETG XAMBUSH ,X>
 		<SETG YAMBUSH ,Y>
 		<MOVE-ALL ,MAZE ,AMBUSH-SITE>
@@ -162,11 +169,7 @@ through the throat.  His lungs fill with molten fire and death
 swallows him.  His last thought is one of wonder, for did not Lord
 Kiyama, his master, tell him the ambush was to be later, beside
 the wharves, and directed at the pirate?" CR CR>
-		<GOTO ,AMBUSH-SITE>)
-	       (ELSE
-		<QUEUE I-AMBUSH-START 5>
-		<SETG AMBUSH-PROB <+ ,AMBUSH-PROB 6>>
-		<RFALSE>)>>
+		<GOTO ,AMBUSH-SITE>)>>
 
 <ROUTINE I-AMBUSH ()
 	 <ZLINES ,AMBUSH-CNT
@@ -186,17 +189,18 @@ staring in shock at the dying maid." CR>)
 		  <COND (<FSET? ,MARIKOS-LITTER ,SCOREBIT>
 			 <FSET ,MARIKO ,DEAD>
 			 <TELL
-" One strikes Mariko in the back as she starts to run for cover.  She
+"One strikes Mariko in the back as she starts to run for cover.  She
 falls to the ground and is still." CR>
 			 <FAILED-SCENE>)
 			(ELSE
 			 <TELL
-" One thuds into the ground where Mariko was an instant ago." CR>)>)
+"One thuds into the ground where Mariko was an instant ago." CR>)>)
 		 (<MOVE ,TORANAGA ,HERE>
 		  <REMOVE ,TORANAGA-IN-DRAG>
 		  <FSET ,CURTAINS ,OPENBIT>
-		  <MARGINAL-PIC ,P-IN-DRAG T ,P-IN-DRAG-CORNER T>
-		  <TELL CR
+		  <COND (<NOT <MARGINAL-PIC ,P-IN-DRAG T ,P-IN-DRAG-CORNER T>>
+			 <CRLF>)>
+		  <TELL
 "Buntaro shields Toranaga's litter with his body as best he can, then
 whips open the curtains.  Two arrows are imbedded in Toranaga's chest and
 side,
@@ -293,6 +297,7 @@ too.  The party is surrounded!" CR>
 harbor.  At night, it is a nightmare of blind alleys, twisting overhung
 streets, and shadowy hurrying shapes." CR>)
 	       (<RARG? ENTER>
+		<TOUCH-SEG ,P-MAZE-BACKGROUND>
 		<PICSET ,MAZE-PICS>
 		<COND (<NOT <FSET? ,HERE ,TOUCHBIT>>
 		       <MOVE-ALL ,CITY ,MAZE>
@@ -313,7 +318,7 @@ pass." CR CR>
 		       <SET YY ,YAMBUSH>
 		       <TELL
 "The cortege re-forms and prepares to continue the escape.  The urgency is
-now great, as the escaped grays will spread the alarm." CR>)
+now great, as the escaped Grays will spread the alarm." CR>)
 		      (ELSE
 		       <SET XX ,XSTART>
 		       <SET YY ,YSTART>
@@ -330,6 +335,9 @@ now great, as the escaped grays will spread the alarm." CR>)
 		<COND (<VERB? DEFINE>
 		       <CLEAR ,MAZE-WINDOW>
 		       <RFALSE>)
+		      (<VERB? COLOR>
+		       <TELL
+"[Sorry, you can't change colors in this part of Osaka.]" CR>)
 		      (<VERB? WALK>
 		       <REPEAT ((MOVED? <>))
 			  <SET XX ,X>
@@ -395,13 +403,14 @@ now great, as the escaped grays will spread the alarm." CR>)
 					       <TELL
 G"You make your way through the deserted streets.">
 					       <TELL
-" Toranaga stops the cortege outside a battered gate.  A fish is etched
+"Toranaga stops the cortege outside a battered gate.  A fish is etched
 into its timbers.  He knocks in code.  The door opens at once, and an
 ill-kempt samurai bows.  \"Bring your men and follow me,\" Toranaga
-says.  Fifteen men, dressed as "I"ronin"" follow him and slip into
+says.  Fifteen men dressed as "I"ronin"" follow him and slip into
 place as advance and rear guard.  Others spread the alarm to other
 secret cadres.  Soon there are fifty troops with you and a hundred
-guarding your flanks." CR>)>)
+guarding your flanks." CR>)>
+					<RTRUE>)
 				       (<AND <EQUAL? .OXX ,XFISH>
 					     <EQUAL? .OYY ,YFISH>>
 					<REMOVE ,FISH-GATE>)>
@@ -439,6 +448,7 @@ confusion." CR>)
 <ROUTINE LEAVE-MAZE ("AUX" YY)
 	 <SET YY <+ <WINGET ,S-TEXT ,WYPOS> <WINGET ,S-TEXT ,WTOP>>>
 	 <SETUP-TEXT-AND-STATUS>
+	 <COND (<APPLE?> <DISPLAY-BORDER>)>
 	 <SCREEN ,S-TEXT>
 	 <CURSET <- .YY <WINGET ,S-TEXT ,WTOP>> 1>>
 
@@ -583,17 +593,24 @@ confusion." CR>)
 		       <MPUTB .X .Y .VAL>
 		       <DISPLAY-MAZE-PIC <BAND .VAL 127> .Y .X>)>)>>
 
-<ROUTINE DISPLAY-MAZE ("AUX" Y BY BX MH TH SH)
+<ROUTINE DISPLAY-MAZE ("AUX" Y BY BX MH MW TH SH FH)
 	 <RESET-MARGIN>
 	 <CLEAR ,S-TEXT>
 	 <PICINF ,P-MAZE-BACKGROUND ,YX-TBL>
+	 <SET FH <WINGET ,S-FULL ,WHIGH>>
 	 <SET SH <WINGET ,S-STATUS ,WHIGH>>
+	 <SET MH <GET ,YX-TBL 0>>
+	 <SET MW <GET ,YX-TBL 1>>
+	 <COND (<G? <+ .SH .MH <* 2 ,FONT-Y>> .FH>
+		<SET MH <- .FH .SH <* 2 ,FONT-Y>>>)>
+	 <COND (<G? .MW <WINGET ,S-TEXT ,WWIDE>>
+		<SET MW <WINGET ,S-TEXT ,WWIDE>>)>
 	 <WINDEF ,MAZE-WINDOW
 		 <SET Y <+ <WINGET ,S-STATUS ,WTOP> .SH>>
 		 <WINGET ,S-TEXT ,WLEFT>
-		 <SET MH <GET ,YX-TBL 0>>
-		 <GET ,YX-TBL 1>>
-	 <SET TH <- <WINGET ,S-FULL ,WHIGH> .SH>>
+		 .MH
+		 .MW>
+	 <SET TH <- .FH .SH>>
 	 <WINDEF ,S-TEXT
 		 <+ .Y .MH> <WINGET ,S-TEXT ,WLEFT>
 		 <- .TH .MH> <WINGET ,S-TEXT ,WWIDE>>
@@ -603,13 +620,15 @@ confusion." CR>)
 	 <SET BY <GET ,MAZE-BOX-TBL 0>>
 	 <SET BX <GET ,MAZE-BOX-TBL 1>>
 	 <SETG YOFFSET
-	       </ <- <WINGET ,MAZE-WINDOW ,WHIGH>
-		     <* ,MAZE-HEIGHT .BY>>
-		  2>>
+	       <- <WINGET ,MAZE-WINDOW ,WHIGH>
+		  <* ,MAZE-HEIGHT .BY>>>
+	 <COND (<L? ,YOFFSET 0> <SETG YOFFSET 0>)
+	       (ELSE <SETG YOFFSET </ ,YOFFSET 2>>)>
 	 <SETG XOFFSET
-	       </ <- <WINGET ,MAZE-WINDOW ,WWIDE>
-		     <* ,MAZE-WIDTH .BX>>
-		  2>>
+	       <- <WINGET ,MAZE-WINDOW ,WWIDE>
+		  <* ,MAZE-WIDTH .BX>>>
+	 <COND (<L? ,XOFFSET 0> <SETG XOFFSET 0>)
+	       (ELSE <SETG XOFFSET </ ,XOFFSET 2>>)>
 	 <PRINTM>
 	 <SCREEN ,S-TEXT>>
 
@@ -621,11 +640,14 @@ confusion." CR>)
 				     .Y .X>
 		   <SET OFFS <+ .OFFS 1>>>>>
 
-<CONSTANT MAZE-WIDTH 37>
-<CONSTANT MAZE-HEIGHT 17>
+<CONSTANT MAX-MAZE-WIDTH 37>
+<CONSTANT MAX-MAZE-HEIGHT 17>
+<GLOBAL MAZE-MAP <ITABLE <* ,MAX-MAZE-WIDTH ,MAX-MAZE-HEIGHT> (BYTE) 128>>
+
+<GLOBAL MAZE-WIDTH 37>
+<GLOBAL MAZE-HEIGHT 17>
 <GLOBAL SIZE 0>
 <GLOBAL PMAX 0>
-<GLOBAL MAZE-MAP <ITABLE <* ,MAZE-WIDTH ,MAZE-HEIGHT> (BYTE) 128>>
 
 <CONSTANT DIR
 	  <TABLE <TABLE (BYTE) 0 1 2 3> <TABLE (BYTE) 0 1 3 2>
@@ -659,6 +681,9 @@ confusion." CR>)
 <GLOBAL YFISH 0>
 
 <ROUTINE BUILDMAZE ("AUX" LEFT PLEN D)
+	 <COND (<APPLE?>
+		<SETG MAZE-WIDTH 19>
+		<SETG MAZE-HEIGHT 15>)>
 	 <SETG SIZE <* </ ,MAZE-WIDTH 2> </ ,MAZE-HEIGHT 2>>>
 	 <SETG PMAX ,SIZE>
 	 <SET LEFT ,SIZE>

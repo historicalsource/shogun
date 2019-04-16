@@ -104,7 +104,10 @@ THINGS
 				 <COND (<NOT <EQUAL? ,P-CAN-UNDO 2>>
 					<REPAINT-DISPLAY>)
 				       (<EQUAL? ,P-CAN-UNDO 2>
-					<COLOR ,FG-COLOR ,BG-COLOR>
+					<NORMAL-COLOR>
+					<SCREEN ,S-FULL>
+					<NORMAL-COLOR>
+					<SCREEN 0>
 					<RESET-MARGIN>
 					<CLEAR 0>
 					<UPDATE-STATUS-LINE>
@@ -122,10 +125,10 @@ THINGS
 <DELAY-DEFINITION	YES?>
 
 <COMPILATION-FLAG P-PS-COMMA T>
-<TERMINALS VERB NOUN ADJ
+<TERMINALS (VERB 6) (NOUN 4) (ADJ 5)
 	   ;ADV QUANT MISCWORD
-	   DIR TOBE QWORD CANDO COMMA
-	   PARTICLE PREP ;"keep these two in order! -- SWG"
+	   (DIR 1) TOBE QWORD CANDO COMMA
+	   (PARTICLE 3) (PREP 2) ;"keep these two in order! -- SWG"
 	   ASKWORD
 	   COMMA APOSTR OFWORD ARTICLE QUOTE>
 
@@ -317,21 +320,21 @@ THINGS
 
 <REPLACE-DEFINITION SOFT-KEY-DEFINITIONS
 	<SOFT-KEYS
-	 ,UP-ARROW "n"
-	 ,DOWN-ARROW "s"
-	 ,LEFT-ARROW "w"
-	 ,RIGHT-ARROW "e"
+	 ,UP-ARROW "n"
+	 ,DOWN-ARROW "s"
+	 ,LEFT-ARROW "w"
+	 ,RIGHT-ARROW "e"
 	 ;"vt100 keypad keys"
-	 ,F1 "sw" 
-	 ,F2 "s"
-	 ,F3 "se"
-	 ,F4 "w"
-	 ,F5 ""
-	 ,F6 "e"
-	 ,F7 "nw"
-	 ,F8 "n"
-	 ,F9 "ne"
-	 ,F10 ""
+	 ,F1 "examine " 
+	 ,F2 "take "
+	 ,F3 "wear "
+	 ,F4 "bow to "
+	 ,F5 "turn wheel to "
+	 ,F6 "inventory"
+	 ,F7 "nw"
+	 ,F8 "ne"
+	 ,F9 "se"
+	 ,F10 "sw"
 	 -1 0
 	 -1 <TABLE "Save Definition File" SOFT-SAVE-DEFS>
 	 -1 <TABLE "Restore Definition File" SOFT-RESTORE-DEFS>

@@ -1,0 +1,139 @@
+
+<FILE-FLAGS SENTENCE-ENDS?> 
+<BEGIN-SEGMENT OCHIBA> 
+<ROOM OCHIBA-ROOM (LOC ROOMS) (SCENE S-OCHIBA) (SCORE 3) (DESC "Reception Room"
+) (SYNONYM ROOM) (ADJECTIVE RECEPTION) (FDESC
+"Your feet take you under the final portcullis and your escorts lead
+you up to the huge door.  Here they leave you alone.  Desperate for
+any distraction from the ordeal to come, you admire the camellia blossom
+Mariko took from a vase in your quarters and gave to you.  The flower is
+reassuring.  Not everyone here in Osaka is an enemy.|
+|
+You stand rigid for a moment, petrified with
+nervousness.  What if you disgrace yourself?  What if you slip or your
+swords fall or your limited Japanese fails you.  You take a deep breath
+and walk forward into the flare-lit maw.") (LDESC
+"It is an immense, high-raftered room with a golden ornamented
+ceiling.  Gold-paneled columns support the rafters, which are made of rare and
+polished woods.  Five hundred samurai and their ladies are here, wearing
+all the colors of the rainbow.  To one side is a line of guests who wait
+to bow before the raised platform at the far end.") (FLAGS ONBIT) (ACTION
+OCHIBA-ROOM-F)> 
+<DEFINE-ROUTINE OCHIBA-ROOM-F> 
+<DEFINE-ROUTINE NOT-A-BARBARIAN?> 
+<OBJECT CAMELLIA (DESC "camellia blossom") (SYNONYM BLOSSOM FLOWER CAMELLIA) (
+ADJECTIVE CAMELLIA PINK) (FLAGS TAKEBIT SCOREBIT) (ACTION CAMELLIA-F)> 
+<DEFINE-ROUTINE CAMELLIA-F> 
+<GLOBAL OCHIBA-QUESTION <>> 
+<DEFINE-ROUTINE I-OCHIBA> 
+<GLOBAL OCHIBA-CNT 0 %<> WORD> 
+<OBJECT OCHIBA (LOC OCHIBA-ROOM) (DESC "Lady Ochiba") (SYNONYM OCHIBA LADY) (
+ADJECTIVE LADY) (FLAGS PERSON JAPANESEBIT NOABIT FEMALE) (DESCFCN OCHIBA-DESC)
+(ACTION OCHIBA-F)> 
+<DEFINE-ROUTINE OCHIBA-DESC> 
+<DEFINE-ROUTINE OCHIBA-F> 
+<END-SEGMENT> 
+<BEGIN-SEGMENT DEPARTURE> 
+<DEFINE-ROUTINE DEPARTURE-AFTER-F> 
+<DEFINE-ROUTINE I-DEPARTURE> 
+<GLOBAL DEPARTURE-CNT 0 %<> WORD> 
+<GLOBAL YAMAZAKI-ATTACK <>> 
+<GLOBAL YAMAZAKI-ATTACKS <LTABLE 0
+"The Captain leaps forward, his sword a whirling arc directed at your
+head!" "The Captain swings his sword, chopping viciously at your knees."
+"The Captain charges at you, his sword pointed straight at your belly."
+"The Captain screams \"Yaemon!\" and begins an overhand blow toward
+your head.">> 
+<OBJECT YAMAZAKI (SCENE S-DEPARTURE) (DESC "Yamazaki") (SYNONYM GRAY CAPTAIN
+LEADER YAMAZAKI DANZENJI) (ADJECTIVE GRAY) (FLAGS PERSON NOABIT NOTHEBIT
+SCOREBIT) (HEALTH 4) (GENERIC GENERIC-CAPTAIN-F) (ACTION YAMAZAKI-F)> 
+<DEFINE-ROUTINE YAMAZAKI-F> 
+<CONSTANT SWORD-ATTACKS <LTABLE 0
+"You swing, wishing for luck, for good karma, for a pistol, by
+God!  He parries, but the force of your blow is strong, and the tip
+manages to carve into his wrist."
+"You hold the blade before you, stabbing almost wildly with it, wondering
+why his attack is so formal.  You see an opening and plunge madly
+forward, wounding him in the chest."
+"You interpose your blade, and there is a ringing, almost bell-like
+crash as they meet.  You slide your blade around and manage to wound
+him.  He seems almost surprised."
+"Leaping and yelling, you charge him, and in an astonishing flurry he
+fights back, executing a daring turn and riposte, but he's off balance
+and you slice the back of his calf.">> 
+<OBJECT KOJIMA (SCENE S-DEPARTURE) (DESC "Kojima") (SYNONYM CAPTAIN LEADER
+KOJIMA) (ADJECTIVE GRAY) (FLAGS PERSON JAPANESEBIT NOABIT NOTHEBIT) (HEALTH 4)
+(GENERIC GENERIC-CAPTAIN-F) (ACTION KOJIMA-F)> 
+<DEFINE-ROUTINE KOJIMA-F> 
+<GLOBAL DELAYING-FIGHT? 0> 
+<DEFINE-ROUTINE CAPTAIN-KILLS-YOU> 
+<DEFINE-ROUTINE I-FIGHT> 
+<END-SEGMENT> 
+<BEGIN-SEGMENT SEPPUKU> 
+<BEGIN-SEGMENT ESCAPE> 
+<ROOM FORMAL-GARDEN (LOC ROOMS) (SCENE S-SEPPUKU S-ESCAPE) (DESC
+"Formal Garden") (SYNONYM GARDEN) (ADJECTIVE FORMAL) (SCORE 1) (FDESC
+"In a sudden hush, Mariko's maid Chimmoko comes out of the small gates
+to the garden and walks over to you and bows.  \"Anjin-san, please excuse
+me, my Mistress wishes to see you.  I will escort you.\"|
+|
+You get up, still deep in your reverie and your overpowering sense of
+doom.  The shadows are long now.|
+|
+Chimmoko goes over to Sumiyori.  \"Please excuse me, Captain, but my Lady
+asks you to please prepare everything.\"|
+|
+\"Where does she want it done?\"|
+|
+The maid points to the space in front of the arch.  \"There, Sire.\"|
+|
+Sumiyori is startled.  \"It's to be in public?  She's doing it for all
+to see?  But, well ... what about her second?\"|
+|
+\"She believes Lord Kiyama will honor her.\"|
+|
+\"And if he doesn't?\"|
+|
+\"I don't know, Captain.  She hasn't told me.\"  Chimmoko bows and then
+goes back to the gates and beckons you.  The Grays begin to follow but
+Chimmoko shakes her head and says her mistress had not bidden
+them.  They allow you to leave and you follow the servant into the garden.") (
+LDESC "It is like a different world within the garden gates, verdant and serene,
+the sun on the treetops, birds chattering and insects foraging, the brook
+falling sweetly into the lily pond.  A tiny thatch-roofed tea house is
+beside the garden gate.  The courtyard of the keep, a world away, is to the
+east.") (EAST TO COURTYARD IF GARDEN-GATE IS OPEN) (OUT TO COURTYARD IF
+GARDEN-GATE IS OPEN) (NORTH TO TEA-HOUSE) (IN TO TEA-HOUSE) (FLAGS ONBIT
+OUTSIDE) (GLOBAL GARDEN-GATE TEA-HOUSE) (ACTION FORMAL-GARDEN-F)> 
+<DEFINE-ROUTINE FORMAL-GARDEN-F> 
+<OBJECT GARDEN-GATE (LOC LOCAL-GLOBALS) (DESC "garden gate") (SYNONYM GATE) (
+ADJECTIVE GARDEN) (FLAGS DOORBIT)> 
+<OBJECT LILY-POND (LOC FORMAL-GARDEN) (DESC "lily pond") (SYNONYM POND WATER) (
+ADJECTIVE LILY) (FLAGS NDESCBIT VEHBIT) (ACTION LILY-POND-F)> 
+<DEFINE-ROUTINE LILY-POND-F> 
+<END-SEGMENT> 
+<BEGIN-SEGMENT SEPPUKU> 
+<DEFINE-ROUTINE SEPPUKU-EXAMINE-MARIKO> 
+<DEFINE-ROUTINE SEPPUKU-TAKE-MARIKO> 
+<BEGIN-SEGMENT ESCAPE> 
+<ROOM TEA-HOUSE (LOC ROOMS) (SCENE S-SEPPUKU S-ESCAPE S-DEPARTURE S-MARIKO) (
+DESC "Tea House") (LDESC
+"The tea house is small, simple, and immaculate.  The doorway is small
+so that all will be humble, equal, the host and guest, the most high
+Lord and the merest samurai.") (SYNONYM HOUSE HUT) (ADJECTIVE LITTLE TEA
+CHA-NO-YU) (OUT TO FORMAL-GARDEN) (SOUTH TO FORMAL-GARDEN) (FLAGS ONBIT OUTSIDE
+) (ACTION TEA-HOUSE-F)> 
+<DEFINE-ROUTINE TEA-HOUSE-F> 
+<END-SEGMENT> 
+<BEGIN-SEGMENT SEPPUKU> 
+<OBJECT GREEN-RIBBON (OWNER MARIKO) (DESC "green silk ribbon") (SYNONYM RIBBON)
+(ADJECTIVE GREEN SILK) (FLAGS TAKEBIT) (ACTION GREEN-RIBBON-F)> 
+<DEFINE-ROUTINE GREEN-RIBBON-F> 
+<OBJECT SUMIYORI (SCENE S-SEPPUKU) (DESC "Sumiyori") (SYNONYM BROWN CAPTAIN
+LEADER SUMIYORI) (ADJECTIVE CAPTAIN BROWN) (FLAGS PERSON NOABIT NOTHEBIT) (
+ACTION SUMIYORI-F)> 
+<DEFINE-ROUTINE SUMIYORI-F> 
+<DEFINE-ROUTINE I-SEPPUKU> 
+<GLOBAL SEPPUKU-CNT 0 %<> WORD> 
+<GLOBAL MARIKO-WON-FLAG <>> 
+<END-SEGMENT> 

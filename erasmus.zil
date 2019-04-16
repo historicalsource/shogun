@@ -103,16 +103,18 @@ hemmed in by rocks and smashed by waves." CR>)
 		      (<EQUAL? ,REEF-X ,REEF-Y>
 		       <TELL
 "The reef is barely two hundred yards ">
-		       <COND (<EQUAL? ,SHIP-DIRECTION ,P?WEST>
-			      <TELL "ahead">)
+		       <TELL-REEF-DIR>
+		       <TELL ", great black claws of rocks
+pounded by the hungry sea.  A foaming line of surf looms ">
+		       <TELL-REEF-DIR>
+		       <TELL ", broken intermittently ">
+		       <COND (<EQUAL? ,SHIP-DIRECTION ,P?WEST ,P?NW>
+			      <TELL "to port">)
 			     (<EQUAL? ,SHIP-DIRECTION ,P?SW>
 			      <TELL "to starboard">)
-			     (<EQUAL? ,SHIP-DIRECTION ,P?NW>
-			      <TELL "to port">)
-			     (ELSE <TELL "away">)>
-		       <TELL ", great black claws of rocks
-pounded by the hungry sea.  A foaming line of surf looms ahead,
-broken intermittently to port." CR>)
+			     (ELSE
+			      <TELL "by too-narrow channels">)>
+		       <TELL "." CR>)
 		      (ELSE
 		       <TELL
 "The reef is off to the west, veiled in storm but revealed by
@@ -127,6 +129,15 @@ breakers." CR>)>)
 			      <SETG P-DIRECTION ,P?PORT>)>
 		       <PERFORM ,V?TURN ,WHEEL ,INTDIR>
 		       <RTRUE>)>)>>
+
+<ROUTINE TELL-REEF-DIR ()
+	 <COND (<EQUAL? ,SHIP-DIRECTION ,P?WEST>
+		<TELL "ahead">)
+	       (<EQUAL? ,SHIP-DIRECTION ,P?SW>
+		<TELL "to starboard">)
+	       (<EQUAL? ,SHIP-DIRECTION ,P?NW>
+		<TELL "to port">)
+	       (ELSE <TELL "away">)>>
 
 <OBJECT FORESAILS
 	(LOC LOCAL-GLOBALS)
@@ -204,9 +215,6 @@ someone screams." CR>)
 	(FLAGS NDESCBIT THE ;PERSON FEMALE VEHBIT SCOREBIT)
 	(GENERIC GENERIC-SHIP-F)
 	(ACTION LG-ERASMUS-F)>
-
-<ROUTINE GENERIC-SHIP-F (R F)
-	 ,LG-ERASMUS>
 
 <ROUTINE LG-ERASMUS-F ("OPT" (RARG <>))
 	 <COND (<RARG? SUBJ>
@@ -395,7 +403,7 @@ G"That would be suicide in this storm." CR>)
 	 <COND (<EQUAL? ,SHIP-DIRECTION ,P?WEST>
 		<COND (<OR <FSET? ,FORESAILS ,RMUNGBIT>
 			   <AND <EQUAL? ,SHIP-Y 1>
-				<L? ,SHIP-X 6>>>
+				<L=? ,SHIP-X 7>>>
 		       <SETG SHIP-X <- ,SHIP-X 1>>)
 		      (ELSE
 		       <SETG SHIP-X <- ,SHIP-X 2>>)>)
@@ -412,9 +420,9 @@ G"That would be suicide in this storm." CR>)
 		       <TELL CR
 "The waiting spines of the reef tear into the ship!">
 		       <COND (<FSET? ,HERE ,OUTSIDE>
-			      <TELL " The gap is tantalizingly
+			      <TELL "The gap is tantalizingly
 close, but you missed it.">)>
-		       <TELL " Two years out from England, and it ends here in
+		       <TELL "Two years out from England, and it ends here in
 a watery grave." CR>
 		       <JIGS-UP>)
 		      (<EQUAL? ,SHIP-X 6>
@@ -474,7 +482,7 @@ dead men!\" screams one.">
 			      <COND (<IN? ,VINCK ,HERE>
 				     <MOVE ,VINCK ,ON-DECK>
 				     <TELL
-" \"We'd better go above, Pilot,\" urges Vinck as he shuffles toward
+"\"We'd better go above, Pilot,\" urges Vinck as he shuffles toward
 the door." CR>)
 				    (ELSE <CRLF>)>)
 			     (<HERE? ,CAPTAINS-CABIN>
@@ -486,7 +494,7 @@ thanks to you!  Out!\"" CR>)
 "You sense from the terror in the voice that the reefs are close.">
 			      <COND (<IN? ,GINSEL ,BELOW-DECKS>
 				     <TELL
-" Has the watch been asleep?  All too likely!">)>
+"Has the watch been asleep?  All too likely!">)>
 			      <CRLF>)>)>
 		<RTRUE>)>
 	 <COND (<AND <EQUAL? ,SHIP-Y 9>
@@ -578,7 +586,7 @@ fight the waves for long, and are dashed against the rocks.">
 		 (<AND <EQUAL? ,SHIP-Y 4>
 		       <EQUAL? ,SHIP-X 10>>
 		  <FSET ,HENDRIK ,DEAD>
-		  <REMOVE ,HENDRIK>
+		  <MOVE ,HENDRIK ,GENERIC-OBJECTS>
 		  <COND (<FSET? ,HERE ,OUTSIDE>
 			 <TELL CR
 "This wave comes in stronger than the last.  Hendrik is caught and lifted,
@@ -602,7 +610,7 @@ none.  The "I"Erasmus"" is heading for the rocks starboard of the gap!" CR>)>)
 		       <EQUAL? ,SHIP-X 7>>
 		  <COND (<FSET? ,HERE ,OUTSIDE>
 			 <TELL CR
-"The ship is swept past the gap in the reef!" CR>)>)
+"The ship is being swept past the gap in the reef!" CR>)>)
 		 (<AND <EQUAL? ,SHIP-Y 1>
 		       <EQUAL? ,SHIP-X 5>>
 		  <COND (<HERE? ,BRIDGE-OF-ERASMUS ,ON-DECK>
@@ -756,11 +764,10 @@ speeds through the pass to safety.  Into the bay beyond." CR>
 	(GENERIC GENERIC-CREWMEN-F)
 	(ACTION LG-CREWMEN-F)>
 
-<ROUTINE GENERIC-CREWMEN-F (R F)
-	 ,LG-CREWMEN>
-
 <ROUTINE CREWMEN-DESC ("OPT" RARG OBJ)
-	 <COND (<RARG? OBJDESC?> <RTRUE>)
+	 <COND (<RARG? OBJDESC?>
+		<COND (<HERE? ,BELOW-DECKS ,VILLAGE-SQUARE>
+		       <RTRUE>)>)
 	       (<RARG? OBJDESC>
 		<COND (<HERE? ,BELOW-DECKS>
 		       <COND (,CREW-ON-DECK?
@@ -828,26 +835,26 @@ else.  You'll have to order specific crewmen to get any results." CR>)
 					    <COND (<IN? ,MAETSUKKER
 							,BELOW-DECKS>
 						   <TELL
-" Vinck, Ginsel, and Maetsukker are">)
+"Vinck, Ginsel, and Maetsukker are">)
 						  (ELSE
 						   <TELL
-" Vinck and Ginsel are">)>)
+"Vinck and Ginsel are">)>)
 					   (<IN? ,MAETSUKKER ,BELOW-DECKS>
 					    <TELL
-" Vinck and Maetsukker are">)
+"Vinck and Maetsukker are">)
 					   (ELSE
 					    <TELL
-" Vinck is">)>)
+"Vinck is">)>)
 				    (<IN? ,GINSEL ,BELOW-DECKS>
 				     <COND (<IN? ,MAETSUKKER ,BELOW-DECKS>
 					    <TELL
-" Ginsel and Maetsukker are">)
+"Ginsel and Maetsukker are">)
 					   (ELSE
 					    <TELL
-" Ginsel is">)>)
+"Ginsel is">)>)
 				    (<IN? ,MAETSUKKER ,BELOW-DECKS>
 				     <TELL
-" Maetsukker is">)
+"Maetsukker is">)
 				    (ELSE <CRLF> <RTRUE>)>
 			      <TELL
 " in the best condition, although everyone is badly off.">)
@@ -1269,7 +1276,7 @@ privateer.  The ">
 deck aft of the wheel, and the ship's bell is hanging here.">
 		<COND (<QUEUED? I-STORM>
 		       <TELL
-" Spray blows past in an angry torrent.">)>
+"Spray blows past in an angry torrent.">)>
 		<CRLF>)
 	       (<RARG? ENTER>
 		<COND (<AND <SCENE? ,S-ERASMUS>
@@ -1281,7 +1288,8 @@ deck aft of the wheel, and the ship's bell is hanging here.">
 		       <FSET ,WHEEL ,RMUNGBIT> ;"lash wheel"
 		       <TELL
 "As you climb onto the bridge, you see that Hendrik has fallen asleep
-at his post.  At least the wheel is lashed in place." CR CR>)>)
+at his post.  At least the wheel is lashed in place." CR CR>)>
+		<RTRUE>)
 	       (<RARG? BEG>
 		<COND (<P? LISTEN <>>
 		       <PERFORM ,V?LISTEN ,WIND>
@@ -1348,7 +1356,7 @@ uncontrolled.">)>
 		       <COND (<AND <IN? ,HENDRIK ,BRIDGE-OF-ERASMUS>
 				   <FSET? ,HENDRIK ,RMUNGBIT>>
 			      <FCLEAR ,HENDRIK ,RMUNGBIT>
-			      <TELL " The noise wakes Hendrik.  \"We're
+			      <TELL "The noise wakes Hendrik.  \"We're
 lost,\" he screams.  \"Oh, Lord Jesus help us!\"">)>
 		       <CRLF>
 		       <COND (<AND ,REEF-FLAG
@@ -1412,12 +1420,12 @@ lost,\" he screams.  \"Oh, Lord Jesus help us!\"">)>
 they pull themselves out onto the deck.">
 		<COND (,REEF-FLAG
 		       <MOVE-CREW ,ON-DECK>
-		       <TELL " They are terrified when they
+		       <TELL "They are terrified when they
 see the encroaching reef, most are panicked and don't know what
 to do next, but a few with their last reserves of strength
 try ineffectually to get the ship under control." CR>)
 		      (ELSE
-		<TELL " They sullenly look around, see that there is
+		<TELL "They sullenly look around, see that there is
 no danger, and muttering curses, return below, oblivious to your
 entreaties." CR>)>)>>
 
@@ -1495,7 +1503,8 @@ deck.  It's dim, warm and close here, and the stench is abominable." CR>)
 			     (ELSE
 			      <TELL
 "As you enter, a volley of feeble curses greets you.  You close the door
-and they subside.  No one moves." CR CR>)>)>)
+and they subside.  No one moves." CR CR>)>)>
+		<RTRUE>)
 	       (<RARG? BEG>
 		<COND (<VERB? SMELL>
 		       <TELL
@@ -1511,6 +1520,9 @@ worse." CR>)
 		      (<P? (ATTACK HIT) CREWMEN>
 		       <TELL
 "They back off, intimidated." CR>)>)>>
+
+<BEGIN-SEGMENT ANJIRO>
+<BEGIN-SEGMENT RODRIGUES>
 
 <ROOM ON-DECK
       (SCENE S-ERASMUS)
@@ -1592,11 +1604,12 @@ to leave without trying to regain your rutters." CR>)>)
 			      <TELL
 "As you climb aboard, ">
 			      <SEALED-PASSAGE>
-			      <CRLF>)>)>)>>
+			      <CRLF>)>)>
+		<RTRUE>)>>
 
-<ROUTINE SEALED-PASSAGE ()
-	 <TELL "Rodrigues heads immediately for
-the sealed passage.  \""I"Kinjiru, gomen nasai,""\" says one of the samurai." CR>>
+<END-SEGMENT ;"ERASMUS+ANJIRO+RODRIGUES">
+
+<BEGIN-SEGMENT ERASMUS>
 
 <OBJECT ERASMUS-ANCHOR
 	(LOC ON-DECK)
@@ -1625,6 +1638,8 @@ grace of God and your good piloting, the "I"Erasmus"" reaches port.">)>>
 		<TELL
 G"That would be suicide in this storm." CR>)>>
 
+<BEGIN-SEGMENT RODRIGUES>
+
 <ROOM PASSAGEWAY
       (LOC ROOMS)
       (DESC "Passageway")
@@ -1647,15 +1662,17 @@ cabin to starboard.  The main deck is forward of here.")
 
 <ROUTINE PASSAGEWAY-F (RARG)
 	 <COND (<RARG? ENTER>
-		<SETG TIRED-TIME <DEQUEUE I-TIRED>>
-		<QUEUE I-BELOW-DECKS -1 T>
-		<COND (<IN? ,ROPER ,PASSAGEWAY>
-		       <MOVE ,ROPER ,MATES-CABIN>
-		       <MOVE ,APPLE ,ROPER>
-		       <TELL
+		<COND (<SCENE? ,S-ERASMUS>
+		       <SETG TIRED-TIME <DEQUEUE I-TIRED>>
+		       <QUEUE I-BELOW-DECKS -1 T>
+		       <COND (<IN? ,ROPER ,PASSAGEWAY>
+			      <MOVE ,ROPER ,MATES-CABIN>
+			      <MOVE ,APPLE ,ROPER>
+			      <TELL
 "As you enter the relative quiet of the aft passageway, you notice
 Jan Roper heading across the passage from your cabin to the Mates'
-cabin." CR CR>)>)
+cabin." CR CR>)>)>
+		<RTRUE>)
 	       (<RARG? BEG>
 		<COND (<P? (OPEN CLOSE)>
 		       <COND (<PRSO? PILOTS-CABIN>
@@ -1667,6 +1684,9 @@ cabin." CR CR>)>)
 			     (<PRSO? CAPTAINS-CABIN>
 			      <PERFORM ,PRSA ,CAPTAINS-CABIN-DOOR>
 			      <RTRUE>)>)>)>>
+
+<END-SEGMENT ;"ERASMUS+RODRIGUES">
+<BEGIN-SEGMENT ERASMUS>
 
 <ROUTINE I-BELOW-DECKS ()
 	 <COND (<FSET? ,HERE ,OUTSIDE>
@@ -1868,6 +1888,8 @@ ornamentation." CR>)
 		       <RESTART-STORM?>
 		       <SCORE-OBJECT ,CAPTAINS-DESK>)>)>>
 
+<BEGIN-SEGMENT RODRIGUES>
+
 <ROOM PILOTS-CABIN
       (LOC ROOMS)
       (DESC "Pilot's Cabin")
@@ -1891,18 +1913,19 @@ second best on the ship.  The only exit is out to the passageway.">
 		<COND (<AND <SCENE? S-ERASMUS>
 			    <NOT <FSET? ,HERE ,TOUCHBIT>>>
 		       <TELL
-" There's something wrong here.  Your cabin has been disturbed.  As
+"There's something wrong here.  Your cabin has been disturbed.  As
 you look around, trying to see what's wrong, your eyes stray to the
 sea chest which contains your rutters.  You do it almost in a panic, for
 a pilot's rutters are his life.">)
 		      (<SCENE? S-RODRIGUES>
 		       <TELL
-" The room looks as though it has been tidied up and then thoroughly
+"The room looks as though it has been tidied up and then thoroughly
 turned over again.">)>
 		<CRLF>)
 	       (<RARG? ENTER>
 		<COND (<SCENE? S-ERASMUS>
-		       <QUEUE I-BUNK 4>)>)
+		       <QUEUE I-BUNK 4>)>
+		<RTRUE>)
 	       (<RARG? LEAVE>
 		<COND (<SCENE? ,S-ERASMUS>
 		       <DEQUEUE I-BUNK>)>)
@@ -1917,6 +1940,9 @@ of your crew.  You think better of it." CR>)>)
 		      (<VERB? SLEEP LIE-DOWN>
 		       <PERFORM ,V?BOARD ,BUNK>
 		       <RTRUE>)>)>>
+
+<END-SEGMENT ;"ERASMUS+RODRIGUES">
+<BEGIN-SEGMENT ERASMUS>
 
 <NEW-ADD-WORD "RUTTERS" NOUN <VOC "RUTTER"> ,PLURAL-FLAG>
 <NEW-ADD-WORD "MAPS" NOUN <VOC "MAP"> ,PLURAL-FLAG>
@@ -2076,7 +2102,7 @@ rest." CR>)>)
 		      (<FSET? ,SEA-CHEST ,LOCKED>
 		       <FSET ,SEA-CHEST ,RMUNGBIT>
 		       <TELL
-"It's locked.  Your keep your rutters in it, and they are your most
+"It's locked.  You keep your rutters in it, and they are your most
 precious possessions." CR>)
 		      (<NOT <FSET? ,SEA-CHEST ,OPENBIT>>
 		       <FSET ,SEA-CHEST ,OPENBIT>
@@ -2129,7 +2155,7 @@ to say." CR>)>>
 	(SCENE S-ERASMUS S-ANJIRO S-RODRIGUES)
 	(DESC "bed")
 	(SYNONYM BUNK BED HAMMOCK BUNKS BEDS HAMMOCKS)
-	(FLAGS FURNITURE VEHBIT)
+	(FLAGS FURNITURE SURFACEBIT VEHBIT)
 	(ACTION LG-BUNK-F)>
 
 <ROUTINE LG-BUNK-F ()
@@ -2205,9 +2231,9 @@ gone!  ">)>
 			      <MOVE ,KEY ,WINNER>
 			      <THIS-IS-IT ,KEY>
 			      <TELL
-"You search for the key to your sea-chest.  Can someone have taken it?  No!  There it is.  You take it with thanks." CR>)
+"You search for the key to your sea chest.  Can someone have taken it?  No!  There it is.  You take it with thanks." CR>)
 			     (ELSE
-			      <TELL "You notice the key to your sea-chest,
+			      <TELL "You notice the key to your sea chest,
 safe and sound where you left it." CR>)>
 		       <RESTART-STORM?>
 		       <SCORE-OBJECT ,KEY>)
@@ -2310,7 +2336,7 @@ sore and tender.  After you finish the apple, you feel better." CR>
 CTHE ,PRSI " take" S ,PRSI " the apple and gobble" S ,PRSI " it greedily.">
 		<COND (<PRSI? ,VINCK ,PIETERZOON CROOCQ>
 		       <TELL
-" \"Thank you, Pilot.  Thank you!\"">)>
+"\"Thank you, Pilot.  Thank you!\"">)>
 		<CRLF>)>>
 
 <ROUTINE RAT-PSEUDO ()
@@ -2341,9 +2367,9 @@ CTHE ,PRSI " take" S ,PRSI " the apple and gobble" S ,PRSI " it greedily.">
 		<TELL
 "This is the Mates' cabin.">
 		<COND (<SCENE? ,S-ERASMUS>
-		       <TELL " It is now shared by Baccus van Nekk, the
+		       <TELL "It is now shared by Baccus van Nekk, the
 chief merchant, Hendrik the third mate, and the boy, Croocq.">)>
-		<TELL " The passageway is outside." CR>)
+		<TELL "The passageway is outside." CR>)
 	       (<RARG? BEG>
 		<COND (<AND <P? SEARCH GLOBAL-HERE>
 			    <IN? ,APPLE ,ROPER>>
@@ -2356,6 +2382,8 @@ Pilot.  Search all you want.\"" CR>)
 D ,PRSO " reluctantly allows himself to be searched, cursing you all
 the while.  You find nothing." CR>)>)>>
 
+<BEGIN-SEGMENT RODRIGUES>
+
 <OBJECT PILOTS-CABIN-DOOR
 	(LOC LOCAL-GLOBALS)
 	(OWNER BLACKTHORNE)
@@ -2363,6 +2391,9 @@ the while.  You find nothing." CR>)>)>>
 	(SYNONYM DOOR)
 	(ADJECTIVE ;MY CABIN)
 	(FLAGS DOORBIT LOCKABLE)>
+
+<END-SEGMENT ;"ERASMUS+RODRIGUES">
+<BEGIN-SEGMENT ERASMUS>
 
 <OBJECT CAPTAINS-CABIN-DOOR
 	(LOC LOCAL-GLOBALS)
@@ -2375,8 +2406,9 @@ the while.  You find nothing." CR>)>)>>
 
 <ROUTINE CAPTAINS-CABIN-DOOR-F ()
 	 <COND (<VERB? KNOCK>
-		<TELL
-"You hear a faint response." CR>)>>
+		<COND (<IN? ,SPILLBERGEN ,CAPTAINS-CABIN>
+		       <TELL
+"You hear a faint response." CR>)>)>>
 
 <OBJECT MATES
 	(LOC GENERIC-OBJECTS)
@@ -2396,8 +2428,12 @@ the while.  You find nothing." CR>)>)>>
 
 <ROUTINE MATES-CABIN-DOOR-F ()
 	 <COND (<VERB? KNOCK>
-		<TELL
-"\"Aye?  Come in, damn you!  Do think this is a palace?\"" CR>)>>
+		<COND (<SCENE? ,S-ERASMUS>
+		       <TELL
+"\"Aye?  Come in, damn you!  Do think this is a palace?\"" CR>)>)>>
+
+<BEGIN-SEGMENT ANJIRO>
+<BEGIN-SEGMENT RODRIGUES>
 
 <OBJECT PASSAGE-DOOR
 	(LOC LOCAL-GLOBALS)
@@ -2417,6 +2453,9 @@ the while.  You find nothing." CR>)>)>>
 		       <TELL
 "You hear noise inside, but no response to your knock." CR>)>)>>
 
+<END-SEGMENT ;"ERASMUS+ANJIRO+RODRIGUES">
+<BEGIN-SEGMENT ERASMUS>
+
 <OBJECT LASHING
 	(LOC BRIDGE-OF-ERASMUS)
 	(DESC "protective lashing")
@@ -2429,7 +2468,6 @@ the while.  You find nothing." CR>)>)>>
 	(OWNER LG-ERASMUS)
 	(DESC "wheel")
 	(SYNONYM WHEEL RUDDER HELM TILLER)
-	(ADJECTIVE SHIPS)
 	(DESCFCN WHEEL-DESC)
 	(FLAGS CANT-HOLD SCOREBIT)
 	(ACTION WHEEL-F)>
@@ -2612,20 +2650,20 @@ foresails, and the ship wallows like a pig!" CR>)
 			      <COND (<AND ,REEF-FLAG ;"3,4"
 					  <EQUAL? ,REEF-X ,REEF-Y>>
 				     <TELL
-" The ship turns broadside to the reef, struggling against the
+"The ship turns broadside to the reef, struggling against the
 wind which tries to drive it onto the spines." CR>)
 				    (<AND <EQUAL? ,SHIP-X 6> ;"11"
 					  <EQUAL? ,SHIP-Y 2>>
 				     <TELL
-" Fighting the wind, the ship slowly turns away from the reef." CR>)
+"Fighting the wind, the ship slowly turns away from the reef." CR>)
 				    (<AND <EQUAL? ,SHIP-X 1> ;"15"
 					  <EQUAL? ,SHIP-Y 1>>
 				     <TELL
-" Struggling, the ship begins to turn to port, slowly, slowly as the
+"Struggling, the ship begins to turn to port, slowly, slowly as the
 swift currents are drawing you deeper into the maze of rocks." CR>)
 				    (ELSE
 				     <TELL
-" The ship struggles against the wind." CR>)>)
+"The ship struggles against the wind." CR>)>)
 			     (<EQUAL? ,P-DIRECTION ,P?STARBOARD>
 			      <QUEUE I-BROADSIDE 2>
 			      <SET-COURSE ,P?STARBOARD>
@@ -2635,15 +2673,15 @@ swift currents are drawing you deeper into the maze of rocks." CR>)
 			      <COND (<AND <EQUAL? ,SHIP-X 8> ;"10"
 					  <EQUAL? ,SHIP-Y 2>>
 				     <TELL
-" The wind snaps the sails full and the ship heads for the gap, but it
+"The wind snaps the sails full and the ship heads for the gap, but it
 means coming very close to the waiting reef!" CR>)
 				    (<AND <EQUAL? ,SHIP-X 5> ;"12"
 					  <EQUAL? ,SHIP-Y 1>>
 				     <TELL
-" With a crack the sails fill, shooting the "I"Erasmus"" into the gap!" CR>)
+"With a crack the sails fill, shooting the "I"Erasmus"" into the gap!" CR>)
 				    (ELSE
 				     <TELL
-" The ship gains speed with the wind." CR>)>)
+"The ship gains speed with the wind." CR>)>)
 			     (<EQUAL? ,P-DIRECTION ,P?FORE ,P?IN>
 			      <DEQUEUE I-BROADSIDE>
 			      <SET-COURSE ,P?FORE>
@@ -2715,6 +2753,9 @@ fails you.  You collapse, every fiber aching with months of
 deprivation.  It is not long after that the ship is driven against the
 rocks.">)>>
 
+<BEGIN-SEGMENT YABU>
+<BEGIN-SEGMENT PIT>
+
 <OBJECT SPILLBERGEN
 	(LOC CAPTAINS-CABIN)
 	(DESC "Captain-General Spillbergen")
@@ -2724,15 +2765,6 @@ rocks.">)>>
 	(DESCFCN SPILLBERGEN-DESC)
 	(GENERIC GENERIC-CAPTAIN-F)
 	(ACTION SPILLBERGEN-F)>
-
-<ROUTINE GENERIC-CAPTAIN-F (R F)
-	 <COND (<SCENE? ,S-ERASMUS ,S-ANJIRO ,S-YABU ,S-PIT>
-		,SPILLBERGEN)
-	       (<SCENE? ,S-NINJA>
-		,GRAY-CAPTAIN)
-	       (<SCENE? ,S-DEPARTURE>
-		<COND (<FSET? ,YAMAZAKI ,DEAD> ,KOJIMA)
-		      (ELSE <RFALSE>)>)>>
 
 <ROUTINE SPILLBERGEN-DESC (RARG OBJ)
 	 <COND (<RARG? OBJDESC?>
@@ -2799,7 +2831,7 @@ florid man, normally very fat, now very thin, the skin of his
 paunch hanging slackly in folds.">
 		<COND (<AND <HERE? ,CAPTAINS-CABIN>
 			    <FSET? ,FLAGON ,SCOREBIT>>
-		       <TELL " He looks parched.">)>
+		       <TELL "He looks parched.">)>
 		<CRLF>)
 	       (<AND <VERB? FIND>
 		     <SCENE? ,S-ERASMUS>
@@ -2819,7 +2851,7 @@ paunch hanging slackly in folds.">
 "Weakly, Spillbergen drinks a little water.">
 		       <COND (<FSET? ,FLAGON ,SCOREBIT>
 			      <TELL
-" \"Thanks,\" he says.  \"Where's land -- where's land?\"|
+"\"Thanks,\" he says.  \"Where's land -- where's land?\"|
 |
 \"Ahead\" is all you can say in reply." CR>
 			      <RESTART-STORM?>
@@ -2978,13 +3010,14 @@ hoarder!\"" CR>)>)
 		       <COND (<FSET? ,APPLE ,NDESCBIT>
 			      <FCLEAR ,APPLE ,NDESCBIT>
 			      <TELL
-" \"It's mine, I tell you!  Share and share alike!\" he whines, pulling
-an apple out of his pocket.">)
+"\"It's mine, I tell you!  Share and share alike!\" he whines, pulling
+an apple out of his pocket." CR>)
 			     (ELSE
 			      <MOVE ,APPLE ,HERE>
 			      <TELL
-" \"Don't hit me!\" he screams, dropping the apple on the ground.">)>)>
-		<CRLF>)
+"\"Don't hit me!\" he screams, dropping the apple on the ground." CR>
+			      <SCORE-OBJECT ,ROPER>)>)
+		      (ELSE <CRLF>)>)
 	       (<P? SEND ROPER>
 		<TELL
 "He refuses to go, scornfully suggesting you get the regular crewmen on
@@ -3049,7 +3082,7 @@ G"The only responses are muttered curses in Dutch." CR>)>)
 		<COND (<P? SEND VAN-NEKK>
 		       <TELL
 "\"I'd go, Pilot, but it's not my watch.  It's Vinck's watch, I think, and
-Ginsel's, and Maetsukker's, if I've not gone crazed.  He smiles wanly." CR>)>)>>
+Ginsel's, and Maetsukker's, if I've not gone crazed.\"  He smiles wanly." CR>)>)>>
 
 <OBJECT CROOCQ
 	(LOC BELOW-DECKS)
@@ -3094,4 +3127,4 @@ G"The only responses are muttered curses in Dutch." CR>)>)
 		    <P? (STEP-ON TAKE BOARD WALK-TO CLIMB-ON)
 			(DECK BRIDGE-OF-ERASMUS ON-DECK)>>)>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"ERASMUS+YABU+PIT">

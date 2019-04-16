@@ -1,0 +1,206 @@
+Wed May 10 17:59:13 EDT 1989
+zsplit of 5/1/89 10:27.
+2 disks active
+5 disks allowed
+Hint segment is called HINTS
+Picture information from /home/development/curpix/a5apple.d; pictures from /home/development/curpix/a5.apple.1.
+Output files will be named shogun.
+Preload size 107
+Extra preload 23
+Segment 0 pictures go with segment 0.
+Splitting a5.seg...
+Segments: 25
+Pages: 673
+Generated global picture directory:  1 pages.
+Segment 0:  0
+Pages 0-94 98-134 136-254 601-608 672 
+260 pages, 20547 picture bytes
+Segment 1:  STARTUP
+Pages 135 
+1 pages, 3884 picture bytes
+Segment 2:  SEKIGAHARA
+Pages 595-596 
+2 pages, 2240 picture bytes
+Segment 3:  YOKOHAMA
+Pages 370 545 581-586 609-610 
+10 pages, 6445 picture bytes
+Segment 4:  ANJIRO
+Pages 260 276 278-279 290 301-325 624-627 
+34 pages, 22988 picture bytes
+Segment 5:  YABU
+Pages 260-266 275-276 295-301 309-310 325-335 627-628 
+31 pages, 8 picture bytes
+Segment 6:  ERASMUS
+Pages 255-301 627-628 630-631 633 640-642 
+55 pages, 19243 picture bytes
+Segment 7:  AUDIENCE
+Pages 370 401-414 614-616 633-634 
+20 pages, 30115 picture bytes
+Segment 8:  PRISON
+Pages 414-439 566 614-615 624 629-630 633-636 
+36 pages, 8 picture bytes
+Segment 9:  VOYAGE
+Pages 260 367-401 630-633 
+40 pages, 42839 picture bytes
+Segment 10:  DEPARTURE
+Pages 370 451-454 456-460 462-463 529-536 617-619 
+23 pages, 8 picture bytes
+Segment 11:  SEPPUKU
+Pages 370 451-460 462-463 536-545 616-618 
+26 pages, 7729 picture bytes
+Segment 12:  OCHIBA
+Pages 370 521-529 619-620 
+12 pages, 8 picture bytes
+Segment 13:  AFTERMATH
+Pages 370 586-595 609 
+12 pages, 8 picture bytes
+Segment 14:  ESCAPE
+Pages 370 449-483 536-538 616-618 633 636-639 
+47 pages, 26199 picture bytes
+Segment 15:  MAZE
+Pages 450 460-461 483-494 624 636 639-640 
+19 pages, 9006 picture bytes
+Segment 16:  MARIKO
+Pages 370 439-449 631 636 
+14 pages, 8 picture bytes
+Segment 17:  NINJA
+Pages 370 401-406 545-581 609-616 
+52 pages, 13399 picture bytes
+Segment 18:  YOKOSE
+Pages 358 370 509-521 620-624 
+20 pages, 10375 picture bytes
+Segment 19:  PIT
+Pages 260-266 275-276 295-301 321-322 335-359 623-624 626-630 
+50 pages, 6494 picture bytes
+Segment 20:  RODRIGUES
+Pages 260 276 278-279 282-283 290 303-310 322-325 359-367 626-627 630-631 
+32 pages, 8 picture bytes
+Segment 21:  QUAKE
+Pages 370 494-509 623-624 
+19 pages, 21569 picture bytes
+Segment 22:  HINTS
+Pages 94-98 136 138 144 148 213 596-601 642-672 
+47 pages, 1195 picture bytes
+Segment 23:  SOFT-KEYS
+Pages 642 
+1 pages, 8 picture bytes
+Segment 24:  RECORD
+Pages 
+0 pages, 0 picture bytes
+Object bytes read in: 344576
+Putting pages 0 - 92 and 98 - 111 in preload.
+Putting pages 112 - 134 in extra preload.
+Adding segment 0 to disk 2; total size now 153.
+Adding hint segment HINTS to disk 1; total size now 153.
+Adding segment 0 pictures to 2; total size now 194.
+Adding global picture directory to 2; total size now 195.
+Adding unused segment STARTUP to disk 3; total size now 9.
+Adding unused segment ERASMUS (adjacent to STARTUP) to disk 3; total size now 102.
+Adding unused segment ANJIRO (adjacent to ERASMUS) to disk 3; total size now 174.
+Adding unused segment YABU (adjacent to ANJIRO) to disk 3; total size now 184.
+Adding unused segment PIT (adjacent to YABU) to disk 3; total size now 222.
+Adding unused segment RODRIGUES (adjacent to PIT) to disk 3; total size now 230.
+Adding unused segment YOKOSE to disk 3; total size now 268.
+Adding unused segment SOFT-KEYS to disk 3; total size now 268.
+Adding unused segment RECORD to disk 3; total size now 268.
+Adding unused segment VOYAGE to disk 4; total size now 124.
+Adding unused segment AUDIENCE (adjacent to VOYAGE) to disk 4; total size now 200.
+Adding unused segment PRISON (adjacent to AUDIENCE) to disk 4; total size now 230.
+Adding unused segment MARIKO (adjacent to PRISON) to disk 4; total size now 240.
+Adding unused segment YOKOHAMA to disk 4; total size now 262.
+Adding unused segment SEKIGAHARA to disk 4; total size now 268.
+Moving 8 pages to 2.
+10 (136) left on 3.
+10 (100) left on 4.
+270 (0) left on 5.
+67 left on 2.
+Adding unused segment OCHIBA to disk 3; total size now 269.
+Adding unused segment AFTERMATH to disk 4; total size now 268.
+Adding unused segment ESCAPE to disk 5; total size now 97.
+Adding unused segment MAZE (adjacent to ESCAPE) to disk 5; total size now 126.
+Adding unused segment NINJA to disk 5; total size now 202.
+Adding unused segment SEPPUKU (adjacent to NINJA) to disk 5; total size now 224.
+Adding unused segment DEPARTURE (adjacent to SEPPUKU) to disk 5; total size now 232.
+Moving 3 pages to 2.
+4 (142) left on 3.
+2 (108) left on 4.
+41 (118) left on 5.
+64 left on 2.
+Moving 16 pages to 2.
+4 (142) left on 3.
+18 (92) left on 4.
+57 (102) left on 5.
+48 left on 2.
+Moving page 450 from 5 (58 (101) left) to 2 (47 left).
+Adding unused segment QUAKE to disk 5; total size now 270.
+Moving 2 pages to 2.
+6 (140) left on 3.
+18 (92) left on 4.
+2 (115) left on 5.
+45 left on 2.
+Split successful.
+Map size: 1 page; 186 words.
+Making disk map...
+Disk 1: Pages 0 to 92 starting on disk page 1.
+Disk 1: Pages 98 to 111 starting on disk page 94.
+Disk 1: Pages 94 to 97 starting on disk page 108.
+Disk 1: Pages 136 to 136 starting on disk page 112.
+Disk 1: Pages 138 to 138 starting on disk page 113.
+Disk 1: Pages 144 to 144 starting on disk page 114.
+Disk 1: Pages 148 to 148 starting on disk page 115.
+Disk 1: Pages 213 to 213 starting on disk page 116.
+Disk 1: Pages 596 to 601 starting on disk page 117.
+Disk 1: Pages 642 to 672 starting on disk page 123.
+Disk 2: Pages 112 to 134 starting on disk page 0.
+Disk 2: Pages 93 to 94 starting on disk page 23.
+Disk 2: Pages 136 to 254 starting on disk page 25.
+Disk 2: Pages 260 to 260 starting on disk page 144.
+Disk 2: Pages 367 to 367 starting on disk page 145.
+Disk 2: Pages 370 to 370 starting on disk page 146.
+Disk 2: Pages 401 to 406 starting on disk page 147.
+Disk 2: Pages 449 to 450 starting on disk page 153.
+Disk 2: Pages 509 to 509 starting on disk page 155.
+Disk 2: Pages 529 to 529 starting on disk page 156.
+Disk 2: Pages 545 to 545 starting on disk page 157.
+Disk 2: Pages 566 to 566 starting on disk page 158.
+Disk 2: Pages 581 to 581 starting on disk page 159.
+Disk 2: Pages 601 to 610 starting on disk page 160.
+Disk 2: Pages 614 to 616 starting on disk page 170.
+Disk 2: Pages 619 to 619 starting on disk page 173.
+Disk 2: Pages 623 to 624 starting on disk page 174.
+Disk 2: Pages 629 to 631 starting on disk page 176.
+Disk 2: Pages 633 to 633 starting on disk page 179.
+Disk 2: Pages 636 to 636 starting on disk page 180.
+Disk 2: Pages 640 to 640 starting on disk page 181.
+Disk 2: Pages 672 to 672 starting on disk page 182.
+Disk 3: Pages 135 to 135 starting on disk page 0.
+Disk 3: Pages 255 to 259 starting on disk page 1.
+Disk 3: Pages 261 to 366 starting on disk page 6.
+Disk 3: Pages 510 to 528 starting on disk page 112.
+Disk 3: Pages 620 to 622 starting on disk page 131.
+Disk 3: Pages 625 to 628 starting on disk page 134.
+Disk 3: Pages 641 to 642 starting on disk page 138.
+Disk 4: Pages 368 to 369 starting on disk page 0.
+Disk 4: Pages 371 to 400 starting on disk page 2.
+Disk 4: Pages 407 to 448 starting on disk page 32.
+Disk 4: Pages 582 to 596 starting on disk page 74.
+Disk 4: Pages 632 to 632 starting on disk page 89.
+Disk 4: Pages 634 to 635 starting on disk page 90.
+Disk 5: Pages 451 to 508 starting on disk page 0.
+Disk 5: Pages 530 to 544 starting on disk page 58.
+Disk 5: Pages 546 to 565 starting on disk page 73.
+Disk 5: Pages 567 to 580 starting on disk page 93.
+Disk 5: Pages 611 to 613 starting on disk page 107.
+Disk 5: Pages 617 to 618 starting on disk page 110.
+Disk 5: Pages 637 to 639 starting on disk page 112.
+52 blocks (312 bytes).
+Writing disk 1.
+Added 3 pages of pictures to file.  Total size 157.
+Writing disk 2.
+Added 41 pages of pictures to file.  Total size 225.
+Writing disk 3.
+Added 124 pages of pictures to file.  Total size 264.
+Writing disk 4.
+Added 160 pages of pictures to file.  Total size 252.
+Writing disk 5.
+Added 153 pages of pictures to file.  Total size 268.

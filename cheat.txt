@@ -1,0 +1,20 @@
+		   CHEAT SHEET FOR SHOGUN
+
+* Insert the diskette in one of your drives (usually drive
+  A), and start the program by typing SHOGUN to the DOS
+  prompt.
+
+* When the first menu appears, type the F10 key (or Apple-0)
+  on an Apple, to get a menu of all scenes.
+
+* Select menu items using the up- and down-arrow keys, and
+  carriage-return once the proper item is highlighted.
+
+* In the "Rodrigues" scene, the correct answers to his
+  questions are "I TRAINED AT TRINITY HOUSE" and "THE
+  LATITUDE IS 50".
+
+* In the IBM version, scripting doesn't currently work. 
+  This is a known bug.
+
+* In the IBM version, there aren't any pictures yet.

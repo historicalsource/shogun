@@ -1,0 +1,236 @@
+ERASMUS AT SEA
+
+I like discovering things in my cabin: my apple, my chest, my two
+rutters. I wouldn't mind a very easy puzzle here like using a key to
+open the chest or my desk to get the apple.
+
+;;I've put a key in your desk that you have to search for.  I could
+;;make it even easier by just having it in the desk.
+
+I don't like the closed doors: the passageway door, the pilot's cabin
+door, the captain's door, the mates' door, the crew's door, etc. It
+prevents free movement, but it isn't fun or tricky to open the doors.
+
+;;I'm reluctant to just make doors open automatically when you try
+;;to go through them.  It's so traditional in I.F. that you have to
+;;open them yourself.
+
+I don't like all those names thrown at me when I enter a room:  Van
+Nekk, Roper, Piterzoon, Croocq, Ginsel, etc., especially since they
+serve no purpose other than color. (I don't have to know them or talk to
+them.) I'd prefer treating them not as individuals but as a group:
+"Seamen are lying about, longing for death less miserable than this."
+
+;;This is changed.  You now just get the names if you say L AT CREWMEN
+;;or WHO ARE CREWMEN.
+
+On the other hand, I like Captain Spillbergen as an individual. I wish
+there were more I could do with him or in front of him. (Is there a way
+to quench his thirst? If so, I can't figure it out.)
+
+;;In Spillbergen's desk is a flagon of water that you can find and
+;;give him.  I'm surprised you haven't found it yet!
+
+As you know, I like the text: eating the apple, writing in the rutter,
+the rat that scurries past, etc.
+
+I can't figure out why, sometimes, "the storm shifts slightly, and the
+waves and wind drive you onto the rocks of a reef" and you die.
+(Sometimes this happens when I'm below deck and Specz is asleep at the
+wheel; sometimes it happens when I first WAKE SPECZ; sometimes it
+happens when I just TAKE WHEEL, letting Specz sleep.) I think I'd rather
+not die from the reefs until I'm given a chance via the bow lookout's
+call "Rotz vooruit!" 
+
+;;I've changed this some, mostly by advancing the storm one move, so
+;;that the first message about it comes immediately.  See what you
+;;think.
+
+I like the scene as written once the reefs are spotted: steering the
+ship, raising the foresails, getting Vinck's help, more steering, and
+the text descriptions. And I like the way the scene ends (suddenly).
+
+Since I don't have to do anything with the anchor (in this scene), its
+presence seems strange.
+
+;;It's tester insurance.  Both Liz and Amy tried to find it and drop it,
+;;possibly after noticing there was one in the Galley in a later scene.
+
+AWAKENING IN ANJIRO
+
+I like the puzzle about eating food twice (the woman seems pretty smart
+-- any obscure reference to the tray and she figures out what to do). I
+like the door breaking when you open it. I like the text decsription of
+the garden.
+
+I neither like nor dislike the clothes and boots. LOOK AT CLOTHES got a
+nice blurb, but I've entered the house wearing the boots and it doesn't
+upset the woman.  I don't remember whether I can walk down to the
+waterfront naked. If not, or if I need the boots (because the pebble
+path hurts my feet), then it's a mini-puzzle, and I'd like it better if
+I had to work a teensy bit harder to find my clothes and boots (just by
+exploring another room or location).
+
+;;I've added Onna not letting you back in the house if you are wearing
+;;your boots.
+
+I like the confrontation with the priest at the waterfront, and I like
+Omi's bit (the interview and the beheading). In many ways Omi is the
+first interesting character we meet (other than ourself), and it might
+be nice to learn more about him after the beheading. I can think of one
+other scene (at least) with Omi:  the Pit. But I think I eventually want
+to read more about certain characters, like Omi: "You later learned much
+about Omi, that he was shrewd and intelligent. He appeared to serve his
+masters well, while he was serving himself even better. Like most of the
+Japanese, he never showed warmth outwardly; yet he was not as cold and
+ruthless as some others.  Omi, in fact, would come to respect you, and
+you him. But now you only hated him and swore revenge." I don't where
+this would work best -- here, or at the Pit scene -- but I think it's
+worth consideration.
+
+I don't like the return to the Erasmus -- it's such a no-win situation.
+Rowing out there to be prevented from doing anything, and rowing back --
+it's such a letdown, which is all the more noticeable after the
+beautifiul beginning. I like the closing text -- "you can still feel the
+sweat trickling down your spine" -- bliss! But that's about the ONLY
+thing I like about the return to the Erasmus. Maybe the delicacy and
+beauty we find in the house and garden can be continued, with new
+discoveries and explorations.  I'm not sure what the goal would be, but
+I'd like it to be achieveable. (I haven't spent much time thinking about
+a goal here.)
+
+;;This section exists entirely to get you to that closing text, which
+;;I like, too.  I'd like to add more stuff in the village, but what?
+
+INTERVIEW WITH YABU
+
+I like this scene as-is, pretty much. I wasn't bothered by a second
+interview (I recall Amy or Liz thinking it repetitious, but I don't find
+it so.) 
+
+I don't like the roll call of names: "You see Father Sebastio, Mura,
+Baccus van Nekk, Maetsukker, Ginsel, Croocq, and Vinck here."  Again,
+I'd rather they be treated not as individuals, since they're not
+interesting as indiviuals. (Exceptions being Yabu, Sebastio, and maybe
+Spillbergen.) 
+
+;;Changed as described above for the "roll-call" on the Erasmus.
+
+A clue is probably needed for Shogun novices about breaking the cross.
+But that's a fine-tuning.
+
+And perhaps more can be said about Yabu, as I suggested about Omi
+previously. 
+
+THE PIT
+
+Oddly, the roll call of names doesn't bother me here. Maybe because such
+a list seems appropriate in a confined space where there's nothing else
+to look at.
+
+I like everything about this scene except it reminds me of Frank Capra's
+movie Meet John Doe, where Capra makes a great situation and you wonder
+how he's going to resolve it -- and Capra couldn't figure out how to
+resolve it, so it has the usual Capra saccharine ending. (You don't have
+a saccharine ending, but the ending still isn't satisfying.) 
+
+There's NOTHING to do in the first part of the scene -- you don't even
+get to choose a straw. It's only 4 or 5 turns now, but it could be even
+fewer. 
+
+I can't remember Amy's suggestion, but I remember liking it when I
+remembered it.
+
+;;I've changed it so that you can get picked as the victim.  Omi no
+;;longer says not to pick you.  If you resist, or if you prevent Vinck
+;;from being taken (if he's the loser), Pieterzoon is still taken.
+;;The scene also goes to the logical end, now.
+
+Maybe the scuffle with the samurai could go on a little longer. Then
+again, maybe all-text combat isn't very interesting, but it was
+certainly the most interactive part of this scene.
+
+I recall from the book that some unlucky samurai gets stuck in the Pit.
+Maybe it's up to the player to prevent his being killed by the others?
+
+;;He's there if you fight hard enough. He even drops a knife that you
+;;can get for a few turns.
+
+VOYAGE TO OSAKA
+
+I like the analogy of the galley riding like "a fat-bellied pig."
+
+Rodrigues orders the player to steer south. The player who does this
+loses, but I don't think it's at all obvious that the player should do
+otherwise.
+
+;;I've changed the text to make it more obvious that Rodrigues is
+;;chickening out, and that you (as the brave guy you are) shouldn't
+;;go along.
+
+The player goes foreward (on Rodrigues' order) to tell the men to ship
+oars. But this doesn't work and the player has to go back to the helm.
+How about if the command DOES work (when you say MEN, SHIP OARS), at
+least temporarily; then, as you return to the helm, a wave or gust of
+wind nearly tips the boat and THEN the player is nearly washed
+overboard. Instead of a nameless hand pulling you from the sea, it can
+be Rodrigues (giving the player more incentive to rescue him later -- to
+return the favor).  The wave or gust that nearly washes you overboard
+can screw up the oarsmen again, explaining Rodrigues' leaving the helm.
+
+I like going ashore looking for Rodrigues -- it suddenly makes the scene
+seem so much larger (not surprising, I guess, since you go from 2 rooms
+to a lot).  And though I haven't figured out how to save Yabu, I like
+the puzzle. (I have the rope and I've thrown things at Yabu, including
+rocks, without success.) I like the time element here -- I seem to have
+plenty of moves to try things, but I don't have forever, since the tide
+comes in.
+
+I guess the search for Rodrigues is realistic, and I can't think of a
+better way to do it; but having to search each location twice is kind of
+repetitious. (Though you've managed to keep it from being dull by
+putting in good text: "sea-bloated ... half-eaten ... crab-mutilated
+corpses.")
+
+As you get out of the skiff, the text says "You disembark quickly,
+intending to lead the search party, but Yabu usurps that position and
+sets a strong pace, which you are hard put to keep up with." But I don't
+believe you can FOLLOW YABU; he's "here."
+
+Overall, I guess this is one of my favorite scenes: it's got puzzles and
+color and exploration.
+
+ESCAPE FROM OSAKA
+
+I successfully finished this scene once upon a time; I failed to finish
+it most recently, so these notes are incomplete.
+
+The exchanges between Buntaro, Ishido, and Hiro-matsu are very nice. But
+the player lacks for a goal or something to do besides wait.  Similarly,
+the player lacks any incentive to LOOK AT KIRITSUBO when Sazuko screams
+and falls. I think this scene suffers from its faithfulness to the book.
+
+I can only suggest a pretty major change for the first part, which keeps
+the things I like but differs greatly from the book; namely:  
+
+The scene begins (non-interactively) with Blackthorne overhearing a
+conversation between Toranaga & Kiritsubo (or Toranaga & Hiro-matsu),
+tipping the player off about the switcheroo. The interactive portion
+then begins much as it does now, except the player must get Hiro-matsu
+somehow into the Courtyard or Forecourt to prevent Ishido and Buntaro
+from battling. (Since Hiro-matsu doesn't understand English, perhaps the
+player has to steal something of Hiro-matsu's and be chased to the
+Courtyard.)  Then, when the switcheroo comes, Toranaga or Kiri
+accidentally drops something, or gets a veil caught on something or
+another, and Blackthorne must save the situation.  Then the scene
+continues pretty much as written.  This gives, at least, a goal for the
+player early on, plus an incentive to LOOK AT KIRITSUBO at the right
+moment. 
+
+I don't understand why, but I enjoy the maze taking me through the
+streets of Osaka. (I didn't get that far in my most recent play.) I
+don't remember if the "map" takes over the entire screen. If not, you
+could have some road-rally-type clues to help you get through the maze
+"in time." (Currently there seems to be no time limit; but if the
+cortege were being chased, it would be necessary to LOOK AT SIGN, see
+the fish, and know to turn north.)

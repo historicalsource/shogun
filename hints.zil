@@ -228,6 +228,7 @@ the answers."
 "Get in it."
 "Keep trying!  Insist!  You'll get your way eventually.">
 	<PLTABLE "I can't find Rodrigues' body!"
+"If you didn't see him clinging to the oar, you can't find him."
 "Be persistent.  Keep searching."
 "Keep heading south from the beach."
 "You can go all the way around the headland, but then you can't
@@ -422,7 +423,7 @@ the party."
 "Give Toranaga your swords!">
 
 	"Journey to Yedo"
-	<PLTABLE "What an embarassing situation!"
+	<PLTABLE "What an embarrassing situation!"
 "When in Rome..."
 "There is little taboo against nakedness here."
 "...and everyone around is a friend."
@@ -453,7 +454,7 @@ the party."
 "But don't take too long! Remember, Yoshi is still out there.">
 
 	"Ochiba"
-	<PLTABLE "How do I avoid embarassment?"
+	<PLTABLE "How do I avoid embarrassment?"
 "What were you worrying about mere seconds ago?"
 "Check your swords!">
 	<PLTABLE "How do I avoid offending?"
@@ -470,7 +471,7 @@ the party."
 "Correct his mistake."
 "You are no longer a barbarian, you are a samurai!"
 "Tell him so!"
-"It will expose his rudeness, and put him in an embarassing position.">
+"It will expose his rudeness, and put him in an embarrassing position.">
 
 	"Departure"
 	<PLTABLE "What can I do to help Mariko?"

@@ -197,7 +197,7 @@ G "Do you wish to ""leave the game">
 	       (T
 		<TELL ,OKAY>)>>
 
-<ROUTINE V-$SCENE ()
+;<ROUTINE V-$SCENE ()
 	 <COND (<AND <PRSO? INTNUM>
 		     <NOT <ZERO? ,P-NUMBER>>
 		     <NOT <G? ,P-NUMBER <GET ,SCENE-NAMES 0>>>>
@@ -229,25 +229,24 @@ G "Do you wish to ""leave the game">
 	 <COND (<NOT .EOG?>
 		<SETUP-TEXT-AND-STATUS> ;"guarantee status line okay")>
 	 <CRLF>
+	 <SETG GAME-OVER? T>
+	 <PUT ,FINISH-MENU
+	      0
+	      <COND (<OR .EOG? <NOT <FLAG-ON? ,F-UNDO>>> 4)
+		    (ELSE 5)>>
 	 <GET-FROM-MENU "What now?"
-			<COND (.EOG? ,EOG-MENU)
-			      (ELSE ,FINISH-MENU)>
+			,FINISH-MENU
 			,FINISH-MENU-F>>
 
-<CONSTANT FINISH-MENU ;"menu when undo exists"
+<GLOBAL GAME-OVER? <>>
+
+<CONSTANT FINISH-MENU ;"menu when undo doesn't exist drops last element"
 	  <LTABLE
 <TABLE (PURE STRING LENGTH) "RESTORE a saved game position ">
 <TABLE (PURE STRING LENGTH) "RESTART the game from the beginning ">
 <TABLE (PURE STRING LENGTH) "QUIT this session of the game ">
 <TABLE (PURE STRING LENGTH) "HINT for something confusing ">
 <TABLE (PURE STRING LENGTH) "UNDO the last move ">>>
-
-<CONSTANT EOG-MENU ;"menu when undo exists"
-	  <LTABLE
-<TABLE (PURE STRING LENGTH) "RESTORE a saved game position ">
-<TABLE (PURE STRING LENGTH) "RESTART the game from the beginning ">
-<TABLE (PURE STRING LENGTH) "QUIT this session of the game ">
-<TABLE (PURE STRING LENGTH) "HINT for something confusing ">>>
 
 <ROUTINE FINISH-MENU-F (WHICH MENU)
 	 <COND (<EQUAL? .WHICH 1 ;RESTORE>
@@ -263,10 +262,8 @@ G "Do you wish to ""leave the game">
 		<CLEAR ,S-TEXT>
 		<TELL ,FAILED>)
 	       (<EQUAL? .WHICH 3 ;QUIT>
-		<COND (<EQUAL? .MENU ,EOG-MENU>
-		       <QUIT>)
-		      (ELSE
-		       <V-QUIT>)>
+		<COND (,GAME-OVER? <QUIT>)
+		      (ELSE <V-QUIT>)>
 		<RESET-MARGIN>
 		<CLEAR ,S-TEXT>)
 	       (<EQUAL? .WHICH 4 ;HINT>
@@ -275,6 +272,7 @@ G "Do you wish to ""leave the game">
 		<V-UNDO>
 		<RESET-MARGIN>
 		<CLEAR ,S-TEXT>)>
+	 <TYPE-ANY-KEY>
 	 <RFALSE>>
 
 <ROUTINE V-RESTORE ()
@@ -284,26 +282,42 @@ G "Do you wish to ""leave the game">
 
 <GLOBAL RESTORED? <>>	;"result of last RESTORE"
 
-<ROUTINE V-SAVE ("AUX" X)
+<ROUTINE V-SAVE ("AUX" X LCNT (CRC 0))
 	 <PUTB ,G-INBUF 2 0>	;"make sure AGAIN gets fooled"
+	 <COND (<AND <APPLE?>
+		     <SET CRC <WINGET ,S-TEXT ,WCRCNT>>>
+		<SET LCNT <WINGET ,S-TEXT ,WLCNT>>)>
 	 <SET X <SAVE>>
 	 <SETG RESTORED? <>>
 	 <COND (<QUEUED? I-SETUP-ANSWER>
 		<I-SETUP-ANSWER> ;"because interrupts won't run")>
-	 <COND (<ZERO? .X>
-		<TELL ,FAILED>)
-	       (<EQUAL? .X 1>
-		<TELL ,OKAY>)
+	 <COND (<EQUAL? .X 0 1>
+		<COND (.CRC
+		       <SET LCNT <- <WINGET ,S-TEXT ,WLCNT> .LCNT>>
+		       <COND (<OR <L? .LCNT 0>
+				  <G? .LCNT .CRC>>
+			      <COND (<EQUAL? <WINGET ,S-TEXT ,WCRFUNC>
+					     RESET-MARGIN>
+				     <RESET-MARGIN>)
+				    (ELSE
+				     <RESET-MARGIN-1>)>)
+			     (ELSE
+			      <WINPUT ,S-TEXT ,WCRCNT <- .CRC .LCNT>>)>)>
+		<COND (<ZERO? .X> <TELL ,FAILED>)
+		      (<EQUAL? .X 1> <TELL ,OKAY>)>)
 	       (<EQUAL? .X 2 3>
 		<COND (<ZERO? <WINGET ,S-FULL ,WHIGH>>
 		       <SET X 3>)>
 		<SETG RESTORED? .X>
 		<REPAINT-DISPLAY <COND (<EQUAL? .X 2> T)>>
+		<RESET-MARGIN>
 		<CRLF>
 		<V-FIRST-LOOK>)>>
 
 <ROUTINE V-UNDO ("AUX" VAL)
-	 <COND (<SET VAL <IRESTORE>>
+	 <COND (<NOT <FLAG-ON? ,F-UNDO>>
+		<TELL "[UNDO not available.]" CR>)
+	       (<SET VAL <IRESTORE>>
 		<INIT-STATUS-LINE>)
 	       (ELSE ,FAILED)>>
 
@@ -318,8 +332,8 @@ N <* ,SCORE-FACTOR <GETB .S 1>> " in this scene, and "
 N <* ,SCORE-FACTOR ,SCORE> " out of " N <* ,SCORE-FACTOR ,TOTAL-SCORE>
 " overall, in " N ,MOVES " move">
 	 <COND (<NOT <1? ,MOVES>> <TELL "s">)>
-	 <TELL ". You have now achieved a rank of "
-	       <GET ,RANKINGS <+ 1 </ ,SCORE <GET ,RANKINGS 0>>>>>
+	 <SET S </ <* ,SCORE ,SCORE-FACTOR> </ ,TOTAL-SCORE 2>>>
+	 <TELL ". You have now achieved a rank of " <GET ,RANKINGS <+ 1 .S>>>
 	 <TELL ,PERIOD>
 	 <RTRUE>>
 
@@ -357,7 +371,7 @@ N <* ,SCORE-FACTOR ,SCORE> " out of " N <* ,SCORE-FACTOR ,TOTAL-SCORE>
 <CONSTANT SHOGUN-NAME "SHOGUN">
 
 <ROUTINE V-VERSION ("OPT" (C? <>))
-	 <COND (.C? <CURSET <+ 1 <* 2 ,FONT-Y>> 1>)>
+	 <COND (.C? <CURSET <+ 1 <* 3 ,FONT-Y>> 1>)>
 	 <HLIGHT ,H-BOLD>
 	 <COND (.C? <DIROUT ,D-TABLE-ON ,DIROUT-TABLE>)>
 	 <TELL ,SHOGUN-NAME>
@@ -391,6 +405,9 @@ N <* ,SCORE-FACTOR ,SCORE> " out of " N <* ,SCORE-FACTOR ,TOTAL-SCORE>
 	 <COND (.C? <DIROUT ,D-TABLE-ON ,DIROUT-TABLE>)>
 	 <TELL "Release ">
 	 <PRINTN <LOWCORE ZORKID>>
+	 <COND (<AND <PICINF 0 ,YX-TBL>
+		     <GET ,YX-TBL 1>>
+		<TELL " / Pix " N <GET ,YX-TBL 1>>)>
 	 <TELL " / Serial number ">
 	 <LOWCORE-TABLE SERIAL 6 PRINTC>
 	 <COND (.C? <PRINT-CENTER-TABLE>)>
@@ -402,16 +419,16 @@ N <* ,SCORE-FACTOR ,SCORE> " out of " N <* ,SCORE-FACTOR ,TOTAL-SCORE>
 	 <CRLF>>
 
 <CONSTANT MACHINES
-	  <LTABLE "Debugging"
-		  "Apple IIe"
-		  "Macintosh"
-		  "Amiga"
-		  "Atari ST"
-		  "IBM"
-		  "Commodore 128"
-		  "Commodore 64"
-		  "Apple IIc"
-		  "Apple IIgs">>
+	  <PLTABLE "Debugging"
+		   "Apple IIe"
+		   "Macintosh"
+		   "Amiga"
+		   "Atari ST"
+		   "IBM"
+		   "Commodore 128"
+		   "Commodore 64"
+		   "Apple IIc"
+		   "Apple IIgs">>
 
 <ROUTINE PCENTER (STR "OPT" (STR1 <>) (STR2 <>))
 	 <DIROUT ,D-TABLE-ON ,DIROUT-TABLE>
@@ -667,7 +684,7 @@ LOOK UNDER it, etc." CR>>
 <ROUTINE IN-DARK? ("OPT" (DIE? <>) "AUX" OLIT)
 	 <SET OLIT ,LIT>
 	 <SETG LIT <LIT? ,HERE>>
-	 <COND (<AND .OLIT <NOT ,LIT>>
+	 <COND ;(<AND .OLIT <NOT ,LIT>>
 		<TELL
 ", leaving you in the dark." CR>
 		<COND (.DIE?
@@ -871,7 +888,10 @@ likelihood that " A ,PRSO " will satisfy you." CR>)>>
 		<TELL-YUKS>)>>
 
 <ROUTINE V-FIND ("OPT" (WHERE <>) "AUX" L)
-	 <COND (<PRSO? ,PLAYER>
+	 <COND (<NOT ,PRSO>
+		<PERFORM ,V?WHERE ,ME>
+		<RTRUE>)
+	       (<PRSO? ,PLAYER>
 		<TELL
 "As close as the hairs of your beard">)
 	       (<INTRINSIC? ,PRSO>
@@ -1170,6 +1190,7 @@ unclean and barbaric." CR>)
 		     <SET TMP <GETP <GET ,SCENE-LOCS ,SCENE> ,P?AFTER>>>
 		<CRLF>
 		<TYPE-ANY-KEY>
+		<CRLF>
 		<INTERLUDE-STATUS-LINE>
 		<TIME-PASSES>
 		<APPLY .TMP>
@@ -1203,18 +1224,29 @@ N <* ,SCORE-FACTOR .SA> " out of a possible " N <* ,SCORE-FACTOR .SP>>)
 	 <TELL ".]" CR CR>
 	 <COND (.SC
 		<V-AFTER>
-		<CONTINUE-TO-NEXT-SCENE <- .SP .SA>>
-		<RESET-MARGIN>
-		<CLEAR ,S-TEXT>
-		<COND (<NOT <EQUAL? ,CURRENT-BORDER ,P-BORDER>>
-		       <DISPLAY-BORDER ,P-BORDER>)>
-		<GOTO-SCENE .SC>)
+		<DEQUEUE-ALL>
+		<SETG NEW-SCENE-NUMBER .SC>)
 	       (ELSE <FINISH>)>>
+
+<GLOBAL NEW-SCENE-NUMBER 0>
+
+<ROUTINE I-NEW-SCENE ("AUX" SC)
+	 <COND (,NEW-SCENE-NUMBER
+		<SET SC ,NEW-SCENE-NUMBER>
+		<SETG NEW-SCENE-NUMBER 0>
+		<GET-FROM-MENU "What now?"
+			       <COND (<EQUAL? <SCORE-HAVE> <SCORE-MAX>>
+				      ,CONTINUE-MENU)
+				     (ELSE ,CONTINUE-AND-HINT-MENU)>
+			       ,CONTINUE-MENU-F>
+		<RESET-MARGIN>
+		<GOTO-SCENE .SC>
+		<RTRUE>)>>
 
 <ROUTINE SCORE-HAVE ()
 	 <GETB <GETPT <GET ,SCENE-LOCS ,SCENE> ,P?SCORE> 0>>
 
-;<ROUTINE SCORE-MAX ()
+<ROUTINE SCORE-MAX ()
 	 <GETB <GETPT <GET ,SCENE-LOCS ,SCENE> ,P?SCORE> 1>>
 
 <CONSTANT CONTINUE-MENU
@@ -1230,26 +1262,17 @@ N <* ,SCORE-FACTOR .SA> " out of a possible " N <* ,SCORE-FACTOR .SP>>)
 <TABLE (PURE STRING LENGTH) "QUIT this session of the game ">
 <TABLE (PURE STRING LENGTH) "HINT for something confusing ">>>
 
-<ROUTINE CONTINUE-TO-NEXT-SCENE (HINT?)
-	 ;<UPDATE-STATUS-LINE>
-	 ;<SETUP-TEXT-AND-STATUS> ;"guarantee status line okay"
-	 <GET-FROM-MENU "What now?"
-			<COND (.HINT? ,CONTINUE-AND-HINT-MENU)
-			      (ELSE ,CONTINUE-MENU)>
-			,CONTINUE-MENU-F>>
-
 <ROUTINE CONTINUE-MENU-F (WHICH MENU)
 	 <COND (<EQUAL? .WHICH 1 ;CONTINUE>
 		<RTRUE>)
 	       (<EQUAL? .WHICH 2 ;SAVE>
-		<V-SAVE>
-		<RFALSE>)
+		<V-SAVE>)
 	       (<EQUAL? .WHICH 3 ;QUIT>
-		<V-QUIT>
-		<RFALSE>)
+		<V-QUIT>)
 	       (<EQUAL? .WHICH 4 ;HINT>
-		<V-HINT>
-		<RFALSE>)>>
+		<V-HINT>)>
+	 <TYPE-ANY-KEY>
+	 <RFALSE>>
 
 <ROUTINE V-FIRST-LOOK ()
 	 <COND (<DESCRIBE-ROOM <G? ,VERBOSITY 1>>
@@ -1751,7 +1774,7 @@ and then what you want to say to them.  For example:|
 	       (ELSE <TELL I"person">)>
 	 <TELL ", ">
 	 <PRINT-INTQUOTE>
-	 <TELL CR "]" CR>
+	 <TELL " ]" CR>
 	 <END-QUOTE>>
 
 <ROUTINE V-SEARCH ()
@@ -2030,11 +2053,13 @@ access to it.  e.g.,
 	 <COND (<FSET? ,PRSO ,VEHBIT>
 		<NEW-VERB ,V?DISEMBARK>
 		<RTRUE>)
-	       (<AND <FSET? ,PRSO ,WEARBIT>
-		     <IN? ,PRSO ,WINNER>>
-		<FCLEAR ,PRSO ,WEARBIT>
-		<TELL
+	       (<FSET? ,PRSO ,WEARABLE>
+		<COND (<AND <FSET? ,PRSO ,WEARBIT>
+			    <IN? ,PRSO ,WINNER>>
+		       <FCLEAR ,PRSO ,WEARBIT>
+		       <TELL
 "You're no longer wearing " THE ,PRSO ,PERIOD>)
+		      (ELSE <TELL G"You aren't ""wearing it." CR>)>)
 	       (ELSE
 		<NEW-VERB ,V?TAKE>
 		<RTRUE>)>>
@@ -2118,7 +2143,7 @@ CTHE ,PRSO " is surprised by your politeness." CR>)
 			      <TELL CA ,PRSO>)
 			     (ELSE
 			      <TELL CTHE ,PRSO>)>
-		       <TELL " bows and responds \"Domo.\"" CR>)>)
+		       <TELL " bows and responds \""I"Domo.""\"" CR>)>)
 	       (T
 		<TO-A-PRSO?>)>>
 
@@ -2239,6 +2264,10 @@ CTHE ,PRSO " is surprised by your politeness." CR>)
 	 <COND (<AND <PRSO? INTDIR>
 		     <SCENE? ,S-ERASMUS ,S-VOYAGE>>
 		<TELL "You must be on the bridge to steer!" CR>)
+	       (<AND <NOT ,PRSI>
+		     <PRSO? ,FORESAILS>>
+		<PERFORM ,V?RAISE ,PRSO>
+		<RTRUE>)
 	       (ELSE
 		<NO-EFFECT>)>>
 
@@ -2672,7 +2701,15 @@ to take it as well." CR>)>
 	       (ELSE
 		<TELL "Keeping quiet when points are scored." CR>)>>
 
-<ROUTINE SCORE-OBJECT ("OPTIONAL" (OBJ <>))
+<ROUTINE SCORE-OBJECT ("OPT" (OBJ1 <>) (OBJ2 <>))
+	 <SET OBJ1 <SCORE-OBJECT? .OBJ1>>
+	 <COND (.OBJ2 <SET OBJ2 <SCORE-OBJECT? .OBJ2>>)>
+	 <COND (<OR .OBJ1 .OBJ2>
+		<COND (,NOTIFY-FLAG
+		       <TELL CR "[Your score just went up.]" CR>)>)>
+	 <RTRUE>>
+
+<ROUTINE SCORE-OBJECT? (OBJ)
 	 <COND (<FSET? .OBJ ,SCOREBIT>
 		<SETG SCORE <+ ,SCORE 1>>
 		<FCLEAR .OBJ ,SCOREBIT>
@@ -2682,11 +2719,9 @@ to take it as well." CR>)>
 		      ;(ELSE
 		       <TELL
 "[Problem with scoring in scene " N ,SCENE ", please report as bug!]" CR>)>
-		<COND (,NOTIFY-FLAG
-		       <TELL CR
-"[Your score just went up.]" CR>)>
-		<RTRUE>)>
-	 <RTRUE>>
+		
+		<RTRUE>)
+	       (ELSE <RFALSE>)>>
 
 <ROUTINE IDROP ()
 	 <COND (<OR <FSET? ,PRSO ,BODY-PART>
@@ -2750,7 +2785,7 @@ to take it as well." CR>)>
 		<MOVE ,WINNER .RM>)>
 	 <SETG HERE .RM>
 	 <SETG LIT <LIT? ,HERE>>
-	 <COND (<AND <NOT .OLIT>
+	 ;<COND (<AND <NOT .OLIT>
 		     <NOT ,LIT>
 		     <PROB 80>>
 		<JIGS-UP ;"this string is a duplicate of one in FLASHLIGHT-F"
@@ -2759,8 +2794,9 @@ the dark is safe.  Someone just grabbed you from behind and strangled
 you with a silken cord.">
 		<RTRUE>)>
 	 <V-INTRODUCE>
-	 <APPLY <GETP ,HERE ,P?ACTION> ,M-ENTER>
-	 <COND (<NOT <EQUAL? ,HERE .RM>>
+	 <COND (<EQUAL? <APPLY <GETP ,HERE ,P?ACTION> ,M-ENTER> ,M-FATAL>
+		<RTRUE>)
+	       (<NOT <EQUAL? ,HERE .RM>>
 		<RTRUE>)
 	       (.V?
 		<V-FIRST-LOOK>)>
@@ -2889,15 +2925,12 @@ neh?" CR>)>
 		       <RFALSE>)>)
 	       (<NOT .L>
 		<RFALSE>)
-	       (<EQUAL? .L ,GLOBAL-OBJECTS>
+	       (<EQUAL? .L ,GLOBAL-OBJECTS ,WINNER ,HERE <LOC ,WINNER>>
 		<RTRUE>)
-	       (<AND <EQUAL? .L ,LOCAL-GLOBALS>
-		     <GLOBAL-IN? .OBJ ,HERE>>
+	       (<GLOBAL-IN? .OBJ ,HERE> ;"allows real objs in (global ...)"
 		<RTRUE>)
 	       (<NOT <EQUAL? <META-LOC .OBJ> ,HERE <LOC ,WINNER>>>
 		<RFALSE>)
-	       (<EQUAL? .L ,WINNER ,HERE <LOC ,WINNER>>
-		<RTRUE>)
 	       (<AND <FSET? .L ,OPENBIT>
 		     <ACCESSIBLE? .L>>
 		<RTRUE>)
@@ -3220,18 +3253,18 @@ courts.  But you pray anyway." CR>>
 <ROUTINE V-RING ()
 	 <YOU-CANT-X-THAT "ring">>
 
-<ROUTINE V-BOW ("AUX" WHO)
+<ROUTINE V-BOW ("AUX" W)
 	 <COND (<B-LYING?>
 		<TELL "You can't bow while lying down!" CR>)
 	       (<PRSO? <> ,ROOMS ,HEAD>
 		<COND (<AND ,OPPONENT <IN? ,OPPONENT ,HERE>>
-		       <SET .WHO ,OPPONENT>)
+		       <SET W ,OPPONENT>)
 		      (<AND ,QCONTEXT <IN? ,QCONTEXT ,HERE>>
-		       <SET .WHO ,QCONTEXT>)
+		       <SET W ,QCONTEXT>)
 		      (ELSE
-		       <SET WHO <FIND-IN ,HERE ,JAPANESEBIT>>)>
-		<COND (.WHO
-		       <PERFORM ,V?BOW .WHO>
+		       <SET W <FIND-IN ,HERE ,JAPANESEBIT>>)>
+		<COND (.W
+		       <PERFORM ,V?BOW .W>
 		       <RTRUE>)
 		      (ELSE
 		       <TELL
@@ -3643,21 +3676,31 @@ learning fast." CR>)>)
 
 <GLOBAL HINTS-OFF:NUMBER -1>
 
+<END-SEGMENT ;"0">
+
+<BEGIN-SEGMENT HINTS>
+
 <REPLACE-DEFINITION INIT-HINT-SCREEN
 <ROUTINE INIT-HINT-SCREEN ()
-  <SCREEN ,S-FULL>
-  <CLEAR ,S-FULL>
-  <RESET-MARGIN>
-  <DISPLAY ,P-HINT-BORDER 1 1>
-  <SETUP-TEXT-AND-STATUS ,P-HINT-LOC>
-  <WINDEF ,S-STATUS 1 1 <* 4 ,FONT-Y> <LOWCORE HWRD>>
-  <SCREEN ,S-TEXT>
-  <MARGIN 0 0>
-  ,S-STATUS>>
+	 ;<TOUCH-SEG ,P-HINT-LOC>
+	 <SCREEN ,S-FULL>
+	 <CLEAR ,S-FULL>
+	 <RESET-MARGIN>
+	 <COND (<NOT <APPLE?>>
+		<DISPLAY-BORDER ,P-HINT-BORDER <>>)
+	       (ELSE <DISPLAY ,P-HINT-BORDER <+ 1 <* 3 ,FONT-Y>> 1>)>
+	 <SETUP-TEXT-AND-STATUS ,P-HINT-LOC>
+	 <SCREEN ,S-TEXT>
+	 <MARGIN 0 0>
+	 ,S-STATUS>>
 
 <REPLACE-DEFINITION LEAVE-HINT-SCREEN
  <ROUTINE LEAVE-HINT-SCREEN ()
-	  <REPAINT-DISPLAY>>>
+	  <RFALSE>>>
+
+<END-SEGMENT ;"0+HINTS">
+
+<BEGIN-SEGMENT 0>
 
 <ROUTINE V-HINT ()
 	 <COND (<EQUAL? ,HINTS-OFF -1>
@@ -3677,13 +3720,16 @@ Do you still want a hint">
 	 <COND (<G? ,SCENE ,S-ESCAPE> ;"default chapter is current scene"
 		<SETG H-CHAPT-NUM <+ ,SCENE 1>>)
 	       (ELSE <SETG H-CHAPT-NUM ,SCENE>)>
-	 <DO-HINTS>>
+	 <TOUCH-SEG ,P-HINT-BORDER>
+	 <DO-HINTS>
+	 <REPAINT-DISPLAY>
+	 <TELL "Back to the story..." CR>>
 
 <ROUTINE V-HINTS-OFF ()
 	 <COND (<NOT <PRSO? ,ROOMS>>
 		<TELL "[Sorry, I don't understand.]" CR>
 		<RTRUE>)
-	       (,HINTS-OFF
+	       (<G? ,HINTS-OFF 0>
 		<TELL "[You've already deactivated">)
 	       (T
 		<SETG HINTS-OFF T>
@@ -3953,7 +3999,10 @@ the color you ask for.  Do you still want to go ahead">
 <GET ,COLOR-TABLE ,BG-COLOR> " background.|
 Is that what you want">
 	    <COND (<YES?>
-		   <COLOR ,FG-COLOR ,BG-COLOR>
+		   <NORMAL-COLOR>
+		   <SCREEN ,S-FULL>
+		   <NORMAL-COLOR>
+		   <SCREEN ,S-TEXT>
 		   <V-$REFRESH>
 		   <RTRUE>)
 		  (ELSE
@@ -3968,8 +4017,16 @@ Is that what you want">
 		     <EQUAL? <WINGET ,S-FULL ,WWIDE> 640>>)>>
 
 <ROUTINE DO-COLOR ()
-	 <COND (<AND <EQUAL? ,MACHINE ,MACINTOSH>
-		     <NOT <MAC-II?>>> ;"b&w Mac"
+	 <PUT ,COLOR-MENU 0
+	      <COND (<EQUAL? ,MACHINE ,AMIGA> 11)
+		    (<AND <EQUAL? ,MACHINE ,IBM>
+			  <EQUAL? <LOWCORE HWRD> 320>>
+		     9)
+		    (ELSE 8 ;"cut out grays")>>
+	 <COND (<OR ;<NOT <BTST <LOWCORE ZVERSION> ,M-COLOR>>
+		    <NOT <BTST <LOWCORE FLAGS> ,F-COLOR>>
+		    <AND <EQUAL? ,MACHINE ,MACINTOSH>
+			 <NOT <MAC-II?>>>> ;"b&w Mac"
 		<COND (<EQUAL? ,BG-COLOR ,C-BLACK>
 		       <SETG BG-COLOR ,C-WHITE>
 		       <SETG FG-COLOR ,C-BLACK>)
@@ -4005,23 +4062,29 @@ color as the text!  Pick another color." CR>)
 	 <RETURN .CHAR>>
 
 <ROUTINE COLOR-OFFSET (TMP)
-	 <COND (<EQUAL? .TMP ,C-WHITE> <SET TMP 1>)>
+	 <COND (<EQUAL? .TMP ,C-WHITE> <SET TMP 1>)
+	       (<G? .TMP ,C-WHITE> <SET TMP <- .TMP 1>>)>
 	 .TMP>
 
 <ROUTINE COLOR-MENU-F (TMP M)
 	 <COND (<EQUAL? .TMP 1> ;"white is really 9, not 1"
-		<SET TMP ,C-WHITE>)>
+		<SET TMP ,C-WHITE>)
+	       (<G? .TMP 8>
+		<SET TMP <+ .TMP 1>>)>
 	 .TMP>
 
 <CONSTANT COLOR-MENU
-	  <LTABLE <TABLE (PURE STRING LENGTH) "White ">
+	  <LTABLE <TABLE (PURE STRING LENGTH) "White "> ;1
 		  <TABLE (PURE STRING LENGTH) "Black ">
 		  <TABLE (PURE STRING LENGTH) "Red ">
 		  <TABLE (PURE STRING LENGTH) "Green ">
 		  <TABLE (PURE STRING LENGTH) "Yellow ">
 		  <TABLE (PURE STRING LENGTH) "Blue ">
 		  <TABLE (PURE STRING LENGTH) "Magenta ">
-		  <TABLE (PURE STRING LENGTH) "Cyan ">>>
+		  <TABLE (PURE STRING LENGTH) "Cyan ">
+		  <TABLE (PURE STRING LENGTH) "Gray "> ;9
+		  <TABLE (PURE STRING LENGTH) "Medium Gray "> ;10
+		  <TABLE (PURE STRING LENGTH) "Dark Gray "> ;11>>
 
 <CONSTANT COLOR-TABLE
 	  <TABLE ;0 "no change"
@@ -4033,7 +4096,10 @@ color as the text!  Pick another color." CR>)
 		 ;6 "blue"
 		 ;7 "magenta"
 		 ;8 "cyan"
-		 ;9 "white">>
+		 ;9 "white"
+		 ;10 "light gray"
+		 ;11 "gray"
+		 ;12 "dark gray">>
 
 <ROUTINE V-SHRUG ()
 	 <TELL "An eloquent gesture." CR>>
@@ -4043,7 +4109,7 @@ color as the text!  Pick another color." CR>)
 		<TELL
 "You sing an old sea chanty.">
 		<COND (<G? ,SCENE 1>
-		       <TELL " It's a good thing no Japanese understand
+		       <TELL "It's a good thing no Japanese understand
 English.">)>
 		<CRLF>)
 	       (<FSET? ,PRSO ,PERSON>
@@ -4177,4 +4243,4 @@ CTHE ,PRSO " doesn't seem worried." CR>)>>
 <ROUTINE V-NEH ()
 	 <TELL "\"Neh.\"" CR>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"0">

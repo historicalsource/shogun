@@ -1,0 +1,117 @@
+------ERASMUS (10)
++1 ROPER			Getting your apple back from Roper
++1 APPLE			Eating the apple
++1 KEY				Finding the key to the sea chest
++1 RUTTER			Writing in your rutter
++1 CAPTAINS-DESK		Finding the flagon in the Captain's desk
++1 FLAGON			Giving the Captain water
++1 MAETSUKKER			Sending Maetsukker out on watch
++1 BELL				Ringing the bell to get the crew on deck
++1 FORESAILS			Fixing the foresails
++1 REEF				Getting through the reef into the harbor
+
+------ANJIRO (5)
++1 FOOD				Eating the food
++1 MURA-DOOR			Apologizing for breaking the door
++1 SEBASTIO			Asking Sebastio who he is
++1 OMI				Getting through Omi's interrogation
++1 SAMURAI-GUARDS		Trying to get your rutters back
+
+------YABU (1)
++1 SEBASTIO-CRUCIFIX		Breaking Sebastio's crucifix
+
+------PIT (5)
++1 VINCK			Saving Vinck if he's the one picked to die
++1 LOSING-SAMURAI		Fighting the samurai, taking one as a hostage
++1 VILLAGE-SQUARE		Agreeing to behave
++1 CROOCQ			Lying down
++1 BATHTUB			Taking a bath
+
+------RODRIGUES (3)
++1 TRINITY-HOUSE		Answering Rodrigues about Trinity House
++1 LIZARD			Answering Rodrigues about the Lizard
++1 LG-ERASMUS			Telling Rodrigues about the Erasmus
+
+------VOYAGE (11)
++1 GUNWALE			Grabbing the gunwale
++1 MAIN-DECK			Restoring order on the oar deck
++1 OARSMEN			Getting the oarsmen to row again
++1 OAR				Throwing oar to Rodrigues
++1 ANCHOR			Dropping anchor once in the bay
++1 SKIFF			Getting into the skiff
++1 LEDGE-4			Finding Rodrigues
++1 YABU-KIMONO			Making a rope of kimonos
++1 LOINCLOTH			Adding loincloths to rope
++1 LEDGE			Finding the ledge
++1 SEARCH-PARTY			Getting Yabu's attention
+
+------AUDIENCE (3)
++1 AUDIENCE-CHAMBER		Defying convention by bowing but not kneeling
++1 DAIS				Moving to the dais when Ishido arrives
++1 ALVITO			Telling Toranaga Alvito is your enemy
+
+------PRISON (6)
++1 THUG				Defeating the thug
++1 DOMINGO			Speaking Spanish to Domingo
++1 JAPANESE			Asking Domingo to teach you Japanese
++1 LG-LINE			Joining the line of prisoners
++1 BANDITS			Avoiding the bandit's attack
++1 YABU-PALANQUIN		Getting in Yabu's palanquin
+
+------MARIKO (4)
++1 MAPLE-GLADE			Greet or bow to Mariko/Toranaga
++1 ISHIDO			Bow to Ishido
++1 YAEMON			Smile or wink at him
++1 PROPHECY			Ask about the prophecy
+
+------ESCAPE (12)
++1 TORANAGA-IN-DRAG		Seeing Toranaga in the hut
++1 KIRITSUBO			Seeing Toranaga and Kiritsubo switch
++1 PARCHMENT			Grabbing the parchment from Ishido
++1 CURTAINS			Giving the parchment to Kiri/Toranaga
++1 CRAZY			Distracting Ishido by acting nuts
++1 WOODS			Reaching the woods successfully
++1 MARIKOS-LITTER		Saving Mariko during ambush
++1 FISH-GATE			Finding the ronin
++1 WHARF			Helping Mariko when she 'faints'
++1 GLOBAL-WATER			Remembering the word for 'water'
++1 GRAY-LEADER			Killing the Gray leader
++1 SECOND-GRAY			Killing the second Gray
+
+------QUAKE (4)
++1 MAIN-FISSURE			Saving Toranaga
++1 SIDE-FISSURE			Saving Mariko
++1 PLATEAU			Pissing in the fissure
++1 SWORDS			Giving swords to Toranaga after his are lost
+
+------ZATAKI (0)
+
+------JOURNEY(3)
++1 YOKOSE-BATHTUB		Bathing with Mariko
++1 YOKOSE-SPA-3			Making love to Mariko
++1 YOKOSE-SPA-1			Getting back to your room safely
+
+------RECEPTION (3)
++1 SWORDS			Checking your swords
++1 CAMELLIA			Giving the camellia to Ochiba
++1 GLOBAL-BARBARIAN		Telling Ishido you are not a barbarian
+
+------DEPARTURE
+
+------SEPPUKU (1)
++1 MARIKO			Carrying Mariko away
+
+------ATTACK (5)
++1 PLAN				Asking Yabu about the plan
++1 CELLARS			Seeing Yabu in the cellars let in the ninja
++1 NINJA			Shooting the ninja leader
++1 MARIKO			Telling Mariko to follow you
++1 MARIKO			Blessing Mariko
+
+------YOKOHAMA (1)
++1 YOKOHAMA			Picking up Vinck
+
+------AFTERMATH (3)
++1 SEALED-SCROLL		Reading the sealed scroll
++1 TRAITOR			Reporting that you saw Yabu
++1 YABU				Reporting the password

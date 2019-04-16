@@ -1,0 +1,2 @@
+#
+zsplit -a 2 -d 5 -h hints -g ~curpix/a5-apple.g -p 108 -e 23 -0 -u ~curpix/a5.apple.G a5 270

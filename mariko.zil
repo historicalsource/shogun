@@ -70,7 +70,7 @@ walk forward.">
 				     <FCLEAR ,SWORDS ,WEARBIT>
 				     <MOVE ,SWORDS ,HERE>
 				     <TELL
-" Suddenly, just as you had feared, your sword belt comes loose and
+"Suddenly, just as you had feared, your sword belt comes loose and
 your swords clatter to the floor.  You turn red, scrambling for them
 on the ground, and Ishido begins a swelling round of humiliating
 laughter.">)>
@@ -92,6 +92,18 @@ from the exchange." CR>)
 			   <P? (DRAW PICK USE TAKE) SWORDS>>
 		       <TELL
 "Such a foolish action would surely lead to your immediate death." CR>)>)>>
+
+<ROUTINE NOT-A-BARBARIAN? ()
+	 <COND (<P? BE (BLACKTHORNE ME)>
+		<COND (<P-NEGATIVE?>
+		       <COND (<PRSI? GLOBAL-BARBARIAN CRAZY>
+			      <RTRUE>)
+			     (ELSE <RFALSE>)>)
+		      (<PRSI? GLOBAL-SAMURAI GLOBAL-HATAMOTO>
+		       <RTRUE>)
+		      (<AND <PRSI? INTADJ>
+			    <ADJ? ,W?SAMURAI>>
+		       <RTRUE>)>)>>
 
 <OBJECT CAMELLIA
 	(DESC "camellia blossom")
@@ -238,8 +250,7 @@ Ishido keeps his eyes riveted on her.  \"No, you are not confined.\"" CR>)
 whisper openly what all those held against their will in Osaka are
 thinking: 'If she can go, so can I, so can you!  I'll leave tomorrow,
 too!'" CR>)
-		 (<DEQUEUE I-OCHIBA>
-		  <TELL CR
+		 (<TELL CR
 "Mariko makes a half-bow to the room and leaves.  Yabu steps forward
 with you and the two of you follow her out, very conscious that you
 are the only samurai present wearing Toranaga's uniform." CR>
@@ -280,7 +291,7 @@ better be understood, however.">)
 				     <TELL
 "\"Please excuse me, Highness.">)>
 			      <TELL
-"  I have to use short words and respectfully
+"I have to use short words and respectfully
 ask you to use simple words with me.\"" CR>)
 			     (ELSE
 			      <TELL
@@ -431,7 +442,6 @@ once there, she weeps silently for all the men who have died." CR>
 		  <REMOVE ,KOJIMA>
 		  <REMOVE ,YAMAZAKI>
 		  <REMOVE ,MARIKOS-LITTER>
-		  <DEQUEUE I-DEPARTURE>
 		  <NEXT-SCENE>)>>
 
 <GLOBAL YAMAZAKI-ATTACK <>>
@@ -524,8 +534,9 @@ Captain parries." CR>)
 			      <COND (<ZERO? <GETP ,BROWNS ,P?COUNT>>
 				     <DEQUEUE I-FIGHT>)>
 			      <TELL CR
-"The captain stares at you silently for a moment, then his eyes glaze
-and he falls to the ground, dead." CR>
+"The captain, slowed by pain and loss of blood, cannot even parry your
+next stroke, which skewers him like a lamb.  He stares at you silently
+for a moment, then his eyes glaze and he falls to the ground, dead." CR>
 			      <SCORE-OBJECT ,YAMAZAKI>)>
 		       <RTRUE>)>)>>
 
@@ -640,7 +651,7 @@ the victor of four duels.  The fresh Gray dispatches him easily and stands
 alone among the bodies." CR>)
 		      (ELSE
 		       <TELL CR
-"Each time a Gray falls, another calmy walks out of the waiting pack to
+"Each time a Gray falls, another calmly walks out of the waiting pack to
 join his comrades in the killing.  It is now " <GET ,NUMBERS .B> " Brown">
 		       <COND (<NOT <EQUAL? .B 1>>
 			      <TELL "s versus as many Grays." CR>)
@@ -655,6 +666,7 @@ join his comrades in the killing.  It is now " <GET ,NUMBERS .B> " Brown">
 "S-SEPPUKU"
 
 <BEGIN-SEGMENT SEPPUKU>
+<BEGIN-SEGMENT ESCAPE>
 
 <ROOM FORMAL-GARDEN
       (LOC ROOMS)
@@ -723,7 +735,8 @@ east.")
 		       <QUEUE I-COME-BACK 6>
 		       <TELL
 "As you enter the garden, Mariko calls to you \"Anjin-san, we are leaving
-soon.  Come back!\"  You see her explain to Yabu what she said." CR CR>)>)>>
+soon.  Come back!\"  You see her explain to Yabu what she said." CR CR>)>
+		<RTRUE>)>>
 
 <OBJECT GARDEN-GATE
 	(LOC LOCAL-GLOBALS)
@@ -750,6 +763,41 @@ gentle fall of water from the brook." CR>)
 "To do so would disturb the serenity and peace of the garden and the
 pond." CR>)>>
 
+<END-SEGMENT>
+<BEGIN-SEGMENT SEPPUKU>
+
+<ROUTINE SEPPUKU-EXAMINE-MARIKO ()
+	 <TELL
+"She is kneeling, facing the doorway, freshly made up, lips crimson,
+immaculately coiffured, wearing a fresh kimono of somber blue edged
+with green, with a lighter green obi and a thin green ribbon for her
+hair." CR>>
+
+<ROUTINE SEPPUKU-TAKE-MARIKO ()
+	 <COND (<HERE? FORMAL-GARDEN TEA-HOUSE>
+		<TELL
+"\"No, Anjin-san, I cannot stop.  This is my duty to our master.  Only in this
+way may I expiate the sin of my father, and not die in shame.\"" CR>)
+	       (<AND <FSET? ,MARIKO ,SCOREBIT>
+		     <NOT <FSET? ,MARIKO ,SITTING>>>
+		<MOVE ,MARIKO ,WINNER>
+		<DEQUEUE I-SEPPUKU>
+		<TELL
+"You decide that she has endured enough, proved enough, so you come
+forward and catch her in your arms as she falls, lift her up just as
+her mind leaves her.  For a moment you stand there alone, proud that
+you alone decided.  She rests like a broken doll in your arms.  Then
+you carry her inside.  No one moves or bars your path." CR>
+		<SCORE-OBJECT ,MARIKO>
+		<NEXT-SCENE>)
+	       (<JIGS-UP? ,J-SEPPUKU
+"You reconsider.  You would both die if you interrupted the ceremony.">
+		<TELL "You come forward to try to help her.">
+		<INTERRUPTED-SEPPUKU>)
+	       (ELSE <RTRUE>)>>
+
+<BEGIN-SEGMENT ESCAPE>
+
 <ROOM TEA-HOUSE
       (LOC ROOMS)
       (SCENE S-SEPPUKU S-ESCAPE S-DEPARTURE S-MARIKO)
@@ -758,7 +806,7 @@ pond." CR>)>>
 "The tea house is small, simple, and immaculate.  The doorway is small
 so that all will be humble, equal, the host and guest, the most high
 Lord and the merest samurai.")
-      (SYNONYM HOUSE)
+      (SYNONYM HOUSE HUT)
       (ADJECTIVE LITTLE TEA CHA-NO-YU)
       (OUT TO FORMAL-GARDEN)
       (SOUTH TO FORMAL-GARDEN)
@@ -783,7 +831,11 @@ Lord and the merest samurai.")
 		       <TELL "slip your feet out of your thongs and ">)>
 		<TELL "walk
 up the three steps.  You have to stoop, almost to your knees, to go
-through the tiny screened doorway." CR CR>)>>
+through the tiny screened doorway." CR CR>
+		<RTRUE>)>>
+
+<END-SEGMENT>
+<BEGIN-SEGMENT SEPPUKU>
 
 <OBJECT GREEN-RIBBON
 	(OWNER MARIKO)
@@ -1008,8 +1060,7 @@ time.  Again she fails.  Her hands go to the crimson again, and this time she
 forces herself upright.  She wavers and almost falls, then her feet
 move and slowly she totters across the crimson, reeling helplessly toward
 the main door." CR>)>)
-		 (<DEQUEUE I-SEPPUKU>
-		  <COND (<HERE? ,FORECOURT>
+		 (<COND (<HERE? ,FORECOURT>
 			 <TELL CR
 "Mariko teeters helplessly, unable to move forward any further.  There is
 a hushed silence, everyone in the forecourt watching her.  She falls to
@@ -1023,4 +1074,4 @@ throats make it, comes over the walls." CR>)>
 
 <GLOBAL MARIKO-WON-FLAG <>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"SEPPUKU">

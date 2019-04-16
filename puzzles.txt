@@ -1,0 +1,90 @@
+Puzzles marked with a + have "happy" endings: they can be solved in the
+usual sense.  Those marked with a - can't be solved in the sense that
+there is a happy ending, or a way to reach the stated goal.  Those marked
+with a . have a partial solution (you can get part of the goal)
+
+Blackthorne
+    (Goal is to survive, to regain his ship, to return to England. Later,
+    to learn Japanese, prove he's not a barbarian, and to keep Mariko.)
+	+ Reef/Arrival: pilot Erasmus through reef, avoid being washed
+	  overboard
+	. The Pit: prevent Yabu from killing anyone, become civilized
+	+ Rescuing Rodrigues: tying kimonos, getting Yabu's attention
+	+ Suicide Attempt: must go through with it
+	+ Surviving in Prison: beat up baddies, become friends with
+	   Fr. Domingo, don't reveal that you're English
+	+ Learning Japanese: this goes on throughout the game, but there
+	  is a long sequence soon after you first meet Mariko
+	. The Pheasant: you could probably throw it away?
+	+ Teaching Toranaga to dive/not beating him in race
+	+ Toranaga's Escape from Osaka Castle
+	   Diversion: must notice that old woman is really Toranaga
+	   Battle at/in harbor: must thread way through maze of streets,
+	    get to ship, get by Rodrigues in harbor
+	+ Rescuing Toranaga from Earthquake
+	- Saving Mariko from her suicide: prevent Mariko from committing
+	   suicide (can't "win" because it is only Oshido who can do this)
+	- Saving Mariko during battle at Osaka Castle: if you save Mariko
+	   the point of the suicide/battle is lost, also, she "wants" to
+	   die.  You can, however, prevent her from being kidnapped by the
+	   ninja.
+
+Mariko
+    (Goal is to atone for her father's sin and gain revenge against the
+    Taiko and Ishido (by helping Toranaga). Later, to keep her affair with
+    Blackthorne secret, to somehow have him without compromising her
+    position.)
+	Teaching Blackthorne Japanese
+	Falling in love with Blackthorne
+	Avoiding rape by Portuguese
+	Suicide Attempt
+	Attack on Osaka Castle
+
+Toranaga
+    (Goal is to become Shogun.)
+	Escape from Osaka Castle
+	 Disguise as a woman
+	 Battle at/in harbor
+	Influencing other daimyos
+	 Zataki
+	 Kiyama
+	Detecting Yabu's treachery
+
+Omi
+    (Goal is increased power and influence, ultimately to replace Yabu as
+    head of the Kasigi clan.)
+	Taming Blackthorne
+	The Musket Regiment
+	Getting Kiku
+
+Yabu
+    (Goal is increased power and influence, perhaps ultimately to be Shogun,
+    but more immediately to avoid detection as a traitor.)
+	The Waiting Barbarian
+	Betrayal of Toranaga
+	Attack on Osaka Castle
+	 Killing Sumiyori
+	 Letting in the ninja
+
+Ferriera
+    (Goal is to destroy Blackthorne, failing that, his ship. Long-term,
+    wealth for himself and decreased influence for the Jesuits.)
+	Neutralizing Blackthorne
+	Gaining the upper hand vs. the Jesuits
+	Killing B. after he is released from Osaka
+
+...more possible characters...
+
+dell'Aqua
+
+Alvito
+
+Rodrigues
+
+Ochiba
+
+Ishido
+
+Usagi
+
+Mura

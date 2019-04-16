@@ -1,0 +1,51 @@
+zap of 6/13/89 15:17.
+Release: 322
+     0  Inserting a5.zap.
+    64  Inserting a5freq.zap.
+   682  Inserting a5dat.zap.
+ 47115  Inserting a5pur.zap.
+ 50299  Inserting pstack.zap.
+ 50338  Inserting pmem.zap.
+ 50434  Inserting parser.zap.
+ 55191  Inserting find.zap.
+ 57481  Inserting reds.zap.
+ 64308  Inserting breds.zap.
+ 66592  Inserting top.zap.
+ 68265  Inserting misc.zap.
+ 71050  Inserting soft.zap.
+ 73318  Inserting menu.zap.
+ 74238  Inserting status.zap.
+ 75268  Inserting pic.zap.
+ 76444  Inserting desc.zap.
+ 77528  Inserting record.zap.
+ 77590  Inserting verbs.zap.
+ 98896  Inserting prare.zap.
+103212  Inserting qverbs.zap.
+105755  Inserting globals.zap.
+111295  Inserting cast.zap.
+130954  Inserting erasmus.zap.
+154745  Inserting anjiro.zap.
+188510  Inserting voyage.zap.
+206074  Inserting audience.zap.
+230836  Inserting osaka.zap.
+248313  Inserting maze.zap.
+253570  Inserting quake.zap.
+267537  Inserting mariko.zap.
+279735  Inserting attack.zap.
+306118  Inserting clues.zap.
+308574  Inserting a5str.zap.
+Unreferenced table: PT?124
+Unreferenced table: PT?1326
+Unreferenced table: STRBEG
+Unreferenced table: PT?1426
+Unreferenced string: STR?75
+Data from 48839 to 50304 not in segment 0.
+
+Lexical buffer space allocated:  1472368
+Max lexical space allocated at any one time: 48012
+Object buffer space allocated:  352000
+Source bytes read:  1353859
+Object bytes written:  345088
+Preload: 47115; 405 objects; 239 globals; 1389 words.
+Used 5:32
+Elapsed time 7:09

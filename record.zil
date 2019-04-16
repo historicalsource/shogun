@@ -274,4 +274,4 @@
 			<TELL ", " D .CNT>)>>
 	 <CRLF>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"RECORD">

@@ -201,7 +201,8 @@
 		       <RTRUE>)>)
 	       (ELSE
 		<MORE-SPECIFIC>
-		<COND (<VERB? TELL> <END-QUOTE> <RFATAL>)>)>>
+		<COND (<VERB? TELL> <END-QUOTE> <RFATAL>)>
+		<RTRUE>)>>
 
 <OBJECT HER
 	(LOC GLOBAL-OBJECTS)
@@ -417,7 +418,8 @@ a steer hasn't.\"" CR>)>>
 		<TELL G"There is no response." CR>)
 	       (<RARG? <>>
 		<COND (<VERB? EXAMINE>
-		       <LIST-PEOPLE ,MAN? "man" "men">)
+		       <LIST-PEOPLE ,MAN? "man" "men">
+		       <CRLF>)
 		      (<OR <VERB? TELL>
 			   <P? TELL-ABOUT LG-MEN>>
 		       <TELL
@@ -445,7 +447,8 @@ G"You'll have to address an individual to get a response." CR>
 		<TELL G"There is no response." CR>)
 	       (<RARG? <>>
 		<COND (<VERB? EXAMINE>
-		       <LIST-PEOPLE ,WOMAN? "woman" "women">)
+		       <LIST-PEOPLE ,WOMAN? "woman" "women">
+		       <CRLF>)
 		      (<OR <VERB? TELL>
 			   <P? TELL-ABOUT LG-WOMEN>>
 		       <TELL
@@ -996,7 +999,7 @@ the desired direction." CR>)
 		    <P? TEACH * ENGLISH>
 		    <P? ASK-ABOUT * ENGLISH>>
 		<RFALSE>)
-	       (<VERB? BE BE?> <RFALSE>)
+	       (<VERB? BE BE? REPLY> <RFALSE>)
 	       (ELSE
 		<FIND-NATIONALITY ,ENGLISH ,ENGLISHBIT>)>>
 
@@ -1059,6 +1062,11 @@ world." CR>)>)>>
 	(COUNT 0)
 	(FLAGS NOABIT NOTHEBIT SCOREBIT)
 	(ACTION JAPANESE-F)>
+
+<ROUTINE JAPANESE? ()
+	 <OR <PRSI? JAPANESE>
+	     <ADJ? ,W?JAPANESE>
+	     <PP? ,W?FROM ,JAPAN>>>
 
 <ROUTINE JAPANESE-F ()
 	 <COND (<OR <P? (SPEAK LEARN SAY) JAPANESE>
@@ -1512,4 +1520,222 @@ tanners, executioners and undertakers." CR>)>>
 		      (ELSE
 		       <TELL "You'll have to be more specific." CR>)>)>>
 
-<END-SEGMENT>
+"generic functions"
+
+<ROUTINE GENERIC-SHIP-F (R F)
+	 ,LG-ERASMUS>
+
+<ROUTINE GENERIC-CREWMEN-F (R F)
+	 ,LG-CREWMEN>
+
+<ROUTINE GENERIC-CAPTAIN-F (R F)
+	 <COND (<SCENE? ,S-ERASMUS ,S-ANJIRO ,S-YABU ,S-PIT>
+		,SPILLBERGEN)
+	       (<SCENE? ,S-NINJA>
+		,GRAY-CAPTAIN)
+	       (<SCENE? ,S-DEPARTURE>
+		<COND (<FSET? ,YAMAZAKI ,DEAD> ,KOJIMA)
+		      (ELSE <RFALSE>)>)>>
+
+<ROUTINE GENERIC-SEA-F (R F)
+	 ,LG-SEA>
+
+<ROUTINE GENERIC-GALLEY-F (R F)
+	 <COND (<SCENE? ,S-YABU ,S-ANJIRO ,S-ERASMUS>
+		,LG-ERASMUS)
+	       (<SCENE? ,S-RODRIGUES>
+		,SLAVER)
+	       (ELSE
+		,LG-GALLEY)>>
+
+<ROUTINE GENERIC-DECK-F (R F)
+	 ,DECK>
+
+<ROUTINE GENERIC-CRAZY-F (R F)
+	 <COND (<SCENE? ,S-PRISON> ,MADMAN)
+	       (ELSE ,CRAZY)>>
+
+<ROUTINE GENERIC-LITTER-F (R F)
+	 <COND (<OR <HERE? ,WOODS>
+		    <IN? ,WINNER ,MARIKOS-LITTER>>
+		,MARIKOS-LITTER)
+	       (<IN? ,YABU-PALANQUIN ,HERE>
+		,YABU-PALANQUIN)>>
+
+<OBJECT LG-VILLAGE
+	(LOC LOCAL-GLOBALS)
+	(DESC "fishing village")
+	(SYNONYM VILLAGE)
+	(ADJECTIVE SMALL FISHING)
+	(FLAGS NDESCBIT)
+	(ACTION LG-VILLAGE-F)>
+
+<ROUTINE LG-VILLAGE-F ()
+	 <COND (<SCENE? S-ANJIRO>
+		<COND (<VERB? THROUGH>
+		       <COND (<HERE? ,GARDEN ,MURA-HOUSE> <DO-WALK ,P?EAST>)
+			     (<HERE? ,ANJIRO-WATERFRONT> <DO-WALK ,P?NORTH>)
+			     (ELSE
+			      <TELL "The village is right here." CR>)>)
+		      (<VERB? EXIT>
+		       <COND (<HERE? ,GARDEN ,MURA-HOUSE>
+			      <TELL
+"You can't tell from here how to leave the village." CR>)
+			     (<HERE? ,ANJIRO ,ANJIRO-WATERFRONT>
+			      <DO-WALK ,P?NORTH>)>)>)
+	       (<SCENE? S-VOYAGE>
+		<TELL "The village is too far away, considering your condition." CR>)>>
+
+<OBJECT LG-BAY
+	(LOC LOCAL-GLOBALS)
+	(DESC "bay")
+	(SYNONYM BAY HARBOR POINT)
+	(FLAGS NDESCBIT)
+	(ACTION LG-BAY-F)>
+
+<ROUTINE LG-BAY-F ()
+	 <COND (<VERB? EXAMINE>
+		<COND (<SCENE? ,S-VOYAGE>
+		       <TELL
+"The bay looks like an island of relative calm." CR>)
+		      (ELSE
+		       <TELL
+"The harbor is a small bay protected by reefs almost out of sight to the
+east." CR>)>)
+	       (<P? (PUT THROW) * LG-BAY>
+		<PERFORM ,PRSA ,PRSO ,LG-SEA>
+		<RTRUE>)>>
+
+<OBJECT LG-LAND
+	(LOC LOCAL-GLOBALS)
+	(DESC "land")
+	(SYNONYM LAND SHORE ROCK ROCKS CLIFF CLIFFS HEADLAND WATERFRONT WHARF)
+	(ADJECTIVE DRY)
+	(FLAGS NDESCBIT)
+	(ACTION LG-LAND-F)>
+
+<ROUTINE LG-LAND-F ("AUX" TRIES)
+	 <COND (<AND <SCENE? ,S-ANJIRO ,S-RODRIGUES>
+		     <VERB? WALK-TO>>
+		<DO-WALK ,P?WEST>)
+	       (<AND <SCENE? ,S-VOYAGE>
+		     <VERB? POINT>
+		     ,GALLEY-IN-BAY?>
+		<COND (<FSET? ,SKIFF ,RMUNGBIT>
+		       <SET TRIES <GETP ,SKIFF ,P?COUNT>>
+		       <PUTP ,SKIFF ,P?COUNT <+ .TRIES 1>>
+		       <COND (<ZERO? .TRIES>
+			      <TELL
+"Hiro-matsu is here, with Yabu beside him.  They eventually realize
+you are proposing to go ashore, and Hiro-matsu responds harshly.  ">
+			      <HIRO-MATSU-REFUSES>)
+			     (<EQUAL? .TRIES 1>
+			      <YABU-BOARDS-SKIFF>)>)
+		      (ELSE
+		       <TELL
+G"It would be a good trick, and somewhat amusing, to get into a boat
+while it's still on deck, but not a good idea." CR>)>)
+	       (<VERB? WALK-TO>
+		<COND (<IN? ,WINNER ,SKIFF>
+		       <DO-WALK ,P?EAST>)
+		      (<IN? ,WINNER ,SMALL-BOAT>
+		       <DO-WALK ,P?WEST>)
+		      (<SCENE? ,S-ERASMUS ,S-VOYAGE>
+		       <TELL "Easier said than done." CR>)>)
+	       (<VERB? RUB CLIMB-ON>
+		<COND (<OR <SCENE? ,S-ERASMUS>
+			   <AND <SCENE? ,S-VOYAGE>
+				<HERE? ,IN-THE-SEA ,GALLEY ,MAIN-DECK>>>
+		       <TELL
+"It's too far away." CR>)
+		      (ELSE
+		       <TELL
+"It feels like you would expect land to feel." CR>)>)>>
+
+<OBJECT LG-SEA
+	(LOC LOCAL-GLOBALS)
+	(DESC "sea")
+	(SYNONYM SEA OCEAN WATER WAVES WAVE FOAM SEAWATER
+	         TIDE COMBER COMBERS CURRENT CURRENTS)
+	(ADJECTIVE RAGING FROTHY FOAMY)
+	(FLAGS NDESCBIT VEHBIT)
+	(GENERIC GENERIC-SEA-F)
+	(ACTION LG-SEA-F)>
+
+<ROUTINE LG-SEA-F ("OPT" (RARG <>))
+	 <COND (<RARG? <>>
+		<COND (<VERB? EXAMINE LOOK-INSIDE>
+		       <COND (<SCENE? ,S-ERASMUS>
+			      <TELL
+"The sea is a maze of mountainous waves and razor-spined reef-tops." CR>)
+			     (<SCENE? ,S-VOYAGE>
+			      <TELL
+"The gale-driven surf is thrown high in the air, hurled by the wind
+against the rocky shore.">
+			      <COND (<AND <NOT <HERE? ,GALLEY ,MAIN-DECK
+						      ,IN-THE-SEA>>
+					  <NOT <IN? ,YABU ,HERE>>>
+				     <TELL
+"You can see that the tide is coming in.">)>
+			      <CRLF>)
+			     (ELSE
+			      <TELL "It's full of water." CR>)>)
+		      (<VERB? POINT>
+		       <COND (<IN? ,YABU ,HERE>
+			      <TELL
+"Yabu looks at the sea, and you can tell he hates and perhaps fears
+it." CR>)>) 
+		      (<OR <VERB? BOARD THROUGH SWIM LEAP DIVE>
+			   <P? THROW ME>>
+		       <COND (<HERE? ,ON-DECK ,BRIDGE-OF-ERASMUS>
+			      <COND (<SCENE? S-ANJIRO S-RODRIGUES>
+				     <TELL
+"Wouldn't it be safer to just climb back into the boat?" CR>)
+				    (ELSE
+				     <PERFORM ,V?LEAP ,LG-ERASMUS>
+				     <RTRUE>)>)
+			     (<HERE? ANJIRO-WATERFRONT>
+			      <DO-WALK ,P?EAST>
+			      <RTRUE>)
+			     (<HERE? GALLEY MAIN-DECK>
+			      <GOTO ,IN-THE-SEA>)
+			     (<HERE? MAIN-DECK-2>
+			      <COND (<JIGS-UP? ,J-PILING>
+				     <JIGS-UP
+"You hit your head on a piling as you attempt this feat.">)
+				    (ELSE <RTRUE>)>)
+			     (<HERE? IN-THE-SEA>
+			      <COND (<IN? ,WINNER ,SKIFF>
+				     <TELL
+"As you try to leap into the sea, the samurai grab you.  They hold you
+tightly as Yabu scowls." CR>)
+				    (ELSE
+				     <TELL G"You already are." CR>)>)
+			     (<IN? ,WINNER ,SMALL-BOAT>
+			      <TELL
+"Why do that when you're in a nice boat?" CR>)
+			     (ELSE
+			      <TELL "You wouldn't like it.  It's wet." CR>)>)
+		      (<P? (PUT THROW) * LG-SEA>
+		       <COND (<HELD? ,PRSO>
+			      <REMOVE ,PRSO>
+			      <TELL
+CTHE ,PRSO " drop">
+			      <COND (<NOT <PLURAL? ,PRSO>> <TELL "s">)>
+			      <TELL " into the water and ">
+			      <COND (<PRSO? ,OARS ,BOAT-OAR ,LIFE-RING>
+				     <TELL "float">)
+				    (ELSE <TELL "sink">)>
+			      <COND (<NOT <PLURAL? ,PRSO>> <TELL "s">)>
+			      <TELL " out of sight." CR>)>)
+		      (<VERB? DRINK>
+		       <TELL
+"Seawater will drive you mad, as every sailor knows." CR>)>)>>
+
+<CONSTANT NUMBERS
+	  <LTABLE "one" "two" "three" "four" "five" "six"
+		  "seven" "eight" "nine" "ten" "eleven" "twelve"
+		  "thirteen" "fourteen" "fifteen" "sixteen"
+		  "seventeen" "eighteen" "nineteen" "twenty">>
+
+<END-SEGMENT ;"0">

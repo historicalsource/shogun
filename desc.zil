@@ -147,7 +147,7 @@ Prints nothing and rfalses if there was nothing to list.
 							   <SET PARA? T>
 							   <CRLF>)
 							  (<EQUAL? .LEVEL T>
-							   <TELL " ">)>
+							   <TELL "">)>
 						    <DESCRIBE-START
 						      .OBJ
 						      <COND (<FSET? .F ,PLURAL>
@@ -220,7 +220,7 @@ Prints nothing and rfalses if there was nothing to list.
 			     (ELSE <TELL "is ">)>)>)
 	       (<EQUAL? .OBJ ,PLAYER>
 		<COND (<EQUAL? ,D-BIT ,WEARBIT>
-		       <TELL " You are wearing ">)
+		       <TELL "You are wearing ">)
 		      (T
 		       <TELL "You are carrying ">)>)
 	       (<FSET? .OBJ ,PERSON>
@@ -303,6 +303,4 @@ Prints nothing and rfalses if there was nothing to list.
 	       (T ;"nothing"
 		<RFALSE>)>>
 
-<END-SEGMENT>
-
-;"END"
+<END-SEGMENT ;"0">

@@ -1,4 +1,3 @@
-		 
 "OSAKA for
 				 SHOGUN
 	(c) Copyright 1988 Infocom, Inc.  All Rights Reserved."
@@ -29,56 +28,32 @@ and a force of Grays guards the Browns." CR>)
 	       (<VERB? FOLLOW>
 		<COND (<NOT <IN? ,CORTEGE ,HERE>>
 		       <DO-WALK ,P?SOUTH>)>)>>
-		 
 
-<OBJECT KIMONO
-	(OWNER BLACKTHORNE)
-	(DESC "kimono")
-	(SYNONYM KIMONO CLOTHES)
-	(ADJECTIVE SILK)
-	(FLAGS TAKEBIT WEARABLE)
-	(ACTION KIMONO-F)>
-
-<ROUTINE KIMONO-F ()
-	 <COND (<AND <VERB? TAKE-OFF> <FORMAL-SCENE?>>
+<ROUTINE ESCAPE-FOLLOW-KIRI ("AUX" DIR)
+	 <COND (<AND ,SEEN-TORANAGA?
+		     <IN? ,KIRIS-LITTER ,COURTYARD>>
+		<COND (<JIGS-UP? ,J-SWITCH
+"You stop partway, realizing you might be disrupting something you know
+nothing about.">
+		       <TELL
+"You follow Kiri into the garden and the little hut.  She's crouched inside,
+trying to be quiet, but when you blunder in she screams in spite of
+herself.  The scream brings guards.  They recognize Kiri and wonder, if she
+is here,
+who is in the litter?  It is only after the ensuing battle that Ishido
+returns and orders you killed." CR>
+		       <JIGS-UP>)
+		      (ELSE <RTRUE>)>)
+	       (<NOT <IN? ,KIRIS-LITTER ,HERE>>
+		<COND (<SET DIR <NEXT-ROOM? <LOC ,KIRIS-LITTER>>>
+		       <DO-WALK .DIR>)
+		      (ELSE
+		       <TELL "You've lost track of her." CR>)>)
+	       (ELSE
 		<TELL
-"You would expose yourself to ridicule." CR>)
-	       (<AND <VERB? WEAR>
-		     <NOUN-USED? ,PRSO ,W?CLOTHES>
-		     <NOT <FSET? ,PRSO ,RMUNGBIT>>>
-		<PERFORM ,V?DRESS>
-		<RTRUE>)
-	       (<AND <VERB? TAKE-OFF>
-		     <NOUN-USED? ,PRSO ,W?CLOTHES>
-		     <NOT <FSET? ,PRSO ,RMUNGBIT>>>
-		<PERFORM ,V?STRIP>
-		<RTRUE>)
-	       (<VERB? TEAR>
-		<TELL
-"Your kimono would tear easily, but it would be silly to do so." CR>)>>
+"She's in her litter, so you can follow it when it leaves." CR>)>>
 
-<OBJECT SANDALS
-	(OWNER BLACKTHORNE)
-	(DESC "pair of sandals")
-	(SYNONYM SANDALS SLIPPERS THONG THONGS)
-	(FLAGS TAKEBIT WEARABLE PLURAL)>
-
-<OBJECT SOCKS
-	(OWNER BLACKTHORNE)
-	(DESC "socks")
-	(SYNONYM SOCKS TABIS)
-	(ADJECTIVE TABI)
-	(FLAGS TAKEBIT WEARABLE PLURAL NOABIT)
-	(ACTION SOCKS-F)>
-
-<ROUTINE SOCKS-F ()
-	 <COND (<VERB? EXAMINE>
-		<TELL
-"These are tabi socks.  They are different from European socks in that
-there is a notch for the thong of a sandal.  They remind you of mittens." CR>)
-	       (<AND <VERB? TAKE-OFF WEAR>
-		     <FSET? ,SANDALS ,WEARBIT>>
-		<HAVE-TO-TAKE-OFF ,SANDALS>)>>
+<BEGIN-SEGMENT MAZE>
 
 <OBJECT BUNTARO
 	(DESC "Buntaro")
@@ -105,6 +80,9 @@ to kill someone, and wouldn't be too particular about who." CR>)>)
 with a quick temper.  He is the only living son of Lord Hiro-matsu,
 and the husband of Lady Mariko." CR>)>>
 
+<END-SEGMENT ;"ESCAPE MAZE">
+<BEGIN-SEGMENT ESCAPE>
+
 <OBJECT SAZUKO
 	(DESC "Sazuko")
 	(SYNONYM SAZUKO GIRL)
@@ -125,70 +103,6 @@ and very pregnant." CR>)
 		<TELL
 "Lady Sazuko is a short, square-faced girl of little beauty.  She is
 very pregnant." CR>)>>
-
-<OBJECT BROWNS
-	(DESC "Brown-uniformed samurai")
-	(SYNONYM BROWNS BROWN SAMURAI)
-	(ADJECTIVE BROWNS BROWN BROWN-UNIFORMED)
-	(FLAGS PERSON JAPANESEBIT NOABIT)
-	(COUNT 20)
-	(GENERIC GENERIC-SAMURAI-F)
-	(ACTION BROWNS-F)>
-
-<ROUTINE BROWNS-F ("OPT" (RARG <>))
-	 <COND (<RARG? SUBJ>
-		<RFALSE>)
-	       (<RARG? WINNER>
-		<COND (<AND <HERE? ,MAIN-DECK>
-			    <SCENE? ,S-ESCAPE>>
-		       <SETG WINNER ,PLAYER>
-		       <PERFORM ,V?MIZU>
-		       <RTRUE>)
-		      (ELSE
-		<TELL
-"The Browns are not under your orders." CR>)>
-		<END-QUOTE>)
-	       (ELSE
-		<COND (<VERB? WHO>
-		       <TELL
-"The Browns are Toranaga's samurai." CR>)
-		      (<VERB? EXAMINE>
-		       <TELL
-"They are all dressed in the Brown uniform." CR>)>)>>
-
-<OBJECT GRAYS
-	(DESC "Gray-uniformed samurai")
-	(SYNONYM GRAYS GRAY SAMURAI ESCORT GUARDS GUARDSMEN)
-	(ADJECTIVE GRAY GRAY-UNIFORMED)
-	(FLAGS PERSON JAPANESEBIT NOABIT)
-	(GENERIC GENERIC-SAMURAI-F)
-	(ACTION GRAYS-F)>
-
-<ROUTINE GRAYS-F ("OPT" (RARG <>))
-	 <COND (<RARG? SUBJ>
-		<RFALSE>)
-	       (<RARG? WINNER>
-		<TELL
-"The Grays ignore you." CR>
-		<END-QUOTE>)
-	       (ELSE
-		<COND (<VERB? WHO>
-		       <TELL
-"The Grays are Ishido's samurai." CR>)
-		      (<VERB? EXAMINE>
-		       <COND (<SCENE? ,S-PRISON>
-			      <TELL
-"They are behaving more like escorts than guards." CR>)
-			     (ELSE
-			      <TELL
-"They are all dressed in the Gray uniform." CR>)>)>)>>
-
-<ROUTINE NOT-A-BARBARIAN? ()
-	 <OR <AND <P? BE (BLACKTHORNE ME)
-		      (GLOBAL-BARBARIAN CRAZY)>
-		  <P-NEGATIVE?>>
-	     <P? BE (BLACKTHORNE ME)
-		 (GLOBAL-SAMURAI GLOBAL-HATAMOTO)>>>
 
 <ROUTINE I-ISHIDO ()
 	 <ZLINES ,ISHIDO-CNT
@@ -263,11 +177,11 @@ well." CR CR
 "Satisfied that all is as it should be, Ishido turns and leaves with all
 his men.  Hiro-matsu exhales and scratches his piles.">
 			 <COND (<HERE? ,COURTYARD>
-				<TELL " \"You'd better
+				<TELL "\"You'd better
 leave now, Yabu-san.  That rice maggot'll give you no more trouble.\"  Yabu
 replies, \"Yes, at once.\"" CR>)
 			       (ELSE
-				<TELL " He says something to Yabu, who bows
+				<TELL "He says something to Yabu, who bows
 and then begins to get the escort moving." CR>)>)>)>>	       
 
 <OBJECT TORANAGA-IN-DRAG
@@ -294,8 +208,8 @@ CTHE ,TORANAGA-IN-DRAG " looks at you, but doesn't reply." CR>)
 		       <FCLEAR ,TORANAGA-IN-DRAG ,FEMALE>
 		       <TELL
 "You look at the veiled figure.  She is dressed exactly like Kiri, and at
-first you assume that it must be her.  But if so, how did she get here?
-Then you look more carefully, and realize it's a man, not a woman --
+first you assume that it must be her.  But if so, how did she get
+here?  Then you look more carefully, and realize it's a man, not a woman --
 it's Toranaga, in disguise!  What can he be planning?  Escape!" CR>
 		       <SCORE-OBJECT ,TORANAGA-IN-DRAG>)
 		      (ELSE
@@ -347,6 +261,8 @@ his sword from beneath the incongruously feminine kimono.  His sword is
 as sharp as it needs to be, though." CR>
 			      <JIGS-UP>)
 			     (ELSE <RTRUE>)>)>)>>
+
+<BEGIN-SEGMENT SEPPUKU>
 
 <ROOM COURTYARD
       (LOC ROOMS)
@@ -413,6 +329,9 @@ CTHE ,PRSO " doesn't seem to be anywhere nearby." CR>)>)
 		       <TELL
 "\"No, Anjin-san, stay here!\" Mariko says.  \"We are leaving soon.\"" CR>)>)>>
 
+<END-SEGMENT ;"ESCAPE+SEPPUKU">
+<BEGIN-SEGMENT ESCAPE>
+
 <ROUTINE I-KIRI ()
 	 <ZLINES ,KIRI-CNT
 		 (<COND (<HERE? ,COURTYARD>
@@ -425,8 +344,8 @@ giving him instructions.  All you can understand is the word "I"dozo"",
 			(ELSE
 			 <TELL CR
 "You can hear conversations and crying coming from the courtyard." CR>)>)
-		 (<COND (<HERE? ,COURTYARD>
-			 <FSET ,KIRITSUBO ,SCOREBIT>
+		 (<FSET ,KIRITSUBO ,SCOREBIT>
+		  <COND (<HERE? ,COURTYARD>
 			 <TELL CR
 "Lady Sazuko bows and hurries off, Yabu following.  The girl runs up the
 steps.  As she nears the top she slips and falls.  Kiri screams something
@@ -437,18 +356,17 @@ in Japanese.  All eyes flash to the prostrate girl." CR>)
 "Kiritsubo hurries through the garden into the little tea house, then
 emerges again moments later.  As she passes you, your eyes meet.  ">
 			 <COND (<FSET? ,TORANAGA-IN-DRAG ,SCOREBIT>
-				<TELL
-"It is not Kiri, but Toranaga in disguise!" CR>
-				<SCORE-OBJECT ,TORANAGA-IN-DRAG>
 				<REPLACE-SYNONYM ,TORANAGA-IN-DRAG
 						 ,W?KIRITSUBO
-						 ,W?TORANAGA>)
+						 ,W?TORANAGA>
+				<TELL
+"It is not Kiri, but Toranaga in disguise!" CR>)
 			       (ELSE
 				<TELL
 "It is Toranaga.  Kiritsubo and Toranaga have switched!" CR>)>
 			 <TELL CR
 "The figure slips into Kiri's litter, veil drawn." CR>
-			 <SCORE-OBJECT ,KIRITSUBO>)
+			 <SCORE-OBJECT ,TORANAGA-IN-DRAG ,KIRITSUBO>)
 			(<HERE? ,TEA-HOUSE>
 			 <TELL CR
 "Suddenly, Kiritsubo dashes into the tea house.  When she sees you, she
@@ -462,8 +380,8 @@ sword and surprisingly attacks you rather than Yabu.">
 "There seems to be some commotion in the courtyard." CR>)>)
 		 (<MOVE ,TORANAGA-IN-DRAG ,KIRIS-LITTER>
 		  <MOVE ,KIRITSUBO ,TEA-HOUSE>
+		  <FCLEAR ,KIRITSUBO ,SCOREBIT>
 		  <COND (<HERE? ,COURTYARD>
-			 <FCLEAR ,KIRITSUBO ,SCOREBIT>
 			 <COND (<EQUAL? ,OHERE ,FORMAL-GARDEN>
 				<TELL CR
 "You see that Sazuko, one of Toranaga's consorts, has fallen to the
@@ -471,7 +389,7 @@ ground.  She is pregnant, and everyone is terrified for the safety of
 the child." CR>)>
 			 <TELL CR
 "Mariko and Yabu rush to aid the girl.  Yabu picks her up.  Sazuko is
-more startled than hurt.  She speaks to them, embarassed at her clumsiness,
+more startled than hurt.  She speaks to them, embarrassed at her clumsiness,
 then stands.  Everyone relaxes.  Toranaga's unborn child is safe." CR>)
 			(ELSE
 			 <TELL CR
@@ -595,6 +513,8 @@ a battle erupts.">)>
 "He hustles you unceremoniously back to the courtyard." CR CR>
 		       <GOTO ,COURTYARD>)>)>>
 
+<BEGIN-SEGMENT MAZE>
+
 <OBJECT KIRIS-LITTER
 	;(LOC COURTYARD)
 	(OWNER KIRITSUBO)
@@ -658,13 +578,6 @@ a battle erupts.">)>
 	(GENERIC GENERIC-LITTER-F)
 	(ACTION MARIKOS-LITTER-F)>
 
-<ROUTINE GENERIC-LITTER-F (R F)
-	 <COND (<OR <HERE? ,WOODS>
-		    <IN? ,WINNER ,MARIKOS-LITTER>>
-		,MARIKOS-LITTER)
-	       (<IN? ,YABU-PALANQUIN ,HERE>
-		,YABU-PALANQUIN)>>
-
 <ROUTINE MARIKOS-LITTER-F ("OPT" (RARG <>))
 	 <COND (<RARG? BEG>
 		<COND (<AND <HERE? WOODS CITY>
@@ -688,6 +601,9 @@ don't move." CR>)
 			      <TELL
 "Mariko's maid prevents you." CR>)>)>)>>
 
+<END-SEGMENT ;"ESCAPE+MAZE">
+<BEGIN-SEGMENT ESCAPE>
+
 <ROUTINE GET-IN-LITTER ("OPT" (FORCE? <>))
 	 <DEQUEUE I-ESCAPE-CONTINUES>
 	 <MOVE ,PLAYER ,MARIKOS-LITTER>
@@ -706,6 +622,8 @@ is soothing and you lay back, depleted." CR CR>
 	 <MOVE ,YABU ,CITY>
 	 <GOTO ,CITY>>
 
+<BEGIN-SEGMENT DEPARTURE>
+
 <ROUTINE MARIKOS-LITTER-DESC (RARG OBJ)
 	 <COND (<RARG? OBJDESC?> <RTRUE>)
 	       (ELSE
@@ -716,6 +634,8 @@ is soothing and you lay back, depleted." CR CR>
 the open curtains you can see Mariko.">)
 		      (ELSE <TELL ".">)>
 		<RFATAL>)>>
+
+<BEGIN-SEGMENT SEPPUKU>
 
 <ROOM FORECOURT
       (LOC ROOMS)
@@ -756,7 +676,7 @@ Mariko gets into her palanquin and sits.  \"Yoshinaka-san!  Please begin.\"")
 paths and walls that makes up the rest of the castle.  To the north, through an
 arched gateway with a fortified gate, is a courtyard.">
 		<COND (<SCENE? ,S-DEPARTURE ,S-SEPPUKU>
-		       <TELL " The forecourt is crowded with Grays,
+		       <TELL "The forecourt is crowded with Grays,
 other samurai and their women.">)>
 		<CRLF>)
 	       (<RARG? LEAVE>
@@ -829,6 +749,9 @@ events to come." CR>)>)>)
 "You could no more open or close this gate by yourself than tear
 down Osaka Castle with your bare hands." CR>)>>
 
+<END-SEGMENT ;"ESCAPE+DEPARTURE+SEPPUKU">
+<BEGIN-SEGMENT ESCAPE>
+
 <OBJECT PORTCULLIS
 	(LOC LOCAL-GLOBALS)
 	(DESC "portcullis")
@@ -853,16 +776,17 @@ is the final drawbridge and the final moat.  To the south, on the far side
 of the bridge,
 is the ultimate strongpoint.">
 		<COND (<SCENE? ,S-ESCAPE>
-		       <TELL " A multitude of flares turn the night into
+		       <TELL "A multitude of flares turn the night into
 crimson day.">)
 		      (ELSE
 		       <TELL
-" Crowds of curious onlookers clog the street.">)>
+"Crowds of curious onlookers clog the street.">)>
 		<CRLF>)
 	       (<RARG? ENTER>
 		<COND (<EQUAL? ,OHERE ,FORECOURT>
 		       <SETG ISHIDO-CNT 0>
-		       <QUEUE I-ISHIDO-2 -1>)>)
+		       <QUEUE I-ISHIDO-2 -1>)>
+		<RTRUE>)
 	       (<RARG? BEG>
 		<COND (<SCENE? ,S-ESCAPE>
 		       <SET MAD?
@@ -966,7 +890,7 @@ exhaustion is beginning to take its toll." CR>)>)>)>)>)>>
 	 <QUEUE I-MADNESS -1>
 	 <COND (<FSET? ,CURTAINS ,OPENBIT>
 		<FCLEAR ,CURTAINS ,OPENBIT>
-		<TELL " For an instant Toranaga
+		<TELL "For an instant Toranaga
 is in full view behind Ishido.  In the never-ending second before Toranaga
 tugs the curtains closed again, you know that Yabu has recognized him,
 and Mariko, and probably Buntaro and some of the Brown samurai.">)>>
@@ -1023,7 +947,7 @@ the curtains." CR>)
 "Everyone is waiting for the hand to appear.">
 		  <COND (,SEEN-TORANAGA?
 			 <TELL
-" You realize Toranaga is trapped.  Politeness demands that he take the
+"You realize Toranaga is trapped.  Politeness demands that he take the
 scroll and his hand will give him away!">)>
 		  <TELL CR CR
 "Ishido is getting impatient.  \"Kiritsubo-san?\" he calls." CR>)
@@ -1177,7 +1101,8 @@ out of sight of the castle, you gratefully collapse." CR>
 			      <SCORE-OBJECT ,WOODS>)>)>)
 	       (<RARG? ENTER>
 		<DEQUEUE I-ISHIDO-2>
-		<DEQUEUE I-MARIKO-FOLLOW>)>>
+		<DEQUEUE I-MARIKO-FOLLOW>
+		<RTRUE>)>>
 
 <ROUTINE I-ESCAPE-CONTINUES ()
 	 <ZLINES ,LITTER-CNT
@@ -1239,7 +1164,7 @@ over in forced semihysteria that the mad barbarian believed he was
 only trying to save Ishido from a bad " I "kami" ".">
 			 <COND (<EQUAL? ,ISHIDO-DISTRACTED?
 					,V?ATTACK ,V?HIT>
-				<TELL " \"It's the worst
+				<TELL "\"It's the worst
 insult to touch their faces, just like with us!\"">)>
 			 <CRLF>)
 			(;5
@@ -1400,7 +1325,8 @@ The harbor is to the east.")
 <ROUTINE CITY-F ("OPT" (RARG <>))
 	 <COND (<RARG? ENTER>
 		<COND (<EQUAL? ,OHERE ,WOODS>
-		       <MOVE-ALL ,WOODS ,CITY>)>)
+		       <MOVE-ALL ,WOODS ,CITY>)>
+		<RTRUE>)
 	       (<RARG? <>>
 		<COND (<VERB? FIND>
 		       <COND (<G=? ,SCENE ,S-VOYAGE>
@@ -1436,7 +1362,7 @@ appear, the Grays spot you and surge forward." CR CR>
 			      <GOTO ,WHARF>
 			      <MOVE ,BROWNS ,WHARF>
 			      <MOVE ,GRAYS ,WHARF>
-			      <MOVE ,GRAY-LEADER ,MAIN-DECK>
+			      <MOVE ,GRAY-LEADER ,MAIN-DECK-2>
 			      <FSET ,GRAY-LEADER ,NDESCBIT>
 			      <RTRUE>)
 			     (<IN? ,MARIKO ,WAREHOUSE>
@@ -1450,7 +1376,8 @@ appear, the Grays spot you and surge forward." CR CR>
 	       (<RARG? ENTER>
 		<COND (<EQUAL? ,OHERE ,MAZE>
 		       <MOVE-ALL ,MAZE ,WAREHOUSE>
-		       <QUEUE I-RUSE -1>)>)>>
+		       <QUEUE I-RUSE -1>)>
+		<RTRUE>)>>
 
 <OBJECT LARGE-KNIFE
 	(DESC "large knife")
@@ -1555,7 +1482,7 @@ the Grays.  You add to the babel in a panting mixture of Portuguese, English,
 and Dutch, motioning for them to hurry.  You lean against the gangway, unable
 to see anything on the galley distinctly.  You can't tell if the samurai on
 deck are Grays or Browns or both." CR>)
-		 (<COND (<HERE? ,WHARF ,MAIN-DECK ,GALLEY>
+		 (<COND (<HERE? ,WHARF ,MAIN-DECK-2>
 			 <TELL CR
 "Mariko is frantically haranguing the senior officer of the Grays.  He shouts
 orders, and suddenly a hundred samurai, all Grays, pour off the ship.|
@@ -1564,14 +1491,13 @@ Quickly, Mariko turns to you and asks, \"Does the ship seem all right to
 you?\"">
 			 <SETG QCONTEXT ,MARIKO>
 			 <COND (<HERE? ,WHARF>
-				<TELL " She motions you onto the galley.">)>
+				<TELL "She motions you onto the galley.">)>
 			 <CRLF>)
 			(ELSE
 			 <TELL CR
 "Mariko is desperately calling you back to the wharf." CR>)>)
 		 (DELAY
-		  <COND (<AND <NOT <IN? ,BLACKTHORNE ,MAIN-DECK>>
-			      <NOT <IN? ,BLACKTHORNE ,GALLEY>>>
+		  <COND (<NOT <IN? ,BLACKTHORNE ,MAIN-DECK-2>>
 			 <TELL CR
 "Mariko commands you urgently in Latin, \"Get aboard the galley,
 Anjin-san!  We must see if it is safe!\"" CR>
@@ -1671,7 +1597,6 @@ his sash.  The phalanx moves with measured tread toward the galley.|
 |
 Bastard, you think.  You're a cruel, cold-gutted, heartless bastard but you've
 got majesty, no doubt about that." CR>
-		  <DEQUEUE I-RUSE>
 		  <NEXT-SCENE>)>>
 
 <ROOM WHARF
@@ -1680,7 +1605,7 @@ got majesty, no doubt about that." CR>
       (SYNONYM WHARF)
       (WEST TO WAREHOUSE)
       (UP TO MAIN-DECK)
-      (EAST TO MAIN-DECK)
+      (EAST TO MAIN-DECK-2)
       (GLOBAL LG-GALLEY GANGWAY)
       (FLAGS ONBIT OUTSIDE ;SCOREBIT)
       (ACTION WHARF-F)>
@@ -1693,7 +1618,8 @@ east, moored to stanchions fixed into the stone wharf that extends
 a hundred yards out into the sea." CR>)
 	       (<RARG? ENTER>
 		<REMOVE ,ANCHOR>
-		<REMOVE ,SKIFF>)
+		<REMOVE ,SKIFF>
+		<RTRUE>)
 	       (<RARG? BEG>
 		<COND (<P? EXAMINE GRAYS>
 		       <TELL
@@ -1705,6 +1631,91 @@ color of their uniforms." CR>)
 "\"Anjin-san, we must be sure.  We must look aboard for Grays.\"" CR>)
 		      (<P? (BOARD CLIMB-ON) (GALLEY LG-GALLEY ROOMS)>
 		       <DO-WALK ,P?EAST>)>)>>
+
+<ROOM MAIN-DECK-2
+      (SCENE S-ESCAPE)
+      (LOC ROOMS)
+      (DESC "Main Deck")
+      (SYNONYM DECK)
+      (ADJECTIVE MAIN)
+      (WEST TO WHARF)
+      (DOWN SORRY "There's nothing of interest below decks.")
+      (FLAGS ONBIT OUTSIDE SCOREBIT)
+      (GLOBAL LG-GALLEY)
+      (GENERIC GENERIC-DECK-F)
+      (ACTION MAIN-DECK-2-F)>
+
+<ROUTINE MAIN-DECK-2-F (RARG)
+	 <COND (<RARG? LOOK>
+		<TELL
+G"This is the oar deck of the galley, forward of the quarterdeck.  ">
+		<TELL
+"Gray guardsmen crowd the deck." CR>)
+	       (<RARG? ENTER>
+		<MOVE ,MARIKO ,MAIN-DECK-2>
+		<MOVE ,BROWNS ,MAIN-DECK-2>
+		<TELL
+"You pull yourself up the gangway using the ropes for support.  Your dash
+across the wharf has tired you more than you realized at first.  Mariko and
+two Browns follow after.">
+		<CRLF> <CRLF>)
+	       (<RARG? BEG>
+		<COND (<P? WALK (P?AFT P?UP)>
+		       <TELL
+"The gangway aft is blocked by Grays and crewmen." CR>)
+		      (<P? TAKE-OFF LG-GALLEY>
+		       <DO-WALK ,P?WEST>)
+		      (<AND <EQUAL? ,QCONTEXT ,MARIKO>
+			    <VERB? YES HAI>>
+		       <SETG QCONTEXT <>>
+		       <TELL
+"\"Well, she's floating, at least,\" you reply, and then notice one of the
+crewmen from the voyage to Osaka.  With Mariko's help, you ask him if the
+galley is ready, and if there are still Grays aboard.  \"Anjin-san, he thanks
+you for the life of his ship, and says they are ready.  As for the other, he
+doesn't know.\"  Mariko seems very worried as she says this." CR>)
+		      (<P? (HELP WAKE TAKE) MARIKO>
+		       <COND (<AND <FSET? ,WHARF ,SCOREBIT>
+				   <NOT <FSET? ,GLOBAL-WATER ,SCOREBIT>>>
+			      <FSET ,GLOBAL-WATER ,SCOREBIT>
+			      <TELL
+"You make your way over to Mariko.  \"Get some water -- water, by God!\"  What's
+the word for water?  Desperately you search your mind for the Japanese
+word.  The old monk had told it to you a thousand times." CR>
+			      <SCORE-OBJECT ,WHARF>)
+			     (,OPPONENT
+			      <TELL
+"You'll have to try something more specific." CR>)
+			     (<NOT <B-STANDING?>>
+			      <TELL
+"You try to crawl to her, but you are too fatigued." CR>)>)
+		      (<OR <VERB? MIZU>
+			   <AND <P? SAY INTQUOTE>
+				<EQUAL? ,W?MIZU
+					<GET-INTQUOTE 0>
+					<GET-INTQUOTE 1>>>
+			   <AND <P? SAY GLOBAL-WATER>
+				<NOUN-USED? ,PRSO ,W?MIZU>>>
+		       <COND (<FSET? ,GLOBAL-WATER ,SCOREBIT>
+			      <TELL
+"\""I"Mizu, mizu!  Hai!  Wakarimas?""\" you yell.  A man nods, and begins to hurry
+away.  You stand protectively over Mariko." CR>
+			      <SCORE-OBJECT ,GLOBAL-WATER>)
+			     (ELSE
+			      <TELL
+"You continue yelling, for no apparent reason." CR>)>)
+		      (<AND <EQUAL? ,OPPONENT ,GRAY-LEADER
+				    ,RANDOM-GRAYS ,SECOND-GRAY>
+			    <OR <MOTION-VERB?>
+				<VERB? PARRY STOP>>>
+		       <SETG DODGED? T>
+		       <COND (<FSET? ,GRAY-LEADER ,DEAD>
+			      <TELL
+"You leap out of the way, and the blow misses." CR>)
+			     (ELSE
+			      <TELL
+"You try desperately to dodge out of the way, trying to avoid the leader's
+attack." CR>)>)>)>>
 
 <OBJECT GRAY-LEADER
 	(DESC "Gray Leader")
@@ -1809,22 +1820,6 @@ a counterattack." CR>)
 "You toss it at " THE ,PRSI " but it misses, and he turns on you!" CR>
 		<JIGS-UP>)>>
 
-;<ROOM WHARF-N
-      (LOC ROOMS)
-      (DESC "North Wharf")
-      (SYNONYM WHARF)
-      (ADJECTIVE NORTH)
-      (SOUTH TO WHARF)
-      (FLAGS ONBIT OUTSIDE)>
-
-;<ROOM WHARF-S
-      (LOC ROOMS)
-      (DESC "South Wharf")
-      (SYNONYM WHARF)
-      (ADJECTIVE SOUTH)
-      (NORTH TO WHARF)
-      (FLAGS ONBIT OUTSIDE)>
-
 <ROUTINE HATAMOTO-AFTER-F ()
 	 <TELL
 "The galley escapes from Osaka harbor, the rowers speeding it back towards
@@ -1837,6 +1832,6 @@ instructed to learn Japanese, and train a regiment of troops in European
 tactics and the use of muskets.|
 |
 But best of all, he says he will return the "I"Erasmus"" to you, but he won't
-say when.">>
+say when." CR>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"ESCAPE">

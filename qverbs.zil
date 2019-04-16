@@ -352,7 +352,17 @@ yourself." CR>
 		  <VOC "ALIVE" ADJ>
 		  ALIVE?
 		  <VOC "QUIET" ADJ>
-		  QUIET?>>
+		  QUIET?
+		  <VOC "DUTCH" ADJ>
+		  DUTCH?
+		  <VOC "PORTUGUESE" ADJ>
+		  PORTUGUESE?
+		  <VOC "SPANISH" ADJ>
+		  SPANISH?
+		  <VOC "ENGLISH" ADJ>
+		  ENGLISH?
+		  <VOC "JAPANESE" ADJ>
+		  JAPANESE?>>
 
 <DEFINE QUIET? (OBJ)
 	 <RTRUE>>

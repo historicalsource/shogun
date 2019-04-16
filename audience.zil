@@ -9,6 +9,8 @@
 <CONSTANT J-JOKE 70>
 <CONSTANT J-SIT 71>
 
+<BEGIN-SEGMENT NINJA>
+
 <ROOM OUTER-CORRIDOR ;"setup s-toranaga"
       (LOC ROOMS)
       (SCENE S-TORANAGA)
@@ -65,7 +67,7 @@ the castle.")
 audience with Toranaga wait.  The great Audience Chamber is to the
 east and stairs down to the lower part of the keep are to the west.">
 		<COND (<SCENE? ,S-TORANAGA>
-		       <TELL " Massed samurai, their young officer in
+		       <TELL "Massed samurai, their young officer in
 front of them, protect the last door -- each with right hand on the
 sword hilt, left on the scabbard, motionless and ready, staring at
 you.">)>
@@ -104,18 +106,18 @@ ten high, the tatami mats the best quality, four fingers thick and
 impeccable.">
 		<COND (<NOT <FSET? ,VASE ,TOUCHBIT>>
 		       <TELL
-" Near the dais, in a niche, is a small earthenware vase
+"Near the dais, in a niche, is a small earthenware vase
 with a single spray of cherry blossom and this fills the room with
 color and fragrance.">)>
 		<COND (<SCENE? S-TORANAGA>
 		       <TELL
-" Ten paces from the dais, circling it, are
+"Ten paces from the dais, circling it, are
 twenty samurai, seated cross-legged and facing outward.">)>
-		<TELL " Doors lead east and west to the outer
+		<TELL "Doors lead east and west to the outer
 and inner corridors, respectively.">
 		<COND (<NOT <FSET? ,SECRET-ROOM-DOOR ,INVISIBLE>>
 		       <TELL
-" On the south wall is a formerly secret door used by the ninja
+"On the south wall is a formerly secret door used by the ninja
 attackers.">)>
 		<CRLF>)
 	       (<RARG? BEG>
@@ -253,6 +255,7 @@ your life.">
 					    <TELL
 "Taking a deep breath, you sit cross-legged and stare at Toranaga." CR>)>)
 				    (<VERB? KNEEL>
+				     <FCLEAR ,AUDIENCE-CHAMBER ,SCOREBIT>
 				     <B-KNEEL>
 				     <TELL
 "You kneel abjectly, in imitation of Hiro-matsu." CR>)>)>)
@@ -277,33 +280,6 @@ guards motion you back." CR>)
 					  <IN? ,NINJA ,HERE>>
 				     <TELL
 G"You would have to walk right through the ninja!" CR>)>)>)>)>>
-
-<ROUTINE ISHIDO-VS-TORANAGA-AFTER-F ()
-	 <TELL
-"Toranaga watches you
-leave the room, taking his mind off the interview and coming to grips
-with the problem of Ishido.  Toranaga was summoned to Osaka to give
-answers to the Council of Regents, and against the advice of his
-advisors, he chose to obey.  Now he is stuck, the meeting delayed and
-delayed, Toranaga caught in the castle of his most deadly enemy.|
-|
-Ishido comes instantly to the point. \"What is your answer to the
-Council of Regents?\"|
-|
-Toranaga answers, \"As President of the
-Council of Regents I do not believe an answer is necessary.  Our late
-Master, the Taiko, has been dead a year.  I don't threaten his house
-or my nephew Yaemon, the Taiko's Heir.  I seek no more territory.  By
-the Lord Buddha, I'll not be the first to break the peace.\"|
-|
-Ishido
-bristles.  \"The Lady Ochiba, the mother of the heir, is hostage in
-your castle at Yedo, against your safety here.  The Council requests
-her presence in Osaka instantly.  We're all agreed: Lord Sugiyama,
-Lord Onoshi, Lord Kiyama, and I.  Here are their signatures.\"|
-|
-Toranaga is livid.  Why had Kiyama and Onoshi defected to Ishido?
-Four to one means isolation and disaster!" CR>>
 
 <OBJECT VASE
  	(LOC AUDIENCE-CHAMBER)
@@ -349,6 +325,36 @@ Four to one means isolation and disaster!" CR>>
  	(OWNER TORANAGA)
  	(SYNONYM DAIS)
  	(FLAGS NDESCBIT SCOREBIT OPENBIT CONTBIT VEHBIT SEARCHBIT)>
+
+<END-SEGMENT ;"AUDIENCE+NINJA">
+<BEGIN-SEGMENT AUDIENCE>
+
+<ROUTINE ISHIDO-VS-TORANAGA-AFTER-F ()
+	 <TELL
+"Toranaga watches you
+leave the room, taking his mind off the interview and coming to grips
+with the problem of Ishido.  Toranaga was summoned to Osaka to give
+answers to the Council of Regents, and against the advice of his
+advisors, he chose to obey.  Now he is stuck, the meeting delayed and
+delayed, Toranaga caught in the castle of his most deadly enemy.|
+|
+Ishido comes instantly to the point. \"What is your answer to the
+Council of Regents?\"|
+|
+Toranaga answers, \"As President of the
+Council of Regents I do not believe an answer is necessary.  Our late
+Master, the Taiko, has been dead a year.  I don't threaten his house
+or my nephew Yaemon, the Taiko's Heir.  I seek no more territory.  By
+the Lord Buddha, I'll not be the first to break the peace.\"|
+|
+Ishido
+bristles.  \"The Lady Ochiba, the mother of the heir, is hostage in
+your castle at Yedo, against your safety here.  The Council requests
+her presence in Osaka instantly.  We're all agreed: Lord Sugiyama,
+Lord Onoshi, Lord Kiyama, and I.  Here are their signatures.\"|
+|
+Toranaga is livid.  Why had Kiyama and Onoshi defected to Ishido?
+Four to one means isolation and disaster!" CR>>
 
 <OBJECT FALCON
 	(DESC "peregrine")
@@ -545,7 +551,7 @@ the outcome." CR>
 "Alvito waits patiently.">
 				<COND (<EQUAL? ,DELAY-CNT 1>
 				       <TELL
-" You wonder if '"I"teki""' truly means 'enemy.'  Of course it does, you
+"You wonder if '"I"teki""' truly means 'enemy.'  Of course it does, you
 tell yourself.  This man's not like the other one.">)>
 				<CRLF>
 				<RTRUE>)>)>)
@@ -619,10 +625,9 @@ for how long: until Lord Toranaga decides.\"" CR>
 		  <MOVE ,TORANAGA ,GENERIC-OBJECTS>
 		  <REMOVE ,GRAYS>
 		  <REMOVE ,TORANAGAS-GUARDS>
-		  <DEQUEUE I-AUDIENCE>
 		  <NEXT-SCENE>)>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"AUDIENCE">
 
 <BEGIN-SEGMENT PRISON>
 
@@ -678,7 +683,7 @@ door seals the prisoners in.")
       (OUT TO PRISON-COURTYARD IF IRON-DOOR IS OPEN)
       (EAST TO PRISON-COURTYARD IF IRON-DOOR IS OPEN)
       (FLAGS ONBIT)
-      (GLOBAL LG-LINE IRON-DOOR PRISON MADMAN)
+      (GLOBAL LG-LINE IRON-DOOR PRISON MADMAN LG-MEN)
       (THINGS <> PRISONER PRISONER-PSEUDO
 	      <> PRISONERS PRISONER-PSEUDO)
       (ACTION PRISON-F)>
@@ -734,7 +739,7 @@ Spanish?\"" CR>)
 			      <TELL
 "\"Ah, the senor is from our dominions in Spanish Flanders!">
 			      <COND (<FSET? ,DOMINGO ,SCOREBIT>
-				     <TELL " But please,
+				     <TELL "But please,
 speak Spanish!  I have heard no Spanish since I came to this awful
 place!\"">)>
 			      <CRLF>)
@@ -852,9 +857,10 @@ other for it." CR>)>)
 	(DESC "apelike man")
 	(SYNONYM APE MAN THUG CONVICT PRISONER)
 	(ADJECTIVE APELIKE UNSHAVEN FILTHY LICE-RIDDEN FILTHY ;"DEAD")
-	(FLAGS AN PERSON JAPANESEBIT OPENBIT CONTBIT SEARCHBIT SCOREBIT)
+	(FLAGS AN PERSON THE JAPANESEBIT OPENBIT CONTBIT SEARCHBIT SCOREBIT)
 	(HEALTH 3)
 	(DESCFCN THUG-DESC)
+	(GENERIC GENERIC-MAN-F)
 	(ACTION THUG-F)>
 
 <ROUTINE THUG-DESC (RARG OBJ)
@@ -1054,7 +1060,8 @@ nodding happily in your direction." CR>)>>
 	(DESC "bulldog-like man")
 	(SYNONYM MAN PRISONER BULLDOG AKABO GONZALEZ)
 	(ADJECTIVE BULLDOG BULLDOG-LIKE)
-	(FLAGS PERSON JAPANESEBIT NDESCBIT OPENBIT CONTBIT SEARCHBIT SCOREBIT)
+	(FLAGS PERSON JAPANESEBIT THE NDESCBIT OPENBIT CONTBIT SEARCHBIT SCOREBIT)
+	(GENERIC GENERIC-MAN-F)
 	(ACTION BULLDOG-F)>
 
 <ROUTINE BULLDOG-F ("OPT" (RARG <>))
@@ -1379,10 +1386,6 @@ prisoners." CR>)>)>)
 	(GENERIC GENERIC-CRAZY-F)
 	(ACTION MADMAN-F)>
 
-<ROUTINE GENERIC-CRAZY-F (R F)
-	 <COND (<SCENE? ,S-PRISON> ,MADMAN)
-	       (ELSE ,CRAZY)>>
-
 <ROUTINE MADMAN-F ("OPT" RARG)
 	 <COND (<RARG? WINNER>
 		<TELL
@@ -1660,6 +1663,7 @@ saying, \""I"Iye!""\"" CR>
 
 <OBJECT YABU-PALANQUIN
 	(OWNER YABU)
+	(SCENE S-PRISON)
 	(DESC "palanquin")
 	(SYNONYM PALANQUIN LITTER)
 	(FLAGS VEHBIT OPENBIT CONTBIT SEARCHBIT)
@@ -1808,7 +1812,7 @@ no ship in all Asia like yours, and if Toranaga commands, you can sweep
 the Portuguese and Spanish from the seas with it, make a gift to him of
 the Black Ship, destroy his enemies, anything!" CR>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"PRISON">
 
 "S-MARIKO"
 
@@ -1939,6 +1943,50 @@ little else.  The interiors are almost entirely mysteries.\"" CR>)
 			      <TELL
 "You bow to Ishido, but he ignores you." CR>)>)>)>>
 
+<ROUTINE MARIKO-TELL-MARIKO-ABOUT ()
+	 <COND (<PRSI? ,ME>
+		<TELL
+"You relate the story of your life. Toranaga questions
+you closely about many points, particulary those relating to war and
+politics." CR>)
+	       (<PRSI? ,DOMINGO ,PRISON>
+		<HOW-I-LEARNED>)
+	       (<PRSI? ,QUEEN ,ENGLAND>
+		<TELL
+"\"My land is ruled by a Queen.  Queen Elizabeth whose father freed us from
+the hated priests, and whose wise rule these many years has kept us
+free!\"" CR>)
+	       (<PRSI? ,BLACK-SHIP>
+		<TELL
+"\"Give me back my ship and I'll sweep the Portuguese and Spanish from the
+sea and bring you the Black Ship!\"" CR>)
+	       (<PRSI? ,WORLD>
+		<TELL
+"\"Perhaps I could draw you a map of the world, as we know it?\"|
+|
+Toranaga seems interested." CR>)
+	       (<PRSI? ,VOYAGE>
+		<TELL
+"\"We were two years sailing here, through Magellan's Pass into the Pacific.\"|
+|
+Toranaga interrupts, and Mariko says, \"My Master says you are mistaken.  All
+bar -- all Portuguese come from the south.\"|
+|
+\"Yes, it's true they favor that way,\" you reply.  \"They have dozens of forts
+all along the route.  Most of those forts employ Japanese troops, by the way.\"|
+|
+You see an immediate reaction on Mariko's face, and when she translates, on
+Toranaga's." CR>)
+	       (<PRSI? CHURCH POPE>
+		<TELL
+"\"The Pope divided the world between Spain and Portugal.  Portugal has the
+exclusive right to this country, to all these countries -- Japan, China, and
+Africa -- in return for spreading Catholicism.\"" CR>)
+	       (ELSE
+		<TELL
+"Mariko passes on the information to Toranaga, but he doesn't seem too
+interested." CR>)>>
+
 <ROUTINE HOW-I-LEARNED ()
 	 <SETG QCONTEXT <>>
 	 <SETUP-ANSWER <>>
@@ -2042,8 +2090,7 @@ the soothsayer's prediction!\"|
 |
 \"No, Lord Toranaga, I haven't forgotten,\" Ishido says, remembering very
 well.  He bows again, very deferential to the boy, and leaves." CR>)
-		 (<DEQUEUE I-YAEMON>
-		  <TELL CR
+		 (<TELL CR
 "Soon the interview is over, and the Heir is sent for his swimming
 lesson.  Toranaga installs you in his own sleeping chamber, as a mark of his
 favor.  Things are looking up, indeed!" CR>
@@ -2118,4 +2165,4 @@ in for trouble!\"|
 Ingeles, it's quite possible the Taiko's Expulsion Edicts would be reexamined and
 all Christian churches, schools, places of rest, would be immediately closed.\"" CR>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"MARIKO">

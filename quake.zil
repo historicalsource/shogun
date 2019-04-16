@@ -202,7 +202,7 @@ scabbarded, though muddied and scarred." CR>)>)
 			      <COND (<AND <FSET? ,SIDE-FISSURE ,RMUNGBIT>
 					  <FSET? ,PLATEAU ,SCOREBIT>>
 				     <TELL
-" You and Toranaga laugh at the sheer
+"You and Toranaga laugh at the sheer
 joy of being alive, which blocks you even more.  At length you both
 succeed.  You relax and collect your strength." CR>
 				     <SETG DELAY-CNT 0>
@@ -293,25 +293,25 @@ cleft.  Mariko screams as it swallows her." CR>)
 "There is a new shock.">
 		  <COND (<IN? ,BLACKTHORNE ,SIDE-FISSURE>
 			 <TELL
-" The ledge you and Mariko are on mostly gives way, only a few tiny
+"The ledge you and Mariko are on mostly gives way, only a few tiny
 holds remaining as the rest falls downward.">)
 			(<IN? ,MARIKO ,SIDE-FISSURE>
 			 <TELL
-" Mariko screams for help from within the side fissure.">)>
+"Mariko screams for help from within the side fissure.">)>
 		  <CRLF>)
 		 (<TELL CR
 "The chasm howls and begins to close.">
 		  <COND (<AND <IN? ,BLACKTHORNE ,SIDE-FISSURE>
 			      <IN? ,MARIKO ,SIDE-FISSURE>>
 			 <TELL
-" You and Mariko fight for balance.">)
+"You and Mariko fight for balance.">)
 			(<IN? ,BLACKTHORNE ,SIDE-FISSURE>
 			 <TELL
-" The far wall screeches sickeningly as it approaches.  Mud and
+"The far wall screeches sickeningly as it approaches.  Mud and
 stones tumble off it.">)
 			(<IN? ,MARIKO ,SIDE-FISSURE>
 			 <TELL
-" You can barely hear Mariko over the rumble of the earthquake.  \"Anjin-san!  Help me!\"">)>
+"You can barely hear Mariko over the rumble of the earthquake.  \"Anjin-san!  Help me!\"">)>
 		  <CRLF>)
 		 (<SETG QUAKE? <>>
 		  <TELL CR
@@ -320,7 +320,7 @@ stones tumble off it.">)
 			 <FSET ,MARIKO ,DEAD>
 			 <FSET ,MARIKO ,NDESCBIT>
 			 <TELL
-" Mariko's ledge gives way, and she slides into the depths, clutching
+"Mariko's ledge gives way, and she slides into the depths, clutching
 futilely at the mud walls, her last scream silenced.">)>
 		  <CRLF>)
 		 (<COND (<IN? ,BLACKTHORNE ,SIDE-FISSURE>
@@ -388,8 +388,7 @@ take a peasant's enjoyment in mere existence." CR>)>)
 			(<AND <FSET? ,PLATEAU ,SCOREBIT>
 			      <L? ,DELAY-CNT 2>>
 			 <RFALSE>)>)
-		 (<DEQUEUE I-QUAKE>
-		  <COND (<IN? ,MARIKO ,HERE>
+		 (<COND (<IN? ,MARIKO ,HERE>
 			 <TELL CR
 G"You lay full length on the ground and look up at the sky.  A moment ago
 you were all ""almost dead, and all worry and heartache was wasted.  "I"Karma"
@@ -459,10 +458,10 @@ fingernails tearing from the effort." CR>)
 		       <COND (<IN? ,TORANAGA ,MAIN-FISSURE>
 			      <COND (<IN? ,WINNER ,MAIN-FISSURE>
 				     <TELL
-" You are only barely holding on beside Toranaga." CR>)
+"You are only barely holding on beside Toranaga." CR>)
 				    (ELSE
 				     <TELL
-" Toranaga clings precariously to the wall a few feet below." CR>)>)
+"Toranaga clings precariously to the wall a few feet below." CR>)>)
 			     (ELSE <CRLF>)>)
 		      (<VERB? ENTER BOARD CLIMB-DOWN>
 		       <COND (<NOT <FSET? ,MAIN-FISSURE ,RMUNGBIT>>
@@ -511,13 +510,13 @@ G"There are no longer any footholds or ledges." CR>)>)>)>>
 		       <COND (<AND <IN? ,MARIKO ,SIDE-FISSURE>
 				   <IN? ,BLACKTHORNE ,SIDE-FISSURE>>
 			      <TELL
-" You and Mariko are clinging">)
+"You and Mariko are clinging">)
 			     (<IN? ,MARIKO ,SIDE-FISSURE>
 			      <TELL
-" Mariko clings">)
+"Mariko clings">)
 			     (<IN? ,BLACKTHORNE ,SIDE-FISSURE>
 			      <TELL
-" You are clinging">)
+"You are clinging">)
 			     (ELSE <RFATAL>)>
 		       <TELL " desperately to the crumbling"G" wall, standing
 precariously on a narrow ledge.">
@@ -527,7 +526,7 @@ precariously on a narrow ledge.">
 "The main fissure snakes down from the hill, its muddy depths gaping.">
 		       <COND (<IN? ,BLACKTHORNE ,SIDE-FISSURE>
 			      <TELL
-" You are clinging desperately to the muddy"G" wall, standing
+"You are clinging desperately to the muddy"G" wall, standing
 precariously on a narrow ledge.">)>
 		       <RFATAL>)>)>>
 
@@ -556,19 +555,19 @@ you with his iron grip." CR>)
 		      (<OR <P? (RAISE PUSH-UP PUSH-OUT PUSH HELP THROW-OFF)
 			       MARIKO
 			       (<> ROOMS SIDE-FISSURE)>
-			   <P? (PUSH-TO GIVE) MARIKO TORANAGA>>
+			   <P? (PUSH-TO PUSH-UP GIVE) MARIKO TORANAGA>>
 		       <TELL
 "Your terror lends you inhuman strength and somehow you manage to
 rip Mariko out of the tomb and shove her upward.">
 		       <COND (<IN? ,TORANAGA ,HERE>
 			      <MOVE ,MARIKO ,HERE>
 			      <TELL
-" Toranaga clutches her wrist and hauls her over the lip of the
+"Toranaga clutches her wrist and hauls her over the lip of the
 chasm." CR>
 			      <SCORE-OBJECT ,SIDE-FISSURE>)
 			     (ELSE
 			      <TELL
-" She tries to pull herself over the lip of the chasm but she can't
+"She tries to pull herself over the lip of the chasm but she can't
 get a grip on the mud and falls back." CR>)>)
 		      (<OR <VERB? DISEMBARK CLIMB-UP>
 			   <P? WALK (OUT UP)>
@@ -591,10 +590,10 @@ the shuddering brink, your lungs gulping air, unable to crawl away." CR>)>)
 				   <NOT <FSET? ,MARIKO ,DEAD>>>
 			      <COND (<IN? ,WINNER ,SIDE-FISSURE>
 				     <TELL
-" You are standing beside Mariko on a small ledge.">)
+"You are standing beside Mariko on a small ledge.">)
 				    (ELSE
 				     <TELL
-" Mariko is shivering on a ledge a few feet below.">)>)>
+"Mariko is shivering on a ledge a few feet below.">)>)>
 		       <CRLF>)
 		      (<VERB? REACH-IN>
 		       <PERFORM ,V?TAKE ,MARIKO>
@@ -608,7 +607,7 @@ the shuddering brink, your lungs gulping air, unable to crawl away." CR>)>)
 and almost blinding you.">
 			      <COND (<IN? ,MARIKO ,SIDE-FISSURE>
 				     <TELL
-"  You reach the narrow ledge on which Mariko is standing." CR>)
+"You reach the narrow ledge on which Mariko is standing." CR>)
 				    (ELSE
 				     <TELL
 "You reach a narrow crumbling ledge." CR>)>)
@@ -617,12 +616,6 @@ and almost blinding you.">
 G"There are no longer any footholds or ledges." CR>)>)>)>>
 
 <ROUTINE I-CRAWL () <RFALSE>>
-
-<END-SEGMENT>
-
-"S-ZATAKI"
-
-<BEGIN-SEGMENT ZATAKI>
 
 <ROUTINE ZATAKI-AFTER-F ()
 	 <MARGINAL-PIC ,P-WARRIOR T ,P-WARRIOR-CORNER T>
@@ -693,7 +686,7 @@ to the will of the Council.\"  He bows formally." CR>
 "\"You're going to submit?,\" Zataki begins, his face twisting with
 disbelief." CR>
 	<TELL CR
-"\"Listen!  I accept the invitation!  I will leave today!\"">>
+"\"Listen!  I accept the invitation!  I will leave today!\"" CR>>
 
 <OBJECT ZATAKI
 	(LOC GLOBAL-OBJECTS)
@@ -718,11 +711,11 @@ his swords well used." CR>)
 "Zataki is Lord of Shinano and half-brother of Toranaga.">
 		       <COND (<G=? ,SCENE ,S-QUAKE>
 			      <TELL
-" He is a member of the Council of Regents, replacing Lord Sugiyama,
+"He is a member of the Council of Regents, replacing Lord Sugiyama,
 who was murdered by "I"ronin"" -- or assassinated by Ishido.">)>
 		       <CRLF>)>)>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"QUAKE">
 
 "S-JOURNEY"
 
@@ -799,7 +792,7 @@ tied loosely about her waist." CR>)
 				    (ELSE
 				     <TELL
 "She is naked, preparing to take her bath.">)>
-			      <TELL " The first time you saw her naked
+			      <TELL "The first time you saw her naked
 you were greatly affected.  Now her nakedness, of itself, does not touch
 you physically.  Living closely in Japanese style in a Japanese house
 where the walls are paper and the rooms multipurpose, you have seen her
@@ -935,7 +928,7 @@ you remove it.  You put it aside, neatly folded." CR>)>>
 "A large wooden bathtub dominates the room.">
 		<COND (<IN? ,MARIKO ,BATHTUB>
 		       <TELL
-"  Mariko is bathing in the tub.">)>
+"Mariko is bathing in the tub.">)>
 		<RFATAL>)>>
 
 <ROUTINE YOKOSE-BATHTUB-F ("OPT" (RARG <>) "AUX" RUIN)
@@ -1035,14 +1028,14 @@ G"You try to drink the scalding bathwater, but it's far too hot." CR>)>)>>
 "First, you put down the towel so it won't get wet.  ">)>>
 
 <ROUTINE EXHIBITION ()
-	 <TELL " People are watching all around the room, undisturbed by
+	 <TELL "People are watching all around the room, undisturbed by
 a public exhibition that would lead to prison or worse in
 England.|
 |
 As the bath finishes and you climb out, you try to hide your anticipation
 of the night -- your anticipation and your fear of discovery." CR>
-	 <TIME-PASSES>
 	 <SCORE-OBJECT ,YOKOSE-BATHTUB>
+	 <TIME-PASSES>
 	 <DRESS-BLACKTHORNE>
 	 <MOVE ,DICTIONARY ,YOKOSE-SPA-1>
 	 <MOVE ,MARIKO ,YOKOSE-SPA-3>
@@ -1129,7 +1122,6 @@ your prudishness." CR>
 				<TELL CR
 "Mariko climbs out of the bath, puts on her robe, and with a slightly
 disappointed bow, heads inside." CR>
-				<DEQUEUE I-YOKOSE-BATH>
 				<FAILED-SCENE>)>
 			 <RTRUE>)>)
 		 (<REMOVE ,ROBE>
@@ -1208,8 +1200,9 @@ away to the city of Odawara.  From there to Yedo is only a matter of time.\"|
 \"Not enough,\" she answered.|
 |
 \"You're wrong, my love, so sorry,\" you said.  \"There's all the time in the
-world.\"" CR CR>
-		       <NEXT-SCENE>)>)>>
+world.\"" CR>
+		       <NEXT-SCENE>
+		       <RFATAL> ;"short out v-first-look")>)>>
 
 <ROOM YOKOSE-SPA-2
       (LOC ROOMS)
@@ -1277,7 +1270,8 @@ are rooms to the east and west.")
 		<COND (<IN? ,CHIMMOKO ,HERE>
 		       <MOVE ,CHIMMOKO ,YOKOSE-CORRIDOR-2>
 		       <TELL
-"As you enter the room, Chimmoko slips silently out." CR CR>)>)
+"As you enter the room, Chimmoko slips silently out." CR CR>)>
+		<RTRUE>)
 	       (<RARG? BEG>
 		<COND (<P? WALK (P?OUT P?EAST)>
 		       <COND (<EQUAL? <LOC ,YOSHINAKA> ,YOKOSE-CORRIDOR-1

@@ -4,8 +4,6 @@
 
 <BEGIN-SEGMENT 0>
 
-<GLOBAL DEMO-VERSION? <>>	;"for swg"
-
 <PROPDEF SCENE <> (SCENE "MANY" S:FIX = <> "MANY" <BYTE .S>)>
 <PROPDEF SCORE <> (SCORE N:FIX = 2 <BYTE 0> <BYTE .N>)>
 
@@ -394,6 +392,9 @@
 ;<ROUTINE RANDOM-ELEMENT (FROB)
 	 <GET .FROB <RANDOM <GET .FROB 0>>>>
 
+<DEFMAC APPLE? ()
+   '<EQUAL? ,MACHINE ,APPLE-2E ,APPLE-2C ,APPLE-2GS>>
+
 
 
 ;"former MAIN.ZIL stuff"
@@ -402,11 +403,18 @@
 
 <GLOBAL SCENE 0>
 
-<ROUTINE SCENE-SELECT ("OPT" (FULL? <>) "AUX" TMP M WID WHICH)
+<ROUTINE SCENE-SELECT ("OPT" (FULL? <>) "AUX" TMP M WID WHICH L Y END)
+	 <SET L <+ <GET ,PART-MENU ;.MEN 0> 1>>
+	 <SET END <+ 1 <WINGET ,S-FULL ,WHIGH>>>
+	 <COND (<APPLE?> <SET L <+ .L 2>>)>
+	 <SET TMP <* .L ,FONT-Y>>
+	 <SET Y <- .END .TMP>>
+	 <COND (<APPLE?> <SET Y <- .Y <* 2 ,FONT-Y>>>)>
+	 <WINDEF ,S-TEXT
+		 .Y <WINGET ,S-TEXT ,WLEFT>
+		 .TMP <WINGET ,S-TEXT ,WWIDE>>
+	 <RESET-MARGIN>
 	 <REPEAT ()
-		 <SPLIT <- <WINGET ,S-FULL ,WHIGH>
-			   <* <+ <GET ,PART-MENU ;.MEN 0> 1> ,FONT-Y>>>
-		 <RESET-MARGIN>
 		 <CLEAR ,S-TEXT>
 		 <SCREEN ,S-TEXT>
 		 <SET WHICH
@@ -414,13 +422,12 @@
 				     ,PART-MENU
 				     ,SCENE-SELECT-F
 				     1>>
-		 <COND (<EQUAL? .WHICH -1>
-			<SET FULL? <NOT .FULL?>>)
-		       (.WHICH <RTRUE>)>>>
+		 <COND (.WHICH <RTRUE>)>>>
 
 <ROUTINE SCENE-SELECT-F (TMP M)
 	 <COND (<EQUAL? .TMP 1>
-		<SPLIT <* ,FONT-Y ,STATUS-LINES>>
+		<SETUP-TEXT-AND-STATUS>
+		;<SPLIT <* ,FONT-Y ,STATUS-LINES>>
 		<SETG SCENE <GET ,SCENES 1>>)
 	       (<EQUAL? .TMP 2>
 		<CLEAR ,S-TEXT>
@@ -466,7 +473,7 @@
 		   "Epilogue">>
 
 <DEFMAC SCENE-CONSTANTS ("TUPLE" SS "AUX" (CNT 0))
-	<MAPF ,LTABLE
+	<MAPF ,PLTABLE
 	      <FUNCTION (S)
 		   <EVAL <FORM CONSTANT .S <SET CNT <+ .CNT 1>>>>>
 	      .SS>>
@@ -493,67 +500,142 @@
 			   S-EPILOGUE>>
 
 <CONSTANT SCENE-LOCS
-	  <LTABLE BRIDGE-OF-ERASMUS 	;"S-ERASMUS"
-		  MURA-HOUSE		;"S-ANJIRO"
-		  VILLAGE-SQUARE	;"S-YABU"
-		  PIT			;"S-PIT"
-		  ANJIRO-WATERFRONT	;"S-RODRIGUES"
-		  GALLEY		;"S-VOYAGE"
-		  OUTER-CORRIDOR	;"S-TORANAGA"
-		  PRISON		;"S-PRISON"
-		  MAPLE-GLADE		;"S-MARIKO"
-		  COURTYARD		;"S-ESCAPE"
-		  PLATEAU		;"S-QUAKE"
-		  YOKOSE-BATH-HOUSE	;"S-JOURNEY"
-		  OCHIBA-ROOM		;"S-OCHIBA"
-		  FORECOURT		;"S-DEPARTURE"
-		  FORMAL-GARDEN		;"S-SEPPUKU"
-		  PRIVATE-QUARTERS	;"S-NINJA"
-		  YOKOHAMA		;"S-YOKOHAMA"
-		  STABLE		;"S-AFTERMATH"
-		  SEKIGAHARA		;"S-EPILOGUE">>
+	  <PLTABLE BRIDGE-OF-ERASMUS	;"S-ERASMUS"
+		   MURA-HOUSE		;"S-ANJIRO"
+		   VILLAGE-SQUARE	;"S-YABU"
+		   PIT			;"S-PIT"
+		   ANJIRO-WATERFRONT	;"S-RODRIGUES"
+		   GALLEY		;"S-VOYAGE"
+		   OUTER-CORRIDOR	;"S-TORANAGA"
+		   PRISON		;"S-PRISON"
+		   MAPLE-GLADE		;"S-MARIKO"
+		   COURTYARD		;"S-ESCAPE"
+		   PLATEAU		;"S-QUAKE"
+		   YOKOSE-BATH-HOUSE	;"S-JOURNEY"
+		   OCHIBA-ROOM		;"S-OCHIBA"
+		   FORECOURT		;"S-DEPARTURE"
+		   FORMAL-GARDEN	;"S-SEPPUKU"
+		   PRIVATE-QUARTERS	;"S-NINJA"
+		   YOKOHAMA		;"S-YOKOHAMA"
+		   STABLE		;"S-AFTERMATH"
+		   SEKIGAHARA		;"S-EPILOGUE">>
+
+<CONSTANT SCENE-PICS
+	  <TABLE (PURE BYTE LENGTH)
+		 P-STORM	;"S-ERASMUS"
+		 P-GARDEN	;"S-ANJIRO"
+		 P-YABU-SEG	;"S-YABU"
+		 P-PIT		;"S-PIT"
+		 P-RODRIGUES-SEG ;"S-RODRIGUES"
+		 P-CONFUSION	;"S-VOYAGE"
+		 P-OSAKA	;"S-TORANAGA"
+		 P-PRISON-SEG	;"S-PRISON"
+		 P-MARIKO-SEG	;"S-MARIKO"
+		 P-PROCESSION	;"S-ESCAPE"
+		 P-QUAKE	;"S-QUAKE"
+		 P-BATH		;"S-JOURNEY"
+		 P-OCHIBA-SEG	;"S-OCHIBA"
+		 P-DEPARTURE-SEG ;"S-DEPARTURE"
+		 P-SEPPUKU	;"S-SEPPUKU"
+		 P-NINJA	;"S-NINJA"
+		 P-VINCK	;"S-YOKOHAMA"
+		 P-AFTERMATH-SEG ;"S-AFTERMATH"
+		 P-CREST	;"S-EPILOGUE">>
 
 <GLOBAL MACHINE <>>
 <GLOBAL WIDTH 0>
 
-<END-SEGMENT>
+<END-SEGMENT ;"0">
 
 <BEGIN-SEGMENT STARTUP>
 
 <ROUTINE GO () 
 	 <MOUSE-LIMIT -1>
-	 <SETG FG-COLOR <LOWCORE (CLRWRD 1)>>
-	 <SETG BG-COLOR <LOWCORE (CLRWRD 0)>>
+	 <SETG MACHINE <LOWCORE INTID>>
+	 <COND ;(<EQUAL? ,MACHINE ,AMIGA> ;"sigh, all Amiga colors are ugly"
+		<SETG FG-COLOR ,C-BLACK>
+		<SETG BG-COLOR 10 ;"light gray">
+		<COLOR ,FG-COLOR ,BG-COLOR>)
+	       (ELSE
+		<SETG FG-COLOR <LOWCORE (CLRWRD 1)>>
+		<SETG BG-COLOR <LOWCORE (CLRWRD 0)>>)>
+	 <COND (<APPLE?>
+		<SETG TEXT-MARGIN 0>
+		<COND (<PICINF ,P-BORDER ,YX-TBL>
+		       <SETG BORDER-HEIGHT <GET ,YX-TBL 0>>)>)
+	       (ELSE <SETG TEXT-MARGIN 2>)>
 	 <SETG LIT T>
 	 <SETG CLOCK-HAND <REST ,C-TABLE ,C-TABLELEN>>
-	 <SETG MACHINE <LOWCORE INTID>>
 	 <SETG PLAYER ,BLACKTHORNE>
 	 <SETUP-FULL>
 	 <TITLE-SCREEN>
+	 <COND (,DEMO-VERSION?
+		<SLIDE-SHOW>
+		<AGAIN>)>
 	 <SETUP-DISPLAY>
 	 <SCENE-SELECT>
 	 <GOTO-SCENE ,SCENE <>>
 	 <MAIN-LOOP>>
 
-<END-SEGMENT>
+<ROUTINE SLIDE-SHOW ()
+	<CLEAR -1>
+	<TELL
+"This is a demonstration version of SHOGUN.|
+|
+	First you will see a few samples of the graphic screens that await you
+in SHOGUN.We've used graphics in surprising new ways to enhance the
+story without detracting from Infocom's traditional richness and depth.|
+	Then you will be able to interact with a small section of
+SHOGUN.Feel free to try the new friendlier parser, the optional mouse
+interface, and the on-screen hints.|
+	SHOGUN is an adaptation of James Clavell's novel,
+which has sold over 7 million copies and inspired the popular T.V.
+mini-series.Dave Lebling, while collaborating with Clavell, has
+incorporated the creative style and rich prose that have made his
+earlier ZORK titles so popular.|
+	In SHOGUN you are transcended into the world of Clavell's saga, which
+combines all of the mystery and action of a great adventure story with
+the intensity and romance of a classic love story.Whether you find
+yourself matching wits with tyrannical Japanese aristocrats or fighting
+off attacks by Ninja assassins, you are sure to be both challenged and
+entertained.Both the action and the intriguing, historical locale set
+the stage for unparalleled fun and excitement.|
+">
+	<TYPE-ANY-KEY>
+	<END-DEMO>>
+
+<ROUTINE END-DEMO ()
+	<CLEAR -1>
+	<TELL "|
+You have reached the end of this demonstration version of|">
+	<V-VERSION>
+	<TELL "||">
+	<TYPE-ANY-KEY>
+	<SCREEN ,S-TEXT>
+	;<DEFAULT-COLORS> ;"return to default before screen clears"
+	<RESTART>
+	<TELL ,FAILED>
+	<AGAIN>>
+
+<END-SEGMENT ;"STARTUP">
 
 <BEGIN-SEGMENT 0>
 
 <CONSTANT S-FULL 7>
 
-<ROUTINE SETUP-FULL ("AUX" (HIGH <LOWCORE VWRD>) (WIDE <LOWCORE HWRD>))
-	 <WINDEF ,S-FULL 1 1 .HIGH .WIDE>>
-
-<ROUTINE SETUP-DISPLAY ("AUX" X (HIGH <LOWCORE VWRD>) (WIDE <LOWCORE HWRD>))
-	 <MOUSE-LIMIT -1>
-	 <SETUP-FULL>
+<ROUTINE SETUP-FULL ("AUX" (HIGH <LOWCORE VWRD>) (WIDE <LOWCORE HWRD>) X)
+	 <WINDEF ,S-FULL 1 1 .HIGH .WIDE>
 	 <SET X <WINGET ,S-TEXT ,WFSIZE>>
 	 <SETG FONT-Y <HIGH-BYTE .X>>
-	 <SETG FONT-X <LOW-BYTE .X>>
+	 <SETG FONT-X <LOW-BYTE .X>>>
+
+<ROUTINE SETUP-DISPLAY ("AUX" (HIGH <LOWCORE VWRD>) (WIDE <LOWCORE HWRD>))
+	 <MOUSE-LIMIT -1>
+	 <SETUP-FULL>
 	 <SETUP-TEXT-AND-STATUS>
 	 <SET WIDE <WINGET ,S-TEXT ,WWIDE>>
 	 <MARGIN ,TEXT-MARGIN ,TEXT-MARGIN ,S-TEXT>
-	 <SET WIDE <- .WIDE 4>>
+	 <SET WIDE <- .WIDE <* 2 ,TEXT-MARGIN>>>
 	 <SETG WIDTH <GETB ,P-INBUF 0>>
 	 <SET WIDE </ .WIDE ,FONT-X>>
 	 <COND (<L? .WIDE ,WIDTH>
@@ -566,19 +648,29 @@
 
 <ROUTINE REPAINT-DISPLAY ("OPT" (NO-BORDER? <>))
 	 <RESET-MARGIN>
-	 <COLOR ,FG-COLOR ,BG-COLOR>
+	 <NORMAL-COLOR>
 	 <SETUP-DISPLAY>
-	 <COND (<NOT .NO-BORDER?> <DISPLAY-BORDER>)>
+	 <COND (<OR <APPLE?> <NOT .NO-BORDER?>>
+		<DISPLAY-BORDER>)>
 	 <INIT-STATUS-LINE T>
 	 <COND (<HERE? ,MAZE>
 		<DISPLAY-MAZE>)>>
 
 <ROUTINE GOTO-SCENE (SC "OPT" (OSC ,SCENE))
+	 <CLEAR ,S-TEXT>
+	 <COND (<AND <APPLE?> <NOT .OSC>>
+		<SCREEN ,S-STATUS>
+		<CLEAR ,S-STATUS>
+		<DISPLAY-BORDER ,P-EBORDER>)
+	       (<NOT <EQUAL? ,CURRENT-BORDER ,P-BORDER>>
+		<DISPLAY-BORDER ,P-BORDER>)>
 	 <END-QUOTE>
 	 <RESET-MARGIN>
 	 <DEQUEUE-ALL>
+	 <SETG ORPHAN-ANSWER <>>
 	 <SETG SCENE .SC>
 	 <SETG HERE <GET ,SCENE-LOCS ,SCENE>>
+	 <TOUCH-SEG <GETB ,SCENE-PICS ,SCENE>>
 	 <FCLEAR ,HERE ,TOUCHBIT>
 	 <SETG QCONTEXT <>>
 	 <MOVE-ALL ,BLACKTHORNE>
@@ -602,6 +694,10 @@
 		<CLOCKER> ;"simulate a previous move..."
 		<SETG MOVES 0>)>
 	 <RTRUE>>
+
+<ROUTINE TOUCH-SEG (S)
+	 <COND (<OR <APPLE?> <EQUAL? ,MACHINE ,IBM>>
+		<PICINF .S ,YX-TBL>)>>
 
 ;<GLOBAL WAS-IT? <>>
 ;<GLOBAL WAS-THEM? <>>
@@ -818,7 +914,7 @@ be included when the crunch comes."
 
 <GLOBAL CLOCK-HAND <>>
 
-<ROUTINE CLOCKER ("AUX" E TICK RTN (FLG <>) (Q? <>) OWINNER TMP (OSC ,SCENE))
+<ROUTINE CLOCKER ("AUX" E TICK RTN (FLG <>) (Q? <>) OWINNER TMP)
 	 <COND (,CLOCK-WAIT <SETG CLOCK-WAIT <>> <RFALSE>)>
 	 <COND (<EQUAL? ,HERE ,STATIONARY?>
 		<SETG STATIONARY-CNT <+ ,STATIONARY-CNT 1>>)
@@ -830,8 +926,11 @@ be included when the crunch comes."
 	 <SET OWINNER ,WINNER>
 	 <SETG WINNER ,PLAYER>
 	 <REPEAT ()
+		 <COND (,NEW-SCENE-NUMBER
+			<I-NEW-SCENE>
+			<SETG CLOCK-HAND <REST ,C-TABLE ,C-INTS>>
+			<SET FLG T>)>
 		 <COND (<EQUAL? ,CLOCK-HAND .E>
-			<SETG CLOCK-HAND .E>
 			<SETG MOVES <+ ,MOVES 1>>
 			<SETG WINNER .OWINNER>
 			<RETURN .FLG>)
@@ -856,7 +955,6 @@ be included when the crunch comes."
 							    1>>)>>
 				      <COND (<ZERO? .TICK>
 					     <PUT ,CLOCK-HAND ,C-RTN 0>)>
-				      <SET OSC ,SCENE>
 				      <COND (<SET TMP <APPLY .RTN>>
 					     <SET FLG .TMP>)>
 				      <COND (<AND <NOT .Q?>
@@ -865,7 +963,7 @@ be included when the crunch comes."
 						    <GET ,CLOCK-HAND
 							 ,C-RTN>>>>
 					     <SET Q? T>)>)>)>)>
-		 <COND (<NOT <EQUAL? .OSC ,SCENE>> ;"new scene during int?"
+		 <COND (,NEW-SCENE-NUMBER ;"new scene during int?"
 			<SETG CLOCK-HAND <REST ,C-TABLE ,C-INTS>>)
 		       (<EQUAL? .FLG ,M-FATAL>
 			<SETG CLOCK-HAND .E>)
@@ -1050,7 +1148,4 @@ be included when the crunch comes."
 <ROUTINE CURSOR-ON ()
 	 <CURSET -2>>
 
-<DEFMAC APPLE? ()
-   '<EQUAL? ,MACHINE ,APPLE-2E ,APPLE-2C ,APPLE-2GS>>
-
-<END-SEGMENT>
+<END-SEGMENT ;"0">

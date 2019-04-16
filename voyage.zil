@@ -8,65 +8,6 @@
 
 <CONSTANT J-PILING 60>
 
-<OBJECT LG-BAY
-	(LOC LOCAL-GLOBALS)
-	(DESC "bay")
-	(SYNONYM BAY HARBOR POINT)
-	(FLAGS NDESCBIT)
-	(ACTION LG-BAY-F)>
-
-<ROUTINE LG-BAY-F ()
-	 <COND (<VERB? EXAMINE>
-		<COND (<SCENE? ,S-VOYAGE>
-		       <TELL
-"The bay looks like an island of relative calm." CR>)
-		      (ELSE
-		       <TELL
-"The harbor is a small bay protected by reefs almost out of sight to the
-east." CR>)>)
-	       (<P? (PUT THROW) * LG-BAY>
-		<PERFORM ,PRSA ,PRSO ,LG-SEA>
-		<RTRUE>)>>
-
-<OBJECT LG-LAND
-	(LOC LOCAL-GLOBALS)
-	(DESC "land")
-	(SYNONYM LAND SHORE ROCK ROCKS CLIFF CLIFFS HEADLAND WATERFRONT WHARF)
-	(ADJECTIVE DRY)
-	(FLAGS NDESCBIT)
-	(ACTION LG-LAND-F)>
-
-<ROUTINE LG-LAND-F ("AUX" TRIES)
-	 <COND (<AND <SCENE? ,S-ANJIRO ,S-RODRIGUES>
-		     <VERB? WALK-TO>>
-		<DO-WALK ,P?WEST>)
-	       (<AND <SCENE? ,S-VOYAGE>
-		     <VERB? POINT>
-		     <NOT <FSET? ,ANCHOR ,SCOREBIT>>>
-		<COND (<FSET? ,SKIFF ,RMUNGBIT>
-		       <SET TRIES <GETP ,SKIFF ,P?COUNT>>
-		       <PUTP ,SKIFF ,P?COUNT <+ .TRIES 1>>
-		       <COND (<ZERO? .TRIES>
-			      <TELL
-"Hiro-matsu is here, with Yabu beside him.  They eventually realize
-you are proposing to go ashore, and Hiro-matsu responds harshly.  ">
-			      <HIRO-MATSU-REFUSES>)
-			     (<EQUAL? .TRIES 1>
-			      <YABU-BOARDS-SKIFF>)>)
-		      (ELSE
-		       <TELL
-G"It would be a good trick, and somewhat amusing, to get into a boat
-while it's still on deck, but not a good idea." CR>)>)
-	       (<VERB? RUB CLIMB-ON>
-		<COND (<OR <SCENE? ,S-ERASMUS>
-			   <AND <SCENE? ,S-VOYAGE>
-				<HERE? ,IN-THE-SEA ,GALLEY ,MAIN-DECK>>>
-		       <TELL
-"It's too far away." CR>)
-		      (ELSE
-		       <TELL
-"It feels like you would expect land to feel." CR>)>)>>
-
 <ROUTINE HIRO-MATSU-REFUSES ()
 	 <TELL
 "\""I"Iye!""\" Hiro-matsu shakes his head, and speaks at length clearly
@@ -78,6 +19,7 @@ refusing permission because of the danger." CR>>
 	 <MOVE ,YABU ,SKIFF>
 	 <MOVE ,SEARCH-PARTY ,SKIFF>
 	 <MOVE ,OARS ,SKIFF>
+	 <FSET ,OARS ,TAKEBIT>
 	 <TELL
 "This time the old man points his sword at the skiff and shakes his
 head.  He and Yabu begin an animated discussion in Japanese, motioning
@@ -103,113 +45,6 @@ below." CR>
 "Yabu motions for you to get in the skiff." CR>)>)>)
 		 (<DEQUEUE I-SKIFF>
 		  <RFALSE>)>>
-
-<OBJECT LG-VILLAGE
-	(LOC LOCAL-GLOBALS)
-	(DESC "fishing village")
-	(SYNONYM VILLAGE)
-	(ADJECTIVE SMALL FISHING)
-	(FLAGS NDESCBIT)
-	(ACTION LG-VILLAGE-F)>
-
-<ROUTINE LG-VILLAGE-F ()
-	 <COND (<SCENE? S-ANJIRO>
-		<COND (<VERB? THROUGH>
-		       <COND (<HERE? ,GARDEN ,MURA-HOUSE> <DO-WALK ,P?EAST>)
-			     (<HERE? ,ANJIRO-WATERFRONT> <DO-WALK ,P?NORTH>)
-			     (ELSE
-			      <TELL "The village is right here." CR>)>)
-		      (<VERB? EXIT>
-		       <COND (<HERE? ,GARDEN ,MURA-HOUSE>
-			      <TELL
-"You can't tell from here how to leave the village." CR>)
-			     (<HERE? ,ANJIRO ,ANJIRO-WATERFRONT>
-			      <DO-WALK ,P?NORTH>)>)>)
-	       (<SCENE? S-VOYAGE>
-		<TELL "The village is too far away, considering your condition." CR>)>>
-
-<OBJECT LG-SEA
-	(LOC LOCAL-GLOBALS)
-	(DESC "sea")
-	(SYNONYM SEA OCEAN WATER WAVES WAVE FOAM
-	         TIDE COMBER COMBERS CURRENT CURRENTS)
-	(ADJECTIVE RAGING FROTHY FOAMY)
-	(FLAGS NDESCBIT VEHBIT)
-	(GENERIC GENERIC-SEA-F)
-	(ACTION LG-SEA-F)>
-
-<ROUTINE GENERIC-SEA-F (R F)
-	 ,LG-SEA>
-
-<ROUTINE LG-SEA-F ("OPT" (RARG <>))
-	 <COND (<RARG? <>>
-		<COND (<VERB? EXAMINE LOOK-INSIDE>
-		       <COND (<SCENE? ,S-ERASMUS>
-			      <TELL
-"The sea is a maze of mountainous waves and razor-spined reef-tops." CR>)
-			     (<SCENE? ,S-VOYAGE>
-			      <TELL
-"The gale-driven surf is thrown high in the air, hurled by the wind
-against the rocky shore.">
-			      <COND (<AND <NOT <HERE? ,GALLEY ,MAIN-DECK
-						      ,IN-THE-SEA>>
-					  <NOT <IN? ,YABU ,HERE>>>
-				     <TELL
-" You can see that the tide is coming in.">)>
-			      <CRLF>)
-			     (ELSE
-			      <TELL "It's full of water." CR>)>)
-		      (<VERB? POINT>
-		       <COND (<IN? ,YABU ,HERE>
-			      <TELL
-"Yabu looks at the sea, and you can tell he hates and perhaps fears
-it." CR>)>) 
-		      (<OR <VERB? BOARD THROUGH SWIM LEAP DIVE>
-			   <P? THROW ME>>
-		       <COND (<HERE? ,ON-DECK ,BRIDGE-OF-ERASMUS>
-			      <COND (<SCENE? S-ANJIRO S-RODRIGUES>
-				     <TELL
-"Wouldn't it be safer to just climb back into the boat?" CR>)
-				    (ELSE
-				     <PERFORM ,V?LEAP ,LG-ERASMUS>
-				     <RTRUE>)>)
-			     (<HERE? ANJIRO-WATERFRONT>
-			      <DO-WALK ,P?EAST>
-			      <RTRUE>)
-			     (<HERE? GALLEY MAIN-DECK>
-			      <COND (<SCENE? ,S-VOYAGE>
-				     <GOTO ,IN-THE-SEA>)
-				    (<JIGS-UP? ,J-PILING>
-				     <JIGS-UP
-"You hit your head on a piling as you attempt this feat.">)
-				    (ELSE <RTRUE>)>)
-			     (<HERE? IN-THE-SEA>
-			      <COND (<IN? ,WINNER ,SKIFF>
-				     <TELL
-"As you try to leap into the sea, the samurai grab you.  They hold you
-tightly as Yabu scowls." CR>)
-				    (ELSE
-				     <TELL G"You already are." CR>)>)
-			     (<IN? ,WINNER ,SMALL-BOAT>
-			      <TELL
-"Why do that when you're in a nice boat?" CR>)
-			     (ELSE
-			      <TELL "You wouldn't like it.  It's wet." CR>)>)
-		      (<P? (PUT THROW) * LG-SEA>
-		       <COND (<HELD? ,PRSO>
-			      <REMOVE ,PRSO>
-			      <TELL
-CTHE ,PRSO " drop">
-			      <COND (<NOT <PLURAL? ,PRSO>> <TELL "s">)>
-			      <TELL " into the water and ">
-			      <COND (<PRSO? ,OARS ,BOAT-OAR ,LIFE-RING>
-				     <TELL "float">)
-				    (ELSE <TELL "sink">)>
-			      <COND (<NOT <PLURAL? ,PRSO>> <TELL "s">)>
-			      <TELL " out of sight." CR>)>)
-		      (<VERB? DRINK>
-		       <TELL
-"Seawater will drive you mad, as every sailor knows." CR>)>)>>
 
 <ROOM IN-THE-SEA
       (LOC ROOMS)
@@ -302,14 +137,6 @@ the waves." CR>
 	(GENERIC GENERIC-GALLEY-F)
 	(ACTION LG-GALLEY-F)>
 
-<ROUTINE GENERIC-GALLEY-F (R F)
-	 <COND (<SCENE? ,S-YABU ,S-ANJIRO ,S-ERASMUS>
-		,LG-ERASMUS)
-	       (<SCENE? ,S-RODRIGUES>
-		,SLAVER)
-	       (ELSE
-		,LG-GALLEY)>>
-
 <ROUTINE LG-GALLEY-DESC (RARG OBJ)
 	 <COND (<RARG? OBJDESC?> <RTRUE>)
 	       (ELSE
@@ -329,7 +156,7 @@ and disappears in the troughs of the waves.">)>)>>
 	 <COND (<VERB? ENTER BOARD CLIMB-FOO CLIMB-ON>
 		<COND (<HERE? ,WHARF>
 		       <DO-WALK ,P?EAST>)
-		      (<HERE? ,GALLEY ,MAIN-DECK>
+		      (<HERE? ,GALLEY ,MAIN-DECK ,MAIN-DECK-2>
 		       <TELL G"You already are." CR>)
 		      (ELSE
 		       <TELL
@@ -338,8 +165,7 @@ and disappears in the troughs of the waves.">)>)>>
 		<COND (<HERE? ,GALLEY>
 		       <PERFORM ,V?TURN ,WHEEL ,PRSI>
 		       <RTRUE>)
-		      (<AND <HERE? ,MAIN-DECK>
-			    <SCENE? ,S-VOYAGE>>
+		      (<HERE? ,MAIN-DECK>
 		       <ARENT-WHERE-PRSO-IS>
 		       <COND (<IN? ,RODRIGUES ,GALLEY>
 			      <FRUSTRATED ,RODRIGUES>)>
@@ -348,7 +174,7 @@ and disappears in the troughs of the waves.">)>)>>
 		       <TELL "You aren't on the galley." CR>)>)>>
 
 <ROUTINE FRUSTRATED (WHO)
-	 <TELL " Frustrated, you yell
+	 <TELL "Frustrated, you yell
 the command to " D .WHO ", but realize that he can't hear you above the
 storm." CR>>
 
@@ -371,7 +197,7 @@ storm." CR>>
 
 <ROOM GALLEY
       (LOC ROOMS)
-      (SCENE S-VOYAGE S-ESCAPE)
+      (SCENE S-VOYAGE)
       (DESC "Toranaga's Galley")
       (SYNONYM GALLEY)
       (OWNER TORANAGA)
@@ -422,11 +248,8 @@ view forward to the oar deck." CR>)
 		<COND (<VERB? WALK>
 		       <COND (<FSET? ,SAFETY-LINE ,WEARBIT>
 			      <TELL
-,YOU-HAVE-TO G"untie your safety line first">
-			      <COND (<SCENE? ,S-VOYAGE>
-				     <TELL ", even though you know that
-without it you could easily be carried overboard." CR>)
-				    (ELSE <TELL "." CR>)>)>)
+,YOU-HAVE-TO G"untie your safety line first"", even though you know that
+without it you could easily be carried overboard." CR>)>)
 		      (<P? UNTIE ME>
 		       <PERFORM ,V?UNTIE ,SAFETY-LINE>
 		       <RTRUE>)
@@ -455,11 +278,10 @@ G"You would surely drown." CR>)>)>)>>
 
 <OBJECT GALLEY-WHEEL
 	(LOC GALLEY)
-	(SCENE S-VOYAGE S-ESCAPE)
+	(SCENE S-VOYAGE)
 	(OWNER GALLEY)
 	(DESC "helm")
 	(SYNONYM WHEEL RUDDER HELM TILLER)
-	(ADJECTIVE SHIPS)
 	(FLAGS CANT-HOLD)
 	(DESCFCN GALLEY-WHEEL-DESC)
 	(ACTION GALLEY-WHEEL-F)>
@@ -476,16 +298,14 @@ G"You would surely drown." CR>)>)>)>>
 		<COND (<OR <FSET? ,SAFETY-LINE ,WEARBIT>
 			   <FSET? ,GALLEY-WHEEL ,ONBIT>>
 		       <COND (<FSET? ,GALLEY-WHEEL ,ONBIT>
-			      <TELL " You have the helm">
+			      <TELL "You have the helm">
 			      <COND (<FSET? ,SAFETY-LINE ,WEARBIT>
 				     <TELL " and a ">)>)
 			     (<FSET? ,SAFETY-LINE ,WEARBIT>
-			      <TELL " The ">)>
+			      <TELL "The ">)>
 		       <COND (<FSET? ,SAFETY-LINE ,WEARBIT>
-			      <TELL "life line secures you">
-			      <COND (<SCENE? ,S-VOYAGE>
-				     <TELL " as the deck pitches and rolls.">)
-				    (ELSE <TELL "." CR>)>)
+			      <TELL
+"life line secures you as the deck pitches and rolls.">)
 			     (ELSE
 			      <TELL
 ". There is a life line lashed to the binnacle.">)>)>)>>
@@ -513,7 +333,7 @@ G"You would surely drown." CR>)>)>)>>
 "You release the helm.">
 		       <COND (<IN? ,RODRIGUES ,HERE>
 			      <TELL
-" Rodrigues takes it.">)>
+"Rodrigues takes it.">)>
 		       <CRLF>)>)
 	       (<P? STRAIGHTEN GALLEY-WHEEL>
 		<SETG P-DIRECTION ,P?FORE>
@@ -568,7 +388,7 @@ with the wind." CR>)
 
 <OBJECT SAFETY-LINE
 	(LOC GALLEY)
-	(SCENE S-VOYAGE S-ESCAPE)
+	(SCENE S-VOYAGE)
 	(DESC "safety line")
 	(SYNONYM LINE LIFELINE ROPE)
 	(ADJECTIVE SAFETY LIFE)
@@ -604,10 +424,10 @@ with the wind." CR>)
 "You untie the line.">
 		       <COND (<FSET? ,ANCHOR ,SCOREBIT>
 			      <TELL
-" You know that without your lifeline you can easily be carried overboard.">
+"You know that without your lifeline you can easily be carried overboard.">
 			      <COND (<FSET? ,OARSMEN ,SCOREBIT>
 				     <TELL
-" But the oars have to be shipped or you are lost.">)>)>
+"But the oars have to be shipped or you are lost.">)>)>
 		       <CRLF>)
 		      (ELSE
 		       <TELL
@@ -616,48 +436,31 @@ with the wind." CR>)
 		<COND (<NOT <FSET? ,SAFETY-LINE ,WEARBIT>>
 		       <MOVE ,SAFETY-LINE ,WINNER>
 		       <FSET ,SAFETY-LINE ,WEARBIT>
-		       <COND (<SCENE? ,S-VOYAGE>
-			      <TELL
+		       <TELL
 "You gratefully return to the safety of the line." CR>)
-			     (ELSE
-			      <TELL
-"You are now tied." CR>)>)
 		      (ELSE
 		       <TELL
 "You're already tied as securely as possible." CR>)>)>>
 
 <ROOM MAIN-DECK
-      (SCENE S-VOYAGE S-ESCAPE)
+      (SCENE S-VOYAGE)
       (LOC ROOMS)
       (DESC "Main Deck")
       (SYNONYM DECK)
       (ADJECTIVE MAIN)
       (AFT TO GALLEY)
       (UP TO GALLEY)
-      (WEST PER MAIN-DECK-EXIT)
       (DOWN SORRY "There's nothing of interest below decks.")
       (FLAGS ONBIT OUTSIDE SCOREBIT)
       (GLOBAL LG-GALLEY LG-SEA LG-LAND LG-BAY LG-RODRIGUES)
       (GENERIC GENERIC-DECK-F)
       (ACTION MAIN-DECK-F)>
 
-<ROUTINE GENERIC-DECK-F (R F)
-	 ,DECK>
-
-<ROUTINE MAIN-DECK-EXIT ("OPT" (RARG <>) (STRICT? <>))
-	 <COND (<SCENE? ,S-ESCAPE> ,WHARF)
-	       (ELSE
-		<COND (<NOT .RARG> <TELL "You can't go that way." CR>)>
-		<RFALSE>)>>
-
 <ROUTINE MAIN-DECK-F (RARG)
 	 <COND (<RARG? LOOK>
 		<TELL
-"This is the oar deck of the galley, forward of the quarterdeck.  ">
-		<COND (<SCENE? ,S-ESCAPE>
-		       <TELL
-"Gray guardsmen crowd the deck." CR>)
-		      (<NOT <FSET? ,ANCHOR ,SCOREBIT>>
+G"This is the oar deck of the galley, forward of the quarterdeck.  ">
+		<COND (<NOT <FSET? ,ANCHOR ,SCOREBIT>>
 		       <TELL
 "The rowers are resting after their ordeal, exhausted but proud of
 their victory over the sea." CR>)
@@ -676,117 +479,50 @@ oars are flailing in the air, some of the oarsmen have been washed
 overboard, and some have slipped their safety lines to try to fight
 order into their oars." CR>)>)
 	       (<RARG? ENTER>
-		<COND (<SCENE? ,S-ESCAPE>
-		       <COND (<EQUAL? ,OHERE ,WHARF>
-			      <MOVE ,MARIKO ,MAIN-DECK>
-			      <MOVE ,BROWNS ,MAIN-DECK>
-			      <TELL
-"You pull yourself up the gangway using the ropes for support.  Your dash
-across the wharf has tired you more than you realized at first.  Mariko and
-two Browns follow after.">)>)
-		      (<SCENE? ,S-VOYAGE>
-		       <COND (<NOT <FSET? ,ANCHOR ,SCOREBIT>>
-			      <TELL
+		<COND (<NOT <FSET? ,ANCHOR ,SCOREBIT>>
+		       <TELL
 "You make your way forward">)
-			     (ELSE
-			      <TELL
+		      (ELSE
+		       <TELL
 "You fight your way forward along the heaving, greasy deck,">)>
-		       <TELL " down the short gangway to the main deck.">)>
+		<TELL " down the short gangway to the main deck.">
 		<CRLF> <CRLF>)
 	       (<RARG? BEG>
-		<COND (<SCENE? ,S-ESCAPE>
-		       <COND (<P? WALK (P?AFT P?UP)>
+		<COND (<P? (CLIMB-FOO HOLD-ON) ROOMS>
+		       <COND (<NOT ,GOT-GUNWALE?>
+			      <PERFORM ,V?TAKE ,GUNWALE>
+			      <RTRUE>)
+			     (ELSE
 			      <TELL
-"The gangway aft is blocked by Grays and crewmen." CR>)
-			     (<P? TAKE-OFF LG-GALLEY>
-			      <DO-WALK ,P?WEST>)
-			     (<AND <EQUAL? ,QCONTEXT ,MARIKO>
-				   <VERB? YES HAI>>
-			      <SETG QCONTEXT <>>
-			      <TELL
-"\"Well, she's floating, at least,\" you reply, and then notice one of the
-crewmen from the voyage to Osaka.  With Mariko's help, you ask him if the
-galley is ready, and if there are still Grays aboard.  \"Anjin-san, he thanks
-you for the life of his ship, and says they are ready.  As for the other, he
-doesn't know.\"  Mariko seems very worried as she says this." CR>)
-			     (<P? (HELP WAKE TAKE) MARIKO>
-			      <COND (<AND <FSET? ,WHARF ,SCOREBIT>
-					  <NOT <FSET? ,GLOBAL-WATER ,SCOREBIT>>>
-				     <FSET ,GLOBAL-WATER ,SCOREBIT>
-				     <TELL
-"You make your way over to Mariko.  \"Get some water -- water, by God!\"  What's
-the word for water?  Desperately you search your mind for the Japanese
-word.  The old monk had told it to you a thousand times." CR>
-				     <SCORE-OBJECT ,WHARF>)
-				    (,OPPONENT
-				     <TELL
-"You'll have to try something more specific." CR>)
-				    (<NOT <B-STANDING?>>
-				     <TELL
-"You try to crawl to her, but you are too fatigued." CR>)>)
-			     (<OR <VERB? MIZU>
-				  <AND <P? SAY INTQUOTE>
-				       <EQUAL? ,W?MIZU
-					       <GET-INTQUOTE 0>
-					       <GET-INTQUOTE 1>>>
-				  <AND <P? SAY GLOBAL-WATER>
-				       <NOUN-USED? ,PRSO ,W?MIZU>>>
-			      <COND (<FSET? ,GLOBAL-WATER ,SCOREBIT>
-				     <TELL
-"\""I"Mizu, mizu!  Hai!  Wakarimas?""\" you yell.  A man nods, and begins to hurry
-away.  You stand protectively over Mariko." CR>
-				     <SCORE-OBJECT ,GLOBAL-WATER>)
-				    (ELSE
-				     <TELL
-"You continue yelling, for no apparent reason." CR>)>)
-			     (<AND <EQUAL? ,OPPONENT ,GRAY-LEADER
-					   ,RANDOM-GRAYS ,SECOND-GRAY>
-				   <OR <MOTION-VERB?>
-				       <VERB? PARRY STOP>>>
-			      <SETG DODGED? T>
-			      <COND (<FSET? ,GRAY-LEADER ,DEAD>
-				     <TELL
-"You leap out of the way, and the blow misses." CR>)
-				    (ELSE
-				     <TELL
-"You try desperately to dodge out of the way, trying to avoid the leader's
-attack." CR>)>)>)
-		      (<SCENE? ,S-VOYAGE>
-		       <COND (<P? (CLIMB-FOO HOLD-ON) ROOMS>
-			      <COND (<NOT ,GOT-GUNWALE?>
-				     <PERFORM ,V?TAKE ,GUNWALE>
-				     <RTRUE>)
-				    (ELSE
-				     <TELL
 "You have returned to the relative security of the deck." CR>)>)
-			     (<AND <FSET? ,GUNWALE ,RMUNGBIT>
-				   <NOT ,GOT-GUNWALE?>>
-			      <COND (<VERB? WALK WALK-TO>
-				     <TELL
+		      (<AND <FSET? ,GUNWALE ,RMUNGBIT>
+			    <NOT ,GOT-GUNWALE?>>
+		       <COND (<VERB? WALK WALK-TO>
+			      <TELL
 "You can't walk while being swept overboard!" CR>)
-				    (<AND <NOT <GAME-VERB?>>
-					  <NOT <VERB? TAKE BOARD SWIM HOLD HOLD-ON>>>
-				     <TELL
+			     (<AND <NOT <GAME-VERB?>>
+				   <NOT <VERB? TAKE BOARD SWIM HOLD HOLD-ON>>>
+			      <TELL
 "Your preoccupations are unusual for someone who is being swept
 overboard in the middle of the ocean." CR>)>)
-			     (<P? TAKE-OFF LG-GALLEY>
-			      <DO-WALK ,P?DOWN>)
-			     (<AND <P? WALK DOWN>
-				   <FSET? ,SKIFF ,RMUNGBIT>>
-			      <PERFORM ,V?BOARD ,SKIFF>
-			      <RTRUE>)
-			     (<P? BOARD LG-SEA>
-			      <TELL
+		      (<P? TAKE-OFF LG-GALLEY>
+		       <DO-WALK ,P?DOWN>)
+		      (<AND <P? WALK DOWN>
+			    <FSET? ,SKIFF ,RMUNGBIT>>
+		       <PERFORM ,V?BOARD ,SKIFF>
+		       <RTRUE>)
+		      (<P? BOARD LG-SEA>
+		       <TELL
 G"You would surely drown." CR>)
-			     (<P? (ROW WALK-TO) <>>
-			      <COND (<FSET? ,MAIN-DECK ,SCOREBIT>
-				     <PERFORM ,V?HELP ,OARSMEN>
-				     <RTRUE>)
-				    (ELSE
-				     <SETG WINNER ,OARSMEN>
-				     <PERFORM ,PRSA ,PRSO ,PRSI>
-				     <SETG WINNER ,PLAYER>
-				     <RTRUE>)>)>)>)>>
+		      (<P? (ROW WALK-TO) <>>
+		       <COND (<FSET? ,MAIN-DECK ,SCOREBIT>
+			      <PERFORM ,V?HELP ,OARSMEN>
+			      <RTRUE>)
+			     (ELSE
+			      <SETG WINNER ,OARSMEN>
+			      <PERFORM ,PRSA ,PRSO ,PRSI>
+			      <SETG WINNER ,PLAYER>
+			      <RTRUE>)>)>)>>
 
 <OBJECT SKIFF
 	(LOC MAIN-DECK)
@@ -827,7 +563,7 @@ G"You would surely drown." CR>)
 		       <COND (<AND <IN? ,YABU ,SKIFF>
 				   <IN? ,SEARCH-PARTY ,SKIFF>>
 			      <TELL
-" Yabu sits imperiously in the bow, and the search party mans the oars.">)>
+"Yabu sits imperiously in the bow, and the search party mans the oars.">)>
 		       <CRLF>
 		       <RTRUE>)>)
 	       (<RARG? BEG>
@@ -936,8 +672,11 @@ Yabu, who looks very pleased with himself." CR>)>)
 "In this gale, any object that isn't tied down is a deadly
 missile." CR>)>)
 		      (<VERB? LAUNCH LOWER>
-		       <COND (,GALLEY-IN-BAY? ;<NOT <FSET? ,ANCHOR ,SCOREBIT>>
-			      <COND (<NOT <FSET? ,SKIFF ,RMUNGBIT>>
+		       <COND (,GALLEY-IN-BAY?
+			      <COND (<FSET? ,ANCHOR ,SCOREBIT>
+				     <TELL
+"The galley is still being washed to and fro.  It's too dangerous." CR>)
+				    (<NOT <FSET? ,SKIFF ,RMUNGBIT>>
 				     <FSET ,SKIFF ,RMUNGBIT>
 				     <MOVE ,BOAT-OAR ,SKIFF>
 				     <TELL "The skiff is ">
@@ -1134,8 +873,9 @@ and, choking, you pull yourself back." CR>
 		 (;1
 		  <SETG SHIP-COURSE ,P?PORT>
 		  <SETG SHIP-DIRECTION ,P?SOUTH>
-		  <MARGINAL-PIC ,P-CONFUSION <>>
-		  <TELL CR
+		  <COND (<NOT <MARGINAL-PIC ,P-CONFUSION <>>>
+			 <CRLF>)>
+		  <TELL
 "\"Watch out forward!\" Rodrigues shouts.  The galley rolls sickeningly,
 twenty oars pulling at air instead of sea and there is chaos aboard.  The
 first comber has struck and the port gunwale is awash.  The galley
@@ -1232,12 +972,12 @@ aft.">)
 "Rodrigues says,">)>
 			
 		  <TELL
-" \"You take the helm.  When I signal, steer west
+"\"You take the helm.  When I signal, steer west
 for that point.  You see it?  I'm going">
 		  <COND (<HERE? ,GALLEY> <TELL " forward">)>
 		  <TELL " to help the captain with the oarsmen.\"">
 		  <COND (<HERE? ,GALLEY>
-			 <TELL " He unties his lifeline and goes forward.">)>
+			 <TELL "He unties his lifeline and goes forward.">)>
 		  <CRLF>)
 		 (DELAY
 		  <COND (<NOT <FSET? ,GALLEY-WHEEL ,ONBIT>>
@@ -1276,8 +1016,9 @@ you'll kill us all!\"" CR>)>)
 		  <MOVE ,RODRIGUES ,IN-THE-SEA>
 		  <FSET ,RODRIGUES ,INVISIBLE>
 		  <THIS-IS-IT ,LG-RODRIGUES>
-		  <MARGINAL-PIC ,P-OVERBOARD>
-		  <TELL CR
+		  <COND (<NOT <MARGINAL-PIC ,P-OVERBOARD>>
+			 <CRLF>)>
+		  <TELL
 "A great wave comes out of the north.  The galley has taken much water
 previously, now you're awash and being driven backward towards the
 rock-infested shore.|
@@ -1418,9 +1159,12 @@ but you feel safer." CR>)>)
 	(ACTION OAR-F)>
 
 <ROUTINE OAR-F ()
-	 <COND (<OR <P? (THROW GIVE) * LG-RODRIGUES>
-		    <P? TURN * LG-RODRIGUES>
-		    <P? REACH-FOR LG-RODRIGUES>>
+	 <COND (<OR <P? TURN * LG-RODRIGUES>
+		    <P? REACH-FOR LG-RODRIGUES>
+		    <AND <P? (THROW GIVE) OAR (<> LG-RODRIGUES)>
+			 <IN? ,RODRIGUES ,IN-THE-SEA>
+			 <FSET? ,RODRIGUES ,INVISIBLE>
+			 <HERE? ,GALLEY ,MAIN-DECK>>>
 		<COND (<NOT <FSET? ,OAR ,RMUNGBIT>>
 		       <FSET ,OAR ,NDESCBIT>
 		       <MARGINAL-PIC ,P-OAR <>>
@@ -1457,12 +1201,6 @@ is Toranaga's galley.")
               LG-BAY LG-RODRIGUES)
       (ACTION PEBBLED-BEACH-F)>
 
-<CONSTANT NUMBERS
-	  <LTABLE "one" "two" "three" "four" "five" "six"
-		  "seven" "eight" "nine" "ten" "eleven" "twelve"
-		  "thirteen" "fourteen" "fifteen" "sixteen"
-		  "seventeen" "eighteen" "nineteen" "twenty">>
-
 <ROUTINE SEARCH-PARTY-FOLLOWS ()
 	 <MOVE ,YABU ,HERE>
 	 <MOVE ,SEARCH-PARTY ,HERE>
@@ -1480,7 +1218,8 @@ is Toranaga's galley.")
 "The rowers row the skiff east to the shore, jump out,
 and pull it up on the beach." CR CR>)
 		      (<EQUAL? ,OHERE ,ROCKY-SHORE>
-		       <SEARCH-PARTY-FOLLOWS>)>)
+		       <SEARCH-PARTY-FOLLOWS>)>
+		<RTRUE>)
 	       (<RARG? BEG>
 		<COND (<AND <P? WALK P?SOUTH>
 			    <FSET? ,ROCKY-SHORE ,TOUCHBIT>>
@@ -1651,7 +1390,8 @@ the north is the bay where the galley rides at anchor.")
 
 <ROUTINE ROCKY-SHORE-F (RARG)
 	 <COND (<RARG? ENTER>
-		<SEARCH-PARTY-FOLLOWS>)
+		<SEARCH-PARTY-FOLLOWS>
+		<RTRUE>)
 	       (<RARG? BEG>
 		<COND (<AND <P? WALK P?SOUTH>
 			    <FSET? ,CLIFF-PATH ,TOUCHBIT>>
@@ -1681,7 +1421,8 @@ unsafe, the surface loose.")
 
 <ROUTINE CLIFF-PATH-F (RARG)
 	 <COND (<RARG? ENTER>
-		<SEARCH-PARTY-FOLLOWS>)
+		<SEARCH-PARTY-FOLLOWS>
+		<RTRUE>)
 	       (<RARG? BEG>
 		<COND (<AND <P? WALK P?SOUTH>
 			    <FSET? ,LEDGE-4 ,SCOREBIT>
@@ -1722,19 +1463,24 @@ G"There is no sign of Rodrigues." CR>)>)
 "You have already found him.  Is your memory that short?" CR>)>)
 		      (<OR <P? POINT (RODRIGUES LG-RODRIGUES)>
 			   <P? SHOW (RODRIGUES LG-RODRIGUES) YABU>>
-		       <TELL
+		       <COND (<FSET? ,LEDGE-4 ,SCOREBIT>
+			      <TELL
+"You don't know where Rodrigues is." CR>)
+			     (ELSE
+			      <TELL
 "Yabu peers over the cliff and finally sees Rodrigues.  He shrugs as if
-if to say, \"He's dead.\"  He doesn't seem inclined to do anything else." CR>)
+to say, \"He's dead.\"  He doesn't seem inclined to do anything else." CR>)>)
 		      (<P? (HELP TAKE WALK-TO)
 			   (YABU RODRIGUES LG-RODRIGUES)>
 		       <COND (<FSET? ,RODRIGUES ,INVISIBLE>
 			      <RFALSE>)
-			     (<NOT <QUEUED? I-YABU-CLIMBS>>
+			     (<AND <NOT <QUEUED? I-YABU-CLIMBS>>
+				   <NOT <QUEUED? I-YABU-RETURNS>>>
 			      <SETG YABU-CNT 0>
 			      <QUEUE I-YABU-CLIMBS -1>
 			      <TELL
 "You start for the cliff edge, and immediately the samurai restrain you.  Yabu
-shakes his head.  \"Iye!\"|
+shakes his head.  \""I"Iye!""\"|
 |
 You stare at Yabu, towering over him.  \"If you won't let me go, Yabu-san,
 then send one of your men.  Or go yourself.  You!\"" CR>)
@@ -1746,7 +1492,8 @@ then send one of your men.  Or go yourself.  You!\"" CR>)
 "Yabu doesn't see you." CR>)>)
 		      (<P? WALK DOWN>
 		       <COND (<AND <NOT <FSET? ,RODRIGUES ,INVISIBLE>>
-				   <NOT <QUEUED? I-YABU-CLIMBS>>>
+				   <NOT <QUEUED? I-YABU-CLIMBS>>
+				   <NOT <QUEUED? I-YABU-RETURNS>>>
 			      <PERFORM ,V?WALK-TO ,RODRIGUES>
 			      <RTRUE>)
 			     (<IN? ,YABU ,HERE>
@@ -1766,7 +1513,7 @@ Anjin-san,\" Yabu says." CR>)
 "You throw " THE ,PRSO " but " HE/SHE ,PRSO " fall" S ,PRSO " unnoticed into
 the water.">
 		       <COND (<FSET? ,LEDGE ,SCOREBIT>
-			      <TELL " The samurai murmur amongst
+			      <TELL "The samurai murmur amongst
 themselves.  Yabu has composed himself for death.  It is extremely bad
 manners to
 disturb him, as they can see no way for him to climb the cliff.">)>
@@ -1778,7 +1525,7 @@ disturb him, as they can see no way for him to climb the cliff.">)>
 			    <PRSI? <> SEARCH-PARTY>>
 		       <COND (<AND <NOT ,YABU-WARNED?>
 				   <NOT <FSET? ,LEDGE ,SCOREBIT>>
-				   <GETP ,YABU-KIMONO ,P?COUNT>>
+				   <G=? <GETP ,YABU-KIMONO ,P?COUNT> 8>>
 			      <SETG YABU-WARNED? T>
 			      <PUTP ,SEARCH-PARTY ,P?COUNT
 				    <- <GETP ,SEARCH-PARTY ,P?COUNT> 1>>
@@ -1891,7 +1638,8 @@ on the white-frothed shore.")
 		<SEARCH-PARTY-FOLLOWS>
 		<COND (<NOT <QUEUED? I-SEARCH>>
 		       <SETG YABU-CNT 0>
-		       <QUEUE I-SEARCH -1>)>)
+		       <QUEUE I-SEARCH -1>)>
+		<RTRUE>)
 	       (<RARG? BEG>
 		<COND (<OR <P? FIND (RODRIGUES LG-RODRIGUES)>
 			   <P? SEARCH GLOBAL-HERE>
@@ -1969,9 +1717,10 @@ Yabu kicks off his thong slippers.  He takes the swords out of his belt
 and puts them safely under cover.  He barks some orders at one of the
 samurai, then takes off his soaking kimono, and clad only in his loincloth,
 goes to the cliff edge, testing it carefully with his toes and feet." CR>)
-		 (<MARGINAL-PIC ,P-CLIFF>
-		  <MOVE ,YABU ,LEDGE-2>
-		  <TELL CR
+		 (<MOVE ,YABU ,LEDGE-2>
+		  <COND (<NOT <MARGINAL-PIC ,P-CLIFF>>
+			 <CRLF>)>
+		  <TELL
 "Yabu climbs down the side of the cliff with great skill.|
 |
 Suddenly, Yabu slips!  He grips an outcrop with his left hand, stopping
@@ -2177,15 +1926,20 @@ what.  Fools!  There must be a way!" CR>)
 higher, Yabu reaches it!" CR>)>)>)
 	       (<VERB? RAISE MOVE>
 		<COND (,ROPE-LOWERED?
-		       <SETG ROPE-LOWERED? <>>
-		       <COND (<IN? ,YABU-KIMONO ,SEARCH-PARTY>
+		       <COND (<QUEUED? I-YABU-RETURNS>
 			      <TELL
-"You signal the search party, and they raise the rope." CR>)
-			     (<IN? ,YABU-KIMONO ,WINNER>
-			      <TELL
-"You raise the rope." CR>)
+"With Yabu clinging to it, you can't raise it." CR>)
 			     (ELSE
-			      <TELL "No one is holding the rope." CR>)>)
+			      <SETG ROPE-LOWERED? <>>
+			      <COND (<IN? ,YABU-KIMONO ,SEARCH-PARTY>
+				     <TELL
+"You signal the search party, and they raise the rope." CR>)
+				    (<IN? ,YABU-KIMONO ,WINNER>
+				     <TELL
+"You raise the rope." CR>)
+				    (ELSE
+				     <TELL
+"No one is holding the rope." CR>)>)>)
 		      (<NOT .ROPE?>
 		       <TELL "You lift the kimono." CR>)
 		      (ELSE
@@ -2216,10 +1970,10 @@ remove them and tie them together, adding them to the rope.  It is
 now significantly longer.">
 		<COND (,ROPE-LOWERED?
 		       <TELL
-" The rope now reaches almost to Yabu.  If he would just ">
+"The rope now reaches almost to Yabu.  If he could just ">
 		       <COND (<QUEUED? I-YABU-RETURNS> <TELL "stretch">)
-			     (ELSE <TELL "stand">)>
-		       <TELL ", he could probably reach it.">)>
+			     (ELSE <TELL "climb a little higher">)>
+		       <TELL ", he might be able to reach it.">)>
 		<CRLF>
 		<SCORE-OBJECT ,LOINCLOTH>)>>
 
@@ -2249,7 +2003,8 @@ shoves Rodrigues onto it, almost losing him once, then hauls himself up." CR>)
 			 <COND (<G? ,DELAY-CNT 2>
 				<SETG ROPE-LOWERED? T>
 				<TELL CR
-"The samurai lower the rope to Yabu." CR CR>)
+"The samurai lower the rope to Yabu." CR>
+				<RTRUE>)
 			       (ELSE
 				<TELL CR
 "The rope isn't lowered!  Yabu can't reach it, even from the ledge." CR>
@@ -2265,12 +2020,11 @@ shoves Rodrigues onto it, almost losing him once, then hauls himself up." CR>)
 Rodrigues.  Twice he loses the pilot, but each time Yabu drags him back.  His
 position is precarious, but you can see that the bottom of the cliff is now
 completely under water." CR>)
-		 (<DEQUEUE I-YABU-RETURNS>
-		  <MOVE ,YABU ,GENERIC-OBJECTS>
+		 (<MOVE ,YABU ,GENERIC-OBJECTS>
 		  <MOVE ,RODRIGUES ,GENERIC-OBJECTS>
 		  <TELL CR
 "For almost an hour Yabu sets himself against the sea and against his
-failing body, and then, in the dusk, he reaches wide ledge where he's safe
+failing body, and then, in the dusk, he reaches a wide ledge where he's safe
 from the sea and he can rest and not hang from the makeshift, fraying rope.|
 |
 Just then, the samurai Yabu sent to the galley returns with coils of
@@ -2298,6 +2052,6 @@ world.  They have a saying, that a man has a false heart in his mouth for
 all the world to see, another in his breast to show his very special
 friends and family, and the real one, the true one, the secret one,
 which is never known to anyone except himself alone.  So never forget
-they're six-faced and have three hearts!\"">>
+they're six-faced and have three hearts!\"" CR>>
 
 <END-SEGMENT>

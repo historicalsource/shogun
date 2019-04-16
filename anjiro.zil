@@ -42,7 +42,8 @@ she points to your boots, bowing and shaking her head." CR>
 		<COND (<SCENE? ,S-ANJIRO>
 		       <QUEUE I-SEBASTIO -1>
 		       <COND (<IN? ,ONNA ,MURA-HOUSE>
-			      <MOVE ,ONNA ,GARDEN>)>)>)
+			      <MOVE ,ONNA ,GARDEN>)>)>
+		<RTRUE>)
 	       (<RARG? BEG>
 		<COND (<P? LISTEN (<> NOISE)>
 		       <TELL
@@ -171,6 +172,8 @@ comparable fragrance for years." CR>)>>
 
 
 
+<BEGIN-SEGMENT RODRIGUES>
+
 <ROOM ANJIRO-WATERFRONT
       (LOC ROOMS)
       (SCENE S-RODRIGUES)
@@ -196,7 +199,7 @@ the harbor.")
 		<FCLEAR ,HIRO-MATSU ,NOABIT>
 		<FCLEAR ,HIRO-MATSU ,NOTHEBIT>
 		<FSET ,HIRO-MATSU ,AN>
-		<NEW-SDESC ,OMI "Omi">
+		<NEW-SDESC ,OMI ,OMI-NAME>
 		<MOVE-CREW ,PIT>
 		<REMOVE ,HENCHMAN-BODY>
 		<REMOVE ,HENCHMAN-HEAD>
@@ -211,6 +214,7 @@ the harbor.")
 		<MOVE ,OMI ,ANJIRO-WATERFRONT>
 		<MOVE ,YABU ,ANJIRO-WATERFRONT>
 		<MOVE ,HIRO-MATSU ,ANJIRO-WATERFRONT>
+		<MOVE ,TORANAGA ,GENERIC-OBJECTS>
 		<MOVE ,ARCHERS ,ANJIRO-WATERFRONT>
 		<FCLEAR ,ARCHERS ,INVISIBLE>
 		<QUEUE I-MEET-RODRIGUES -1>)
@@ -226,7 +230,8 @@ anchor, to the east, is the "I"Erasmus""." CR>)
 			      <TELL
 "You row the boat up onto the beach." CR CR>)
 			     (<NOT <FSET? ,RUTTER ,RMUNGBIT>>
-			      <QUEUE I-RUTTER-CLUE 1>)>)>)
+			      <QUEUE I-RUTTER-CLUE 1>)>)>
+		<RTRUE>)
 	       (<RARG? BEG>
 		<COND (<AND <SCENE? S-RODRIGUES>
 			    <OR <P? (POINT EXAMINE) LG-ERASMUS>
@@ -236,7 +241,7 @@ anchor, to the east, is the "I"Erasmus""." CR>)
 		       <COND (<NOT <FSET? ,LIZARD ,SCOREBIT>>
 			      <THIS-IS-IT ,LG-ERASMUS>
 			      <SETG QCONTEXT ,RODRIGUES>
-			      <TELL " She's
+			      <TELL "She's
 moored a hundred yards away.  \"Tell me about her, Ingeles,\" asks
 the Portuguese.  \"She looks like a pisscutter!\"">)>
 		       <CRLF>)
@@ -311,6 +316,9 @@ something to the man with the arrow.  Now the man puts it away." CR>
 		       <END-QUOTE>
 		       <RFATAL>)>)>>
 
+<END-SEGMENT ;"ANJIRO+RODRIGUES">
+<BEGIN-SEGMENT ANJIRO>
+
 <ROUTINE I-RUTTER-CLUE ()
 	 <COND (<NOT <FSET? ,RUTTER ,RMUNGBIT>>
 		<FSET ,RUTTER ,RMUNGBIT>
@@ -322,6 +330,8 @@ seen your rutters or the rest of the crew.  ">
 		      (ELSE
 		       <TELL "Can they still be on the "I"Erasmus">)>
 		<TELL ", you wonder?" CR>)>>
+
+<BEGIN-SEGMENT RODRIGUES>
 
 <OBJECT SMALL-BOAT
 	(LOC ANJIRO-WATERFRONT)
@@ -416,7 +426,7 @@ aren't strong enough to pull yourself aboard.">)
 "It's just a small wooden rowboat.">
 		       <COND (<NOT <FSET? ,RUTTER ,RMUNGBIT>>
 			      <FSET ,RUTTER ,RMUNGBIT>
-			      <TELL " It reminds you that you haven't
+			      <TELL "It reminds you that you haven't
 seen your rutters anywhere, and you glance out at the "I"Erasmus"".">)>
 		       <CRLF>)
 		      (<VERB? BOARD>
@@ -479,6 +489,9 @@ there, bobbing in the light waves." CR>)
 	       (<VERB? BOARD>
 		<DO-WALK ,P?DOWN>)>>
 
+<END-SEGMENT ;"ANJIRO+RODRIGUES">
+<BEGIN-SEGMENT ANJIRO>
+
 <ROUTINE HENCHMEN-RESTRAIN ()
 	 <COND (<FSET? ,SEBASTIO-HENCHMEN ,RMUNGBIT>
 		<RFALSE>)
@@ -490,6 +503,8 @@ CTHE ,SEBASTIO " points to you, saying something in Japanese to " THE
 		<TELL
 CTHE ,SEBASTIO " motions to his companions, who restrain you." CR>)
 	       (ELSE <RFALSE>)>>
+
+<BEGIN-SEGMENT RODRIGUES>
 
 <ROOM ANJIRO-HARBOR
       (LOC ROOMS)
@@ -531,9 +546,13 @@ and southern horizons." CR>)
 		       <TELL
 "As you climb down the gangway you can still feel the sweat trickling
 down your spine.  You hate everything about the Japans and wish yourself
-and your crew back aboard, armed, and out to sea." CR CR>
+and your crew back aboard, armed, and out to sea." CR>
 		       <MOVE ,BLACKTHORNE ,HERE>
-		       <NEXT-SCENE>)>)>>
+		       <NEXT-SCENE>
+		       <RFATAL> ;"don't do v-first-look")>)>>
+
+<END-SEGMENT ;"ANJIRO+RODRIGUES">
+<BEGIN-SEGMENT ANJIRO>
 
 <ROOM ANJIRO
       (LOC ROOMS)
@@ -588,6 +607,9 @@ hillsides?  Confused, you walk back to the house you left." CR>)>)
 			      <TELL
 "You've never heard of any place called Anjiro." CR>)>)>)>>
 
+<BEGIN-SEGMENT YABU>
+<BEGIN-SEGMENT RODRIGUES>
+
 <OBJECT VILLAGERS
 	(LOC LOCAL-GLOBALS)
 	(DESC "villagers")
@@ -612,6 +634,9 @@ you." CR>)>)
 		       <TELL
 "They return your bow with amusement.  You are obviously a new and amazing
 sight for them." CR>)>)>>
+
+<END-SEGMENT ;"ANJIRO+RODRIGUES+YABU">
+<BEGIN-SEGMENT ANJIRO>
 
 <OBJECT SEBASTIO-HENCHMEN
 	(SCENE S-ANJIRO)
@@ -790,11 +815,10 @@ translates, \"Kasigi Omi-san says, 'What's your nationality?'\"" CR>)
 			 <RTRUE>)>)
 		 (<SETG QCONTEXT ,SEBASTIO>
 		  <SETG OMI-QUESTION 2>
-		  <TELL CR
-CTHE ,OMI " says, \""I"Onushi ittai doko kara kitanoda?">
 		  <NEW-SDESC ,OMI "Omi">
 		  <SETUP-ANSWER "i sailed from">
-		  <TELL "\" The priest
+		  <TELL CR
+CTHE ,OMI " says, \""I"Onushi ittai doko kara kitanoda?""\"The priest
 says nervously, \"Kasigi Omi-san says, 'Where did you sail from?'\"" CR>)
 		 (DELAY
 		  <COND (,OMI-QUESTION
@@ -887,7 +911,7 @@ soft mats.  You are lying on a thick quilt.|
 You realize that you aren't dreaming because you are terribly hungry.")
       (LDESC
 "The room is filled with muted light shining through the opaque paper
-that fills squares of cedar lathe.  The ceiling is polished cedar.")
+that fills squares of cedar lath.  The ceiling is polished cedar.")
       (EAST TO GARDEN IF MURA-DOOR IS OPEN)
       (OUT TO GARDEN IF MURA-DOOR IS OPEN)
       (FLAGS ONBIT)
@@ -972,7 +996,7 @@ G"It sounds like a group of people.  ""One of them is speaking Portuguese!" CR>)
 <OBJECT MURA-DOOR
 	(LOC LOCAL-GLOBALS)
 	(DESC "door")
-	(SYNONYM SHOJI DOOR PANEL PAPER SCREEN SQUARES LATHES)
+	(SYNONYM SHOJI DOOR PANEL PAPER SCREEN SQUARES LATHS)
 	(ADJECTIVE PAPER WOOD TRANSLUCENT)
 	(FLAGS NDESCBIT DOORBIT TRYTAKEBIT)
 	(ACTION MURA-DOOR-F)>
@@ -984,7 +1008,7 @@ G"It sounds like a group of people.  ""One of them is speaking Portuguese!" CR>)
 "The door has been broken by your clumsiness." CR>)
 		      (ELSE
 		       <TELL
-"The door is made of square wood lathes and covered with paper.  It
+"The door is made of square wood laths and covered with paper.  It
 looks translucent, shadows from the outside mottling the light and
 flimsy structure." CR>)>)
 	       (<VERB? OPEN MUNG TEAR RUB>
@@ -1016,7 +1040,7 @@ flimsy structure." CR>)>)
 		       <TELL
 "You reach to open the door, reeling slightly as you are still very
 weak, and put out a hand to steady yourself but the light, square wood
-lathes can't bear your weight and they shatter, paper ripping apart.  ">
+laths can't bear your weight and they shatter, paper ripping apart.  ">
 		       <COND (<IN? ,FOOD ,WINNER>
 			      <MOVE ,FOOD ,HERE>
 			      <TELL "You drop the food.  ">)>
@@ -1203,6 +1227,8 @@ you.  \""I"Goshujinsama, gokibun wa ikaga desu ka?""\" she asks." CR>>
 
 <NEW-ADD-WORD "HAKU" NOUN>
 
+<BEGIN-SEGMENT PIT>
+
 <OBJECT ONNA
 	(SDESC "middle-aged woman")
 	(SYNONYM WOMAN ONNA ONNA LADY)
@@ -1296,6 +1322,10 @@ understand." CR>)>)
 		<TELL
 CTHE ,ONNA " seems surprised, but not unwilling." CR>)>>
 
+<END-SEGMENT ;"ANJIRO+PIT">
+
+<BEGIN-SEGMENT ANJIRO>
+
 <ROUTINE I-ONNA-RETURNS ()
 	 <MOVE ,FOOD ,TRAY>
 	 <MOVE ,CLOTHES ,HERE>
@@ -1308,6 +1338,8 @@ CTHE ,ONNA " seems surprised, but not unwilling." CR>)>>
 	 <TELL "small woman reappears with more
 food, and your clothes which she places in a neat pile.  She bows
 again and departs." CR>>
+
+<BEGIN-SEGMENT RODRIGUES>
 
 <OBJECT RIBBON
 	(DESC "silk ribbon")
@@ -1391,13 +1423,13 @@ of your rutters?  How can you retrieve them?" CR>)>)>>
 	 <COND (<RARG? OBJDESC?> <RTRUE>)
 	       (<RARG? OBJDESC>
 		<TELL
-"Several samurai are at posts on the main deck.">
+"Several samurai are at posts on the main deck.  They ">
 		<COND (,RIBBON-CNT
-		       <TELL " They watch you warily.">)
+		       <TELL "watch you warily.">)
 		      (<FSET? ,SAMURAI-GUARDS ,RMUNGBIT>
-		       <TELL " They seem relaxed.">)
+		       <TELL "seem relaxed.">)
 		      (ELSE
-		       <TELL " They seem a little nervous.">)>)>>
+		       <TELL "seem a little nervous.">)>)>>
 
 <ROUTINE SAMURAI-GUARDS-F ("OPT" (RARG <>))
 	 <COND (<RARG? SUBJ>
@@ -1465,13 +1497,13 @@ bow and smile again." CR>)
 		       <TELL "The leader returns your bow.">
 		       <COND (,RIBBON-CNT
 			      <TELL
-"  The guards seem more relaxed now.">)>
+"The guards seem more relaxed now.">)>
 		       <CRLF>)>)
 	       (<VERB? TELL-ABOUT>
 		<TELL
 "They don't appear to understand you." CR>)>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"ANJIRO">
 
 
 
@@ -1514,14 +1546,14 @@ daimyo.  Samurai slam all of you on your knees and push your heads into the dust
 		<TELL
 "This is the village square of Anjiro.  The day is clear and warm.">
 		<COND (<SCENE? S-YABU>
-		       <TELL " You are ">
+		       <TELL "You are ">
 		       <COND (<B-KNEELING?>
 			      <TELL "kneeling">)
 			     (ELSE <TELL "standing">)>
 		       <TELL " in front of the platform.">)>
 		<COND (,BATH-FLAG
 		       <TELL
-" A narrow path leads north between two wooden fences.">)>
+"A narrow path leads north between two wooden fences.">)>
 		<CRLF>)
 	       (<RARG? BEG>
 		<COND (<AND <SCENE? ,S-YABU ,S-PIT>
@@ -1561,7 +1593,7 @@ the true Church!  Surely this land is in the power of Satan!\"|
 |
 Yabu smiles happily at you and your crewmen, then points to you and barks
 an additional order to Omi, who bows.  You shudder, wondering what fate
-could be in store for you, and afraid you are about to find out." CR CR>
+could be in store for you, and afraid you are about to find out." CR>
 					    <NEXT-SCENE>)>)
 				    (ELSE
 				     <TELL
@@ -1601,6 +1633,120 @@ CTHE ,PRSO " seems pleased by this display of manners." CR>)>)
 				     <TELL
 "You do as you were ordered." CR>
 				     <SCORE-OBJECT ,CROOCQ>)>)>)>)>>
+
+<ROUTINE YABU-TALK-TO-YABU ()
+	 <COND (<AND <P? BE (BLACKTHORNE ME)>
+		     <EQUAL? ,YABU-QUESTION 1>>
+		<COND (<NOT <PRSI? BLACKTHORNE ME>>
+		       <TELL
+"\"This is no time for foolishness, heretic!\" roars the priest." CR>)
+		      (<AND <NOUN-USED? ,PRSI ,W?BLACKTHORNE>
+			    <ADJ-USED? ,PRSI ,W?JOHN>
+			    <NOT <P-NEGATIVE?>>>
+		       <SETG QCONTEXT <>>
+		       <SETG YABU-QUESTION 0>
+		       <TELL
+G"Father Sebastio translates your answer.  ""He seems very deferential to
+Yabu, and very sweaty." CR>)
+		      (ELSE
+		       <TELL
+"\"No, no!  What is your ">
+		       <COND (<OR <NOUN-USED? ,PRSI
+					      ,W?BLACKTHORNE>
+				  <ADJ-USED? ,PRSI ,W?JOHN>>
+			      <TELL "full ">)>
+		       <TELL
+"name, pirate?\" storms the priest, annoyed in
+spite of himself." CR>)>)
+	       (<AND <EQUAL? ,YABU-QUESTION 2>
+		     <OR <AND <P? BE (BLACKTHORNE ME) INTPP>
+			      <PP? ,W?FROM ,HOLLAND>>
+			 <P? COME-FROM HOLLAND>>
+		     <NOT <P-NEGATIVE?>>>
+		<SETG QCONTEXT <>>
+		<SETG YABU-QUESTION 0>
+		<TELL
+G"Father Sebastio translates your answer.  ""Yabu is showing irritation
+and impatience.  Perhaps the Jesuit's Japanese isn't fluent?" CR>)
+	       (<AND <EQUAL? ,YABU-QUESTION 3>
+		     <P? BE
+			 (BLACKTHORNE ME)
+			 (BLACKTHORNE RODRIGUES LEADER)>
+		     <OR <NOUN-USED? ,PRSI ,W?PILOT>
+			 <NOUN-USED? ,PRSI ,W?PILOT-MAJOR>>
+		     <NOT <P-NEGATIVE?>>>
+		<SETG QCONTEXT ,YABU>
+		<SETG YABU-QUESTION 4>
+		<TELL
+"Father Sebastio doesn't translate what you said.  Instead he asks,
+\"Why is an Englishman the pilot of a Dutch ship?  Answer!\"  Yabu
+looks annoyed at the priest.  Perhaps they aren't allies
+after all." CR>)
+	       (<AND <EQUAL? ,YABU-QUESTION 4>
+		     <EQUAL? ,PRSS ,ME ,BLACKTHORNE>
+		     <P? (WALK WALK-TO WALK-AROUND
+			  COME-FROM COME-TO-FROM)
+			 (<> ENGLAND STRAIT-OF-MAGELLAN
+			  JAPAN PACIFIC GLOBAL-HERE LG-SEA
+			  LG-ERASMUS BLACK-SHIP NOT-HERE-OBJECT)
+			 (<> ENGLAND STRAIT-OF-MAGELLAN
+			  PACIFIC LG-SEA LG-ERASMUS BLACK-SHIP)>
+		     <PAST-TENSE?>
+		     <NOT <P-NEGATIVE?>>>
+		<COND (<PRSO? NOT-HERE-OBJECT>
+		       <TELL
+"\"Liar! You came around Africa and India!\""G" screams the priest." CR>)
+		      (<AND <PRSO? <> LG-SEA LG-ERASMUS
+				   BLACK-SHIP>
+			    <PRSI? <> LG-SEA LG-ERASMUS
+				   BLACK-SHIP>>
+		       <TELL
+"\"Of course you did!  You didn't fly!\""G" screams the priest." CR>)
+		      (ELSE
+		       <SETG YABU-QUESTION 0>
+		       <SETG QCONTEXT <>>
+		       <TELL
+"You describe your voyage.  \"We came through Magellan's Pass.  This is the
+one hundred and thirty-sixth day from there.\"|
+|
+\"You're lying!  Magellan's Pass is secret.  You came via Africa and
+India.  You'll have to tell the truth eventually.  They use torture
+here.\"" CR>
+		       <SCORE-OBJECT ,STRAIT-OF-MAGELLAN>)>)
+	       (<AND <P? BE (BLACKTHORNE ME)>
+		     <P-NEGATIVE?>>
+		<COND (<PRSI? CHURCH>
+		       <TELL
+"\"I've already told the "I"daimyo"" that you're a heretic!\"" CR>)
+		      (<PRSI? PORTUGUESE>
+		       <TELL
+"\"That's right, heretic, dig your own grave!  Only we Portuguese and
+the damnable Spanish are allowed to trade here!\"" CR>)
+		      (<AND <PRSI? PIRATE>
+			    <EQUAL? ,YABU-QUESTION 4>>
+		       <SETG QCONTEXT <>>
+		       <SETG YABU-QUESTION 0>
+		       <TELL
+"\"You liar!  You filthy heretics are all pirates!\"  The priest speaks
+haltingly to Yabu, who answers brusquely.  He is apparently losing
+interest in the interrogation, and looks out into the harbor, toward
+the ship." CR>)
+		      (ELSE
+		       <TELL
+CTHE ,SEBASTIO " translates what you have said.  Yabu doesn't seem
+terribly interested, but only annoyed at the priest's poor Japanese." CR>)>)
+	       (<AND ,YABU-QUESTION
+		     <VERB? SAY REPLY>>
+		<COND (<EQUAL? ,YABU-QUESTION 1 3>
+		       <PERFORM ,V?BE ,ME ,PRSO>
+		       <RTRUE>)
+		      (ELSE
+		       <PERFORM ,V?COME-FROM>
+		       <RTRUE>)>)
+	       (ELSE
+		<TELL
+CTHE ,SEBASTIO " haltingly translates what you have said.  Yabu appears
+increasingly impatient." CR>)>>
 
 <ROUTINE SPEAK-ONLY-TO-YABU ()
 	 <TELL
@@ -1647,7 +1793,7 @@ belt." CR>)
 			     (ELSE <TELL "on the ground.">)>
 		       <COND (<AND <IN? ,OMI ,HERE> <IN? ,YABU ,HERE>>
 			      <TELL
-" The samurai watch.  Omi, in particular, seems interested and excited.">)>
+"The samurai watch.  Omi, in particular, seems interested and excited.">)>
 		       <CRLF>
 		       <SCORE-OBJECT ,SEBASTIO-CRUCIFIX>)
 		      (ELSE
@@ -1814,7 +1960,7 @@ as he whirls toward you, shaking his fist.  His crucifix on its long
 chain waves mockingly near your face." CR>)
 		 (<THIS-IS-IT ,YABU>
 		  <TELL CR
-"\""I"Ano mono wa nani o moshite oru?\""" the "I"daimyo"" snaps
+"\""I"Ano mono wa nani o moshite oru?""\" the "I"daimyo"" snaps
 impatiently." CR>)
 		 (2
 		  <THIS-IS-IT ,YABU>
@@ -1836,7 +1982,7 @@ G"The priest confers with Yabu.  \"Yabu says ""you are a " .STR ", and you
 are condemned to death.\"">
 	 <JIGS-UP>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"YABU">
 
 
 
@@ -2015,14 +2161,14 @@ us God-cursed water!  We want food and water!\"" CR CR
 priest.">
 		  <COND (<VERB? YELL YELL-AT>
 			 <TELL
-" Everyone but you begins yelling.  \"Water!  And food, by God!  Let
+"Everyone but you begins yelling.  \"Water!  And food, by God!  Let
 us out of here!\"">)
 			(ELSE
 			 <TELL
-" Everyone is still yelling.">)>
+"Everyone is still yelling.">)>
 		  <MOVE ,OFFAL ,PIT>
 		  <MOVE ,SEAWATER ,PIT>
-		  <TELL " Omi motions to Mura, who nods and leaves." CR CR
+		  <TELL "Omi motions to Mura, who nods and leaves." CR CR
 "Mura returns with another fisherman, carrying a large barrel.  They empty
 the contents, rotting fish offal and seawater, onto your heads." CR>)
 		 (<SETG MUST-CHOOSE? T>
@@ -2361,12 +2507,12 @@ me that's to go -- \"Pieterzoon is being driven up the ladder." CR CR
 		       <COND (<FSET? ,LOSING-SAMURAI ,SCOREBIT>
 			      <REMOVE ,LOSING-SAMURAI>
 			      <TELL ", including the one you knocked off
-of the ladder, though he appears wary and even embarassed.">)
+of the ladder, though he appears wary and even embarrassed.">)
 			     (ELSE
 			      <TELL " stepping contemptuously over
 the prostrate body of their unconscious comrade.">)>)
 		      (ELSE <TELL ".">)>
-		<TELL " The ladder is jerked aloft.  Air and
+		<TELL "The ladder is jerked aloft.  Air and
 sky and light vanish.  Bolts crash into place." CR>)>
 	 <DEQUEUE I-TAKE-VINCK>
 	 <DEQUEUE I-TAKE-YOU>
@@ -2488,15 +2634,15 @@ you easily." CR>)
 			      <FSET ,LADDER ,RMUNGBIT>
 			      <COND (<QUEUED? I-TAKE-CROOCQ>
 				     <TELL
-" There is no reaction from those above.  They wait patiently." CR>)
+"There is no reaction from those above.  They wait patiently." CR>)
 				    (<IN? ,OMI-SAMURAI ,LADDER>
 				     <TELL
-" The samurai hold tightly onto the ladder, but one swings a sword at
+"The samurai hold tightly onto the ladder, but one swings a sword at
 you!" CR>
 				     <SCORE-OBJECT ,LADDER>)
 				    (ELSE
 				     <TELL
-" A gasp goes through the cellar.  ">
+"A gasp goes through the cellar.  ">
 				     <SAMURAI-ON-LADDER>
 				     <RTRUE>)>)>)
 		      (<VERB? CLIMB-FOO CLIMB-ON CLIMB-UP CLIMB-DOWN BOARD>
@@ -2517,7 +2663,7 @@ you easily." CR>)
 			      <COND (<HELD? ,DAGGER>
 				     <REMOVE ,DAGGER>
 				     <TELL
-" As you reach the top of the ladder, strong hands grab you and force
+"As you reach the top of the ladder, strong hands grab you and force
 you to drop the dagger.">)>
 			      <CRLF>
 			      <CRLF>
@@ -2740,7 +2886,7 @@ limp, dropping his dagger." CR>
 		<TELL
 "A huge black-iron cauldron stands in the square.">
 		<COND (<IN? ,CROOCQ ,CAULDRON>
-		       <TELL " The boy Croocq, trussed like a chicken,
+		       <TELL "The boy Croocq, trussed like a chicken,
 is inside.">)>
 		<RFATAL>)>>
 
@@ -2825,7 +2971,7 @@ any cause for you to insult him.  B">)
 better yet, you will not be killed.  But you will be taught manners.\"  You
 see Omi hitch up his kimono.  He pisses on your back.">
 		  <COND (,PISS-FLAG
-			 <TELL " \"Omi-san says, it
+			 <TELL "\"Omi-san says, it
 is very bad manners to say you will piss on anyone.  It is bad manners and
 very stupid to say you will piss on anyone when you are unarmed.  It is
 very bad manners and even more stupid to say you will piss on anyone
@@ -2905,6 +3051,19 @@ he removes your head." CR>
 <GLOBAL ANSWER-HAI? <>>
 <GLOBAL BATH-FLAG <>>
 
+<ROUTINE CURSE-OMI ()
+	 <COND (<NOT ,PISS-FLAG>
+		<SETG PISS-FLAG T>
+		<TELL
+"You lose your composure.  \"Tell him to go to hell.  Tell him I piss on
+him and his whole country.  Tell him exactly what I said!  Exactly, by
+God!\" you yell at the priest.  Omi listens, then the knuckles on his
+sword hand whiten.  You can see he is trying not to give way to his
+emotions." CR>)
+	       (ELSE
+		<TELL
+"You continue to scream abuse at Omi." CR>)>>
+
 <ROOM BATH-HOUSE
       (LOC ROOMS)
       (DESC "Bath House")
@@ -2929,7 +3088,8 @@ seen, and shiver with fear." CR>)
 		       <QUEUE I-BATH -1>
 		       <TELL
 "You enter the bath house, followed by Mura, who keeps a close eye on
-you." CR CR>)>)
+you." CR CR>)>
+		<RTRUE>)
 	       (<RARG? BEG>
 		<COND (<AND <OR <P? WALK P?SOUTH>
 				<HOSTILE-VERB?>>
@@ -3130,7 +3290,7 @@ G"It's much too heavy!" CR>)>)
 			      <MURA-STOPS-YOU .RUIN>
 			      <COND (<FSET? .RUIN ,WEARBIT>
 				     <TELL
-" He pantomimes removing them, and the old women
+"He pantomimes removing them, and the old women
 giggle and make loud remarks to him." CR>)
 				    (ELSE <CRLF>)>)
 			     (ELSE
@@ -3197,7 +3357,7 @@ permanent?\"|
 |
 \"Temporary,\" Omi answers hesitantly.  \"Only temporary, Lord.\"" CR>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"PIT">
 
 
 
@@ -3379,13 +3539,14 @@ in Japanese fashion while standing amidships." CR>)
 		 (<TELL CR
 CTHE ,RODRIGUES " continues to row toward the "I"Erasmus""." CR>)
 		 (<COND (<FSET? ,ARCHERS ,SCOREBIT>
+			 <CRLF>
 			 <JIGS-UP
 "One of the archers fires an arrow with incredible accuracy.  It takes
 Rodrigues in the back, and he falls.  The second arrow takes you.">
 			 <RFATAL>)
 			(ELSE
 			 <TELL CR
-"You are at the "I"Erasmus.""  " CTHE ,RODRIGUES " ships the oars under the
+"You are at the "I"Erasmus"".  " CTHE ,RODRIGUES " ships the oars under the
 watchful eyes of the samurai on board." CR CR>
 			 <GOTO ,AT-ERASMUS>)>)
 		 (<MOVE ,BOAT-OAR ,SMALL-BOAT>
@@ -3512,6 +3673,10 @@ the galley, you wish you were on deck, helping.  When the sea pours in and
 the galley sinks, you wish so even more strongly.">
 	 <RFATAL>>
 
+<ROUTINE SEALED-PASSAGE ()
+	 <TELL "Rodrigues heads immediately for
+the sealed passage.  \""I"Kinjiru, gomen nasai,""\" says one of the samurai." CR>>
+
 <ROUTINE DONT-BE-STUPID ()
 	 <TELL CR
 "\"Get in here, we haven't much time!  These buggers are going to start
@@ -3527,4 +3692,4 @@ said they may live again in the world of men.  But the smallest breaking of a
 rule, and two will be put back into the pit.  They are to behave and obey all
 orders.\"" CR>>
 
-<END-SEGMENT>
+<END-SEGMENT ;"RODRIGUES">

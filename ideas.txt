@@ -1,0 +1,111 @@
+The general form of the game is that you play several different
+characters.  Different puzzles are presented and solved as
+different characters.  When the game begins, you are
+Blackthorne, but later you can (must?) be Mariko, Toranaga,
+etc. in various situations.
+
+Some puzzles are pretty clearly defined.  These are marked
+with a *.  For others, it's not obvious what the puzzle is. 
+These are marked with a ?.
+
+Puzzles:
+
+* As Blackthorne, you must navigate the Erasmus through the
+storm and reef into Anjiro harbor.  This is primarily just a
+puzzle where you must steer the Erasmus in the right
+direction.  Minor additional parts include being lashed to
+the rudder, commanding the sails to be reefed, etc.
+
+? As Blackthorne, you must learn Japanese.  How this is done
+is an open question.
+
+* As Blackthorne, you must rescue Rodrigues when he is washed
+overboard.  This may include convincing Hiro-matsu to let
+you go ashore, finding Rodrigues (?), causing Yabu to climb
+down the cliff (since the guards won't let you do it),
+attracting his attention to the ledge, etc.
+
+* As Blackthorne, you must help Toranaga escape from Osaka. 
+This would be in several parts.  First, you must notice that
+Toranaga and Kiritsubo switch places.  Second, you must
+distract Ishido and the guards.
+
+* As Toranaga, you must get to the galley through the maze of
+Osaka's streets.  I see this as a maze-type puzzle where
+there are bands of Ishido's Grays and an ambush at some
+point by "bandits."  At some point in the maze is the place
+where you find your extra men (the sign of a fish).  At some
+time after the ambush, Ishido will know you've escaped, and
+more Grays will arrive.
+
+? As Toranaga, you must negotiate with Ferriera and the
+Jesuits to get out of the harbor.  How this is done I
+haven't a clue.
+
+* As Blackthorne, you must maneuver the galley out of the
+harbor by staying close to the frigate, but not too close.
+
+* As Blackthorne, you must teach Toranaga to dive.  This might
+be too hard; instead there could be a swimming race puzzle,
+where you must try to beat Toranaga.
+
+* As Blackthorne, you must threaten (and mean!) to commit
+seppuku, but the timing must be perfect, otherwise you will
+succeed.  You must bring things to a head just as Omi is
+ready to stop you.
+
+? As Mariko, you must teach Blackthorne Japanese.  How?
+
+? As Mariko, you must try to commit suicide.  How to make this
+more than just a timing puzzle?  It is important to not do
+it before Ishido gives in.  Maybe you should play someone
+other than Mariko in this puzzle?  Ishido?
+
+* As Blackthorne, you must fight the ninja during the attack,
+help Mariko escape into the secret room, not open the door
+when the ninja say they only want you, break the bolts on
+the other door, not stop Mariko, etc.
+
+? As Toranaga, you must detect Yabu's treachery?
+
+
+Overall Puzzles:
+
+As Toranaga, you are constantly trying to influence people
+to come over to your side.  How to do this?  Possibilities
+include a diplomacy-type structure, a swapping structure
+("Offer Izu to Yabu," "Tell Zataki about Ochiba," etc.). You
+must also delay things as much as possible after your escape
+from Osaka.  Perhaps various people come to you with
+information, as Gyoko does in the book.  To get the
+information, you have to consent to speak with them.  Some
+of it is true, some is not, and you must act on the true
+information.  This might also be how Omi reports the news
+about Yabu's betrayal during the attack.  There are various
+"players" you can negotiate with.  These include the other
+regents, the Jesuits, Ferriera, some of your own people
+(such as Yabu), Blackthorne, Mariko, etc.  They will ask for
+things, and you have to decide what to give them.  You also
+have limited resources to give away, and if you promise them
+twice, you might get in trouble (like Ishido giving the
+Kwanto to both Zataki and Kiyama).
+
+Learning Japanese.  This is a puzzle for both Blackthorne
+and Mariko.  Perhaps there is a vocabulary you must learn,
+and as Blackthorne, you can only communicate through an
+interpreter or in Japanese.  As the game progresses, you
+have less access to an interpreter.  One implementation
+problem is that some Japanese words are longer than 9
+characters, for example "wakarimas-u" vs. "wakarimas-en".
+
+Scoring.  Your score as each character must depend on how
+you are doing at achieving your goals.  As Toranaga, it's
+your influence.  As Blackthorne, it could be your
+proficiency in Japanese, and your adoption of Japanese
+customs.  Suppose that at various points, Blackthorne is
+given options.  One is a "barbarian" option, and one is a
+"japanese" option.  Examples would include eating meat vs.
+not eating meat, or wearing European clothes vs. wearing a
+kimono.  These might be scored subtly (not appear on the
+status line, for example?)
+

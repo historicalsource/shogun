@@ -5,6 +5,7 @@
 <FILE-FLAGS SENTENCE-ENDS?>
 
 <BEGIN-SEGMENT NINJA>
+<BEGIN-SEGMENT YOKOHAMA>
 
 <OBJECT PISTOL
 	(OWNER BLACKTHORNE)
@@ -38,6 +39,9 @@ your grasp by the force of the explosion!" CR>)
 "You begin the laborious task of loading the pistol." CR>)>)
 		      (ELSE
 		       <TELL "It's already loaded." CR>)>)>>
+
+<END-SEGMENT ;"NINJA+YOKOHAMA">
+<BEGIN-SEGMENT NINJA>
 
 <OBJECT POWDER-HORN
 	(LOC BLACKTHORNE-QUARTERS)
@@ -81,6 +85,216 @@ plug." CR>)
 G"You continue loading the pistol.  Next"", blow the dust carefully away from
 the flint.  Finished!" CR>)>>
 
+<ROUTINE MARIKO-FOLLOW-ME ()
+	 <COND (<NOT <IN? ,MARIKO ,HERE>>
+		<COND (<NEXT-ROOM? <LOC ,MARIKO>>
+		       <COND (<QUEUED? I-NINJA-TAKE-MARIKO>
+			      <TELL
+"Mariko is struggling with the ninja in the next room.  They are trying to
+abduct her!" CR>)
+			     (ELSE
+			      <TELL
+"Mariko is in the next room." CR>)>)
+		      (ELSE
+		       <TELL
+"You no longer know where Mariko is." CR>)>)
+	       (<HERE? ,SECRET-REDOUBT ,BALCONY>
+		<TELL
+"\"No, Anjin-san, I can no longer follow.\"" CR>)
+	       (<QUEUED? I-NINJA-TAKE-MARIKO>
+		<TELL
+"She struggles to free herself from the ninja, but she
+can't.  \"Help me, Anjin-san!\" she yells." CR>)
+	       (ELSE
+		<QUEUE I-MARIKO-FOLLOW -1>
+		<COND (<QUEUED? I-NINJA>
+		       <COND (,CAPTURE-CNT
+			      <TELL
+"\"You can't let them take me">)
+			     (ELSE
+			      <TELL
+"\"I'll stay close by">)>
+		       <TELL
+", Anjin-san.\" she replies." CR>)
+		      (<QUEUED? I-NINJA-COWED>
+		       <TELL
+"\"I'm coming!\" she says, rushing to your side." CR>)
+		      (ELSE
+		       <TELL
+"\"I will follow you,\" she replies." CR>)>
+		<SCORE-OBJECT ,MARIKO>)>>
+
+<ROUTINE NINJA-TALK-TO-YABU ()
+	 <COND (<VERB? TELL-ME-ABOUT WHAT>
+		<COND (<PRSO? ,PLAN>
+		       <COND (<FSET? ,MARIKO ,RMUNGBIT>
+			      <TELL
+"Yabu is very nervous.  \"I know nothing of any plan!\" he blusters." CR>)
+			     (ELSE
+			      <COND (<ADJ-USED? ,PLAN ,W?SECRET>
+				     <TELL "\"No secret">)
+				    (ELSE
+				     <TELL "\"So sorry">)>
+			      <TELL
+", Anjin-san.  You misunderstood.  Say only must have plan.  Very
+difficult escape Osaka, neh?  Understand?\"  Yabu appears somewhat
+nervous." CR>
+			      <SCORE-OBJECT ,PLAN>)>)
+		      (<PRSO? ,NINJA ,LG-NINJA>
+		       <TELL
+"\"Ninja!  Filthy assassins!  Who would use ninja!  Filth!\"  He seems very
+agitated and nervous." CR>)
+		      (<PRSO? ,MARIKO>
+		       <COND (<FSET? ,MARIKO ,RMUNGBIT>
+			      <TELL
+"\"Mariko is dead, Anjin-san.\"" CR>)
+			     (ELSE
+			      <TELL
+"\"She has done a very foolish thing, Anjin-san,\" he says
+vehemently.  He seems to be suppressing an even stronger response.  He is very
+nervous." CR>)>)>)
+	       (<AND <VERB? YES HAI>
+		     <HERE? ,OUTER-ROOM>>
+		<COND (<NOT <FSET? ,PLAN ,SCOREBIT>>
+		       <TELL
+"\"Very good, Anjin-san,\" Yabu replies, looking much relieved." CR>)
+		      (<EQUAL? ,YABU-CNT 1 2>
+		       <TELL
+"\"Good, good!\" Yabu nods.  \"Very worried about Lady Toda.\"  He
+smiles." CR>)>)
+	       (<AND <VERB? NO IYE>
+		     <HERE? ,OUTER-ROOM>>
+		<COND (<NOT <FSET? ,PLAN ,SCOREBIT>>
+		       <TELL
+"\"Don't worry, Anjin-san,\" Yabu replies, trying to look
+unworried." CR>)
+		      (<EQUAL? ,YABU-CNT 1 2>
+		       <TELL
+"\"There is no plan, Anjin-san!\" Yabu says.  \"I'm only worried about
+Lady Toda.\"" CR>)>)
+	       (ELSE
+		<YABU-WAKARIMASEN>)>>
+
+<ROUTINE NINJA-INTERRUPT-YABU ()
+	 <COND (<JIGS-UP? ,J-CALL-YABU
+"You're supposed to be following him, not talking to him!">
+		<TELL
+"Yabu seems surprised to hear you call to him.  He turns and says something
+to you in an angry tone of voice.  You hear the word \""I"kinjiru""\", which
+means 'forbidden.'  Then Yabu draws his killing sword, advances on you, and
+removes your head.">
+		<JIGS-UP>
+		<RFATAL>)
+	       (ELSE
+		<COND (<VERB? TELL>
+		       <END-QUOTE>
+		       <RFATAL>)
+		      (ELSE <RTRUE>)>)>>
+
+<ROUTINE NINJA-FOLLOW-YABU ("AUX" RM)
+	 <SET RM <LOC ,YABU>>
+	 <COND (<HERE? .RM>
+		<COND (<HERE? ,CELLARS>
+		       <TELL
+"He doesn't appear to be going anywhere." CR>)
+		      (,FOLLOW-FLAG
+		       <TELL
+"You continue following him, keeping well behind and being as quiet
+as possible." CR>)
+		      (ELSE
+		       <SETUP-FOLLOW-YABU>
+		       <TELL
+"You follow Yabu, doing your best to avoid being noticed." CR>)>)
+	       (<NEXT-ROOM? .RM>
+		<COND (,FOLLOW-FLAG
+		       <COND (<HERE? ,INNER-CORRIDOR>
+			      <TELL
+"You follow warily behind him, keeping out of sight." CR>)
+			     (<HERE? ,AUDIENCE-CHAMBER>
+			      <TELL
+"You follow behind him, bowing to the guards but keeping far enough
+behind Yabu that he doesn't know he's being followed." CR>)
+			     (<HERE? ,OUTER-CORRIDOR>
+			      <TELL
+"You follow him, letting him get one turn ahead of you on the stairs." CR>)
+			     (<HERE? ,STAIRS>
+			      <TELL
+"You slip silently into the servants' quarters, and they stare at you
+but don't move.  Yabu is heading towards a stairway leading down." CR>)
+			     (<HERE? ,SERVANTS-QUARTERS>
+			      <TELL
+"You follow Yabu at a safe distance, sometimes almost losing him in
+the labyrinthine cellars.  He reaches a large, dimly-lit room full of
+boxes and barrels." CR>)
+			     (ELSE
+			      <TELL
+"You follow behind as silently and stealthily as you can." CR>)>)
+		      (ELSE
+		       <SETUP-FOLLOW-YABU>
+		       <TELL "You begin following Yabu, ">
+		       <COND (<HERE? ,OUTER-ROOM>
+			      <TELL
+"hoping he won't lose you." CR>)
+			     (ELSE
+			      <TELL
+"keeping far enough behind that he doesn't realize
+he's being followed." CR>)>)>
+		<CRLF>
+		<GOTO .RM>
+		<RTRUE>)
+	       (ELSE
+		<SETG FOLLOW-FLAG <>>
+		<TELL "You've lost him!" CR>)>>
+
+<ROUTINE EXAMINE-MARIKO ()
+	 <COND (<FSET? ,MARIKO ,RMUNGBIT>
+		<COND (<FSET? ,MARIKO ,DEAD>
+		       <TELL
+"She seems at peace, sleeping.  You move the kimono aside, then
+put it back again.  Her pulse is almost imperceptible.  Then it
+ceases.">)
+		      (ELSE
+		       <TELL
+"Lady Mariko is broken and dying.  She is still alive, but fading
+rapidly.">)>
+		<TELL
+"Her face is hardly touched but her body is terribly
+mutilated.  Around her neck is her rosary, the tiny golden cross
+lying on her throat." CR>)
+	       (<QUEUED? I-NINJA-TAKE-MARIKO>
+		<TELL
+"Lady Mariko is struggling to free herself." CR>)
+			     (<QUEUED? I-NINJA>
+			      <TELL
+"Lady Mariko looks like the samurai she is, brave and fearless, intent upon
+her purpose." CR>)
+			     (ELSE
+			      <TELL
+"Lady Mariko looks tired, but delicate and beautiful.  The effects of the
+afternoon are still with her, but she is content to be here with you." CR>)>>
+
+<ROUTINE NINJA-TAKE-MARIKO ()
+	 <COND (<FSET? ,MARIKO ,RMUNGBIT>
+		<COND (<FSET? ,BLACKTHORNE ,RMUNGBIT>
+		       <TELL
+"You're too far away.  You'll have to get closer somehow." CR>)
+		      (ELSE
+		       <MOVE ,MARIKO ,WINNER>
+		       <TELL
+"You take her in your arms, her broken body so small it feels like
+she can hardly be real." CR>)>)
+	       (<IN? ,MARIKO ,SECRET-REDOUBT>
+		<MOVE ,MARIKO ,WINNER>
+		<QUEUE I-MARIKO-STRUGGLES -1>
+		<TELL
+"You grab her, dragging her toward the balcony, but she tries to get
+away.  \"No, Anjin-san!  I must stay here!\"" CR>)
+	       (ELSE
+		<SETG WINNER ,MARIKO>
+		<PERFORM ,V?FOLLOW>
+		<SETG WINNER ,PLAYER>
+		<RTRUE>)>>
+
 <ROOM PRIVATE-QUARTERS
       (LOC ROOMS)
       (SCENE S-NINJA)
@@ -93,8 +307,8 @@ the flint.  Finished!" CR>)>>
 or three hours before dawn.  After she woke, you and Mariko had an hour
 alone together.  \"I still cannot believe that Ishido gave in,\" she
 said.  \"I knew it was my karma to bring the hostages out of Osaka.  Only I could
-do that for Lord Toranaga.  And now it's done.  But at what a cost, neh?
-Madonna forgive me.\"|
+do that for Lord Toranaga.  And now it's done.  But at what a cost,
+neh?  Madonna forgive me.\"|
 |
 Now you, Mariko, Kiri, Lady Etsu, and Achiko, the granddaughter of Kiyama, are
 together in Mariko's quarters.  You are still suspicious enough of Ishido's
@@ -132,7 +346,7 @@ the west, your room to the east, and an outer room which leads to a
 corridor on the south.">
 		<COND (<NOT <FSET? ,SECRET-REDOUBT-DOOR ,INVISIBLE>>
 		       <TELL
-" On the north wall is the iron-bound door to Lord Toranaga's secret
+"On the north wall is the iron-bound door to Lord Toranaga's secret
 room.">)>
 		<CRLF>)
 	       (<RARG? BEG>
@@ -222,7 +436,7 @@ well oiled.  \"This is my Master's secret haven,\" she pants." CR>)>)>>
 "Chimmoko, Mariko's servant, enters and bows.  \"Lord Yabu wishes to
 speak with the Anjin-san,\" she says.">
 		       <COND (<NOT <HERE? <LOC ,YABU>>>
-			      <TELL " \"He is waiting in the outer room.\"">)>
+			      <TELL "\"He is waiting in the outer room.\"">)>
 		       <CRLF>)
 		      (ELSE
 		       <QUEUE I-CHIMMOKO 1>)>)>>
@@ -435,70 +649,6 @@ been staying here.")
       (FLAGS ONBIT)
       (GLOBAL LG-NINJA LG-WOMEN)>
 
-<OBJECT SWORDS
-	(OWNER BLACKTHORNE)
-	(DESC "swords")
-	(SYNONYM SWORDS SWORD SELLER)
-	(ADJECTIVE PAIR KILLING STABBING OIL LONG SHORT)
-	(FLAGS TAKEBIT WEARABLE WEAPONBIT NOABIT SCOREBIT PLURAL)
-	(GENERIC GENERIC-SWORD-F)
-	(ACTION SWORDS-F)>
-
-<ROUTINE SWORDS-F ()
-	 <COND (<VERB? EXAMINE>
-		<COND (<FSET? ,SWORDS ,RMUNGBIT>
-		       <FCLEAR ,SWORDS ,RMUNGBIT>
-		       <FSET ,SWORDS ,SCOREBIT>
-		       <SCORE-OBJECT ,SWORDS>
-		       <TELL
-"You quickly check your sword belt.  It's loose, almost ready to fall
-off!  What a stroke of luck you checked it!  How embarrassing if it had
-fallen off!" CR>)
-		      (ELSE
-		       <TELL
-"You have a pair of samurai swords, one the long killing sword">
-		       <COND (<G? ,SCENE ,S-QUAKE>
-			      <TELL
-" named 'Oil Seller'">)>
-		       <TELL ", and
-the other the shorter stabbing sword." CR>)>)
-	       (<AND <VERB? WHO WHAT>
-		     <NOUN-USED? ,PRSO ,W?SELLER>>
-		<TELL
-"The name comes from an experience you would rather forget.  One day
-hunting with Toranaga, your path had been blocked by a weather-beaten
-old oil
-seller.  Cursing, you commanded him to move, and he cursed you
-back.  Toranaga pointed to one of his bodyguards, asked you to give him
-your sword, and before you realized what was happening, the samurai
-lunged at the peddler.  He walked on a pace before falling, divided
-in two at the waist.  Toranaga suggested you call your sword 'Oil
-Seller' in honor of the incident.  \"Your sword has now become legend.\"" CR>)
-	       (<VERB? WEAR>
-		<COND (<NOT <FSET? ,PRSO ,WEARBIT>>
-		       <FSET ,PRSO ,WEARBIT>
-		       <TELL
-"You shove the sword into your sash." CR>)
-		      (ELSE
-		       <TELL "The sword is already in your sash." CR>)>)
-	       (<AND <VERB? TAKE>
-		     <NOT <HELD? ,PRSO>>>
-		<COND (<EQUAL? <ITAKE> T>
-		       <FSET ,SWORDS ,WEARBIT>
-		       <TELL
-"You take the sword and shove it into your sash." CR>)
-		      (ELSE <RTRUE>)>)
-	       (<OR <AND <VERB? DRAW PICK USE TAKE>
-			 <HELD? ,PRSO>>
-		    <P? PUT * HANDS>>
-		<COND (<FSET? ,PRSO ,WEARBIT>
-		       <FCLEAR ,PRSO ,WEARBIT>
-		       <TELL
-"Your skill with the sword is not great, but you are now as ready as
-you will ever be!" CR>)
-		      (ELSE
-		       <TELL "You've already drawn your sword." CR>)>)>>
-
 <ROOM SECRET-REDOUBT
       (LOC ROOMS)
       (SCENE S-NINJA)
@@ -668,10 +818,10 @@ G"You would have to walk right through the ninja!" CR>)>)>>
 "This is a heavy, iron-bound door.  It looks very strong.">
 		<COND (<FSET? ,PRSO ,OPENBIT>
 		       <TELL
-" The door is open now.">)>
+"The door is open now.">)>
 		<COND (<HERE? ,SECRET-REDOUBT>
 		       <TELL
-" There are three iron bolts to secure the door, ">
+"There are three iron bolts to secure the door, ">
 		       <BOLT-STATE .CNT>
 		       <TELL "." CR>)>
 		<CRLF>)
@@ -679,11 +829,17 @@ G"You would have to walk right through the ninja!" CR>)>)>>
 		<COND (<EQUAL? .CNT 7> <RFALSE>)
 		      (ELSE <TELL "The door is still bolted." CR>)>)
 	       (<VERB? LOCK>
-		<PERFORM ,V?CLOSE ,BOLTS>
-		<RTRUE>)
+		<COND (<HERE? PRIVATE-QUARTERS>
+		       <TELL "The door doesn't lock from this side." CR>)
+		      (ELSE
+		       <PERFORM ,V?CLOSE ,BOLTS>
+		       <RTRUE>)>)
 	       (<VERB? UNLOCK>
-		<PERFORM ,V?OPEN ,BOLTS>
-		<RTRUE>)>>
+		<COND (<HERE? PRIVATE-QUARTERS>
+		       <TELL "The door doesn't unlock from this side." CR>)
+		      (ELSE
+		       <PERFORM ,V?OPEN ,BOLTS>
+		       <RTRUE>)>)>>
 
 <OBJECT BALCONY-DOOR
 	(LOC LOCAL-GLOBALS)
@@ -887,7 +1043,8 @@ G"You would have to walk right through the ninja!" CR>)>)>)>)
 		       <QUEUE I-YABU -1>
 		       <TELL
 "As you enter, you see Yabu waiting impatiently.  Beyond him you see
-a guard watching curiously." CR CR>)>)>>
+a guard watching curiously." CR CR>)>
+		<RTRUE>)>>
 
 <ROUTINE I-YABU-LEAVES ()
 	 <COND (<L? ,YABU-CNT 3>
@@ -1128,7 +1285,7 @@ bowing abjectly and pretending not to exist." CR>)
 mildewed, though well-lit.  Crates, boxes and barrels are everywhere.">
 		<COND (,YABU-BETRAYED?
 		       <TELL
-" An ">
+"An ">
 		       <COND (<FSET? ,CELLAR-DOOR ,OPENBIT>
 			      <TELL "open ">)>
 		       <TELL "iron-bound door is set in the east wall.">)>
@@ -1340,22 +1497,33 @@ CTHE ,GUARDS G" stop you from closing the door." CR>)>)
 
 <ROUTINE IRON-BAR-F ()
 	 <COND (<VERB? EXAMINE>
-		<TELL-OPEN-CLOSED>)
+		<COND (<OR <HERE? ,INNER-CORRIDOR>
+			   <FSET? ,INNER-DOOR ,OPENBIT>>
+		       <TELL-OPEN-CLOSED>)
+		      (ELSE
+		       <TELL G"You can't see " THE ,PRSO " from here." CR>)>)
 	       (<AND <VERB? OPEN>
 		     <NOT <FSET? ,IRON-BAR ,OPENBIT>>>
-		<FSET ,IRON-BAR ,OPENBIT>
-		<FCLEAR ,INNER-DOOR ,LOCKED>
-		<TELL
+		<COND (<OR <HERE? ,INNER-CORRIDOR>
+			   <FSET? ,INNER-DOOR ,OPENBIT>>
+		       <FSET ,IRON-BAR ,OPENBIT>
+		       <FCLEAR ,INNER-DOOR ,LOCKED>
+		       <TELL
 "You slide the bar aside." CR>)
+		      (ELSE
+		       <TELL G"You can't open " THE ,PRSO " from here." CR>)>)
 	       (<AND <VERB? CLOSE>
 		     <FSET? ,IRON-BAR ,OPENBIT>>
-		<COND (<AND <IN? ,GRAY-CAPTAIN ,AUDIENCE-CHAMBER>
+		<COND (<AND <HERE? ,AUDIENCE-CHAMBER>
+			    <NOT <FSET? ,INNER-DOOR ,OPENBIT>>>
+		       <TELL G"You can't close " THE ,PRSO " from here." CR>)
+		      (<AND <IN? ,GRAY-CAPTAIN ,AUDIENCE-CHAMBER>
 			    <NOT <FSET? ,GRAY-CAPTAIN ,DEAD>>>
 		       <TELL
-CTHE ,GUARDS G" stop you from barring the door." CR>)
+CTHE ,GRAY-CAPTAIN " stops"G" you from barring the door." CR>)
 		      (<IN? ,GUARDS ,AUDIENCE-CHAMBER>
 		       <TELL
-CTHE ,GUARDS G" stop you from barring the door." CR>)
+CTHE ,GUARDS " stop"G" you from barring the door." CR>)
 		      (ELSE
 		       <FCLEAR ,IRON-BAR ,OPENBIT>
 		       <FSET ,INNER-DOOR ,LOCKED>
@@ -1402,7 +1570,7 @@ screams, and the clash of swords fill the air." CR>)
 G"The sounds of ""battle continue, a violent shouting melee.">
 		  <COND (<HERE? ,AUDIENCE-CHAMBER ,OUTER-CORRIDOR
 				,INNER-CORRIDOR>
-			 <TELL " The frantic
+			 <TELL "The frantic
 guards at the fortified door to the outer corridor listen anxiously to
 the mounting holocaust below.">)>
 		  <CRLF>)
@@ -1432,6 +1600,8 @@ inner corridor." CR>)
 				<TELL CR
 "Now the captain of the Grays leaves the audience chamber." CR>)>)
 			(ELSE <RFALSE>)>)>>
+
+<BEGIN-SEGMENT PRISON>
 
 <OBJECT GRAY-CAPTAIN
 	(SCENE S-NINJA S-PRISON)
@@ -1477,11 +1647,11 @@ the hostages and his desire to destroy the attackers." CR>)
 "You fire the pistol, killing the captain instantly.">
 			      <COND (<IN? ,GUARDS ,HERE>
 				     <JIGS-UP
-" The other guards turn and immediately assume this is a
+"The other guards turn and immediately assume this is a
 betrayal.  They cut you down in short order.">)
 				    (ELSE
 				     <TELL
-" As the gray guards aren't here, you may get away with it." CR>)>)
+"As the gray guards aren't here, you may get away with it." CR>)>)
 			     (ELSE <RTRUE>)>)>)
 	       (<AND <HOSTILE-VERB?>
 		     <NOT <FSET? ,GRAY-CAPTAIN ,DEAD>>>
@@ -1490,6 +1660,10 @@ betrayal.  They cut you down in short order.">)
 "You attack the captain.  Surprised, and assuming you are part of
 some scheme of betrayal, he fights back, and you are dispatched quickly.">)
 		      (ELSE <RTRUE>)>)>>
+
+<END-SEGMENT ;"NINJA+PRISON">
+
+<BEGIN-SEGMENT NINJA>
 
 <CONSTANT J-PLUNGE 170>
 <CONSTANT J-CELLAR 171>
@@ -1680,6 +1854,8 @@ and dispatches you before you can escape.">)>
 		       <RFATAL>)>
 		<SETG KNOCKOUT-CNT 0>
 		<COND (<NOT <FSET? ,BALCONY ,TOUCHBIT>>
+		       <COND (<IN? ,MARIKO ,HERE>
+			      <SETG CAPTURE-CNT 0>)>
 		       <QUEUE I-NINJA-COWED <GETP ,NINJA ,P?COUNT>>)>
 		<FSET ,PISTOL ,RMUNGBIT>
 		<COND (<AND <OR <HERE? ,AUDIENCE-CHAMBER>
@@ -1694,7 +1870,7 @@ and dispatches you before you can escape.">)>
 momentarily stopping the charge.">
 		       <COND (<NOT <FSET? ,GRAY-CAPTAIN ,DEAD>>
 			      <TELL
-"  The shot alerts the Captain of the Grays.">)>
+"The shot alerts the Captain of the Grays.">)>
 		       <CRLF>
 		       <SCORE-OBJECT ,NINJA>)
 		      (ELSE
@@ -1963,7 +2139,8 @@ be sure where they've headed." CR>)>)
 	 <COND (<HELD? ,MARIKO>
 		<TELL CR
 "Mariko tries to break free of your hold." CR>)
-	       (<FSET? ,MARIKO ,DEAD>
+	       (<OR <FSET? ,MARIKO ,DEAD>
+		    <FSET? ,MARIKO ,RMUNGBIT>>
 		<DEQUEUE I-MARIKO-STRUGGLES>
 		<RFALSE>)
 	       (ELSE
@@ -2060,7 +2237,7 @@ floor." CR>)>)>
 "The ninja retreat, " <PICK-ONE ,MARIKO-STRUGGLES>>
 		       <COND (<AND <EQUAL? ,FOLLOW-FLAG ,NINJA>
 				   <HERE? .L>>
-			      <TELL " You follow, fighting your way
+			      <TELL "You follow, fighting your way
 through the chaos, trying to catch up." CR CR>
 			      <GOTO .D>)
 			     (ELSE <CRLF>)>
@@ -2333,9 +2510,10 @@ into the room"><TELL ", killing you instantly." CR>
 				<COND (<IN? ,PISTOL ,BLACKTHORNE>
 				       <MOVE ,PISTOL ,HERE>
 				       <FSET ,PISTOL ,NDESCBIT>)>
-				<MARGINAL-PIC ,P-EXPLOSION <>
-					      ,P-EXPLOSION-CORNER>
-				<TELL CR
+				<COND (<NOT <MARGINAL-PIC ,P-EXPLOSION <>
+							  ,P-EXPLOSION-CORNER>>
+				       <CRLF>)>
+				<TELL
 "Mariko presses back against the iron and calls out firmly, \"I, Toda
 Mariko, protest this shameful attack and by my death --\"">
 				<TELL G" The explosion
@@ -2394,8 +2572,7 @@ dead." CR>)>)>)
 			(<AND <FSET? ,MARIKO ,RMUNGBIT>
 			      <FSET? ,MARIKO ,SCOREBIT>>
 			 <RFALSE>)>)
-		 (<DEQUEUE I-NINJA-VS-SECRET-DOOR>
-		  <TELL CR
+		 (<TELL CR
 "Your head seems to burst with red and purple light and you
 collapse.  Kind hands catch you and help you to the floor." CR>
 		  <NEXT-SCENE>)>>
@@ -2414,7 +2591,7 @@ She mounts painfully to the battlement.  Everyone bows to her.|
 |
 \"I have told the truth.  I attest to it by my death,\" she says.  Then
 she closes her eyes thankfully and lets herself fall forward to welcome
-death.">>
+death." CR>>
 
 <OBJECT ROSARY
 	(DESC "rosary")
@@ -2445,7 +2622,7 @@ her, only to love her.  You replace the rosary." CR>)>>
       (FDESC
 "You recuperate for a few days, and then, to your surprise, your guards are
 gone.  You are taken down to the dock, where you are met by the Captain-General
-of the Black Ship, Ferriera, and Dell'Aqua, the Father-Visitor of the Jesuits.|
+of the Black Ship, Ferriera, and dell'Aqua, the Father-Visitor of the Jesuits.|
 |
 Dell'Aqua says, \"Pilot, I'm taking you to your galley.  Are you all right?\"|
 |
@@ -2836,7 +3013,6 @@ Omi says,|
 	But an escape from death?'\"|
 |
 Toranaga smiles." CR>
-		  <DEQUEUE I-STABLE>
 		  <NEXT-SCENE>)>>
 
 <ROUTINE TORANAGA-LOSES-PATIENCE ()
@@ -3047,7 +3223,8 @@ a truce, and make peace.  I ask it because of Mariko-sama.\"|
 		<CENTER-PIC ,P-CREST>
 		<SET Y <+ <WINGET 4 ,WHIGH> <WINGET 4 ,WTOP>>>
 		<WINDEF ,S-TEXT .Y .LEFT <- <LOWCORE VWRD> .Y 1> .WIDE>
-		<SCREEN ,S-TEXT>)
+		<SCREEN ,S-TEXT>
+		<RTRUE>)
 	       (<RARG? LOOK>
 		<TELL
 "That year, at dawn on the twenty-first day of the tenth month, the
